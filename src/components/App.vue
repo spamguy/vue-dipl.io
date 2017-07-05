@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <v-btn dark default class="btn--dark-flat-focused" @click.native="doStuff">Log In</v-btn>
+        <v-btn dark default class="btn--dark-flat-focused" @click.native="logIn">Log In</v-btn>
         <!-- <router-view></router-view> -->
     </div>
 </template>
@@ -9,7 +9,10 @@
 export default {
     name: 'app',
     methods: {
-        doStuff: () => { console.log('I did something!'); }
+        logIn() {
+            var fakeID = this.$route.query['fake-id'];
+            this.$store.dispatch('setUserToken', fakeID);
+        }
     }
 };
 </script>
