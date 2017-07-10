@@ -8,7 +8,10 @@ export default {
     methods: {
         logIn() {
             var fakeID = this.$route.query['fake-id'];
-            this.$store.dispatch('setUserToken', fakeID);
+            this.$store.dispatch('setUserToken', fakeID)
+            .then(() => {
+                this.$router.push('profile');
+            });
         }
     }
 };
