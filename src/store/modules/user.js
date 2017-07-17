@@ -1,33 +1,25 @@
-import User from '../../api/user';
+import Game from '../../api/game';
 import * as types from '../mutation-types';
 
 const state = {
     user: { },
-    fakeID: '',
-    userToken: ''
+    games: {
+        finished: [ ],
+        waiting: [ ],
+        active: [ ]
+    }
 };
 
 const mutations = {
-    [types.SET_USER_TOKEN](state, token) {
-        state.userToken = token;
-    },
-
-    [types.SET_FAKE_ID](state, fakeID) {
-        state.fakeID = fakeID;
+    [types.SET_FINISHED_GAMES](state, games) {
+        state.games.finished = games.data.Properties;
     }
 };
 
 const actions = {
-    async setUserToken({ commit }, fakeID) {
-        if (fakeID) {
-            commit(types.SET_FAKE_ID, fakeID);
-            return fakeID;
-        }
-        else {
-            const token = await User.getUserToken();
-            commit(types.SET_USER_TOKEN, token);
-            return token;
-        }
+    async fetchFinishedGames({ commit }) {
+        const games = await Game.getAllFinishedGamesForCurrentUser();
+        commit(types.SET_FINISHED_GAMES, games);
     }
 };
 
