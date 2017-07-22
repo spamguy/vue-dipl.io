@@ -25,6 +25,6 @@ module.exports = {
         "curly": [2, "multi-or-nest", "consistent"],
         "dot-location": ["error", "property"],
         "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
-        "max-nested-callbacks": ["error", 3]
+        "max-nested-callbacks": ["error", 5]
     }
 }
