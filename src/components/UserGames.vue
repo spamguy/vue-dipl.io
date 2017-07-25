@@ -51,6 +51,8 @@ export default {
     },
     created() {
         this.$store.dispatch('fetchFinishedGames');
+        this.$store.dispatch('fetchStagingGames');
+        this.$store.dispatch('fetchActiveGames');
     }
 };
 </script>
