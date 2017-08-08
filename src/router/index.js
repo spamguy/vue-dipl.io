@@ -13,7 +13,7 @@ Vue.use(Vuetify);
 Vue.use(Vuex);
 Vue.use(VueLocalStorage);
 
-export default new Router({
+const router = new Router({
     routes: [
         { path: '/', component: Home },
         {
@@ -28,3 +28,10 @@ export default new Router({
         }
     ]
 });
+
+router.beforeEach((to, from, next) => {
+    // TODO: For all secured pages, check that either fakeID/token exists.
+    next();
+});
+
+export default router;
