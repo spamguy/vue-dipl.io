@@ -30,8 +30,9 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-    // TODO: For all secured pages, check that either fakeID/token exists.
-    next();
+    // Block unauthorised state changes.
+    const isAuthenticated = to.matched[0].path === '' || Vue.localStorage.get('fakeID') || Vue.localStorage.get('token');
+    next(isAuthenticated);
 });
 
 export default router;

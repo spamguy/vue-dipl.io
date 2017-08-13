@@ -3,23 +3,14 @@
 </template>
 
 <script>
-import User from '../api/user';
+import Auth from '@/utils/auth';
 
 export default {
     name: 'home',
     methods: {
         async logIn() {
             const fakeID = this.$route.query['fake-id'];
-
-            if (fakeID) {
-                this.$localStorage.set('fakeID', fakeID);
-            }
-            else {
-                const token = await User.getUserToken();
-                this.$localStorage.set('token', token);
-            }
-
-            this.$router.push('profile/games');
+            await Auth.logIn(fakeID);
         }
     }
 };
