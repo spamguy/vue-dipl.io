@@ -1,42 +1,54 @@
 <template>
     <div class="ma-3 elevation-1">
-    <v-tabs dark>
-        <v-tabs-bar slot="activators">
-            <v-tabs-item
-                v-for="tab in tabs"
-                :key="tab"
-                :href="'#' + tab"
-                ripple
-            >
-                {{tab}}
-            </v-tabs-item>
-        </v-tabs-bar>
-        <v-tabs-content id="Active">
-            <v-card flat>
-                <v-card-text v-for="game in activeGames" :key="game.Id">{{game.Name}}</v-card-text>
-            </v-card>
-        </v-tabs-content>
-        <v-tabs-content id="Waiting">
-            <v-card flat>
-                <v-card-text v-for="game in waitingGames" :key="game.Id">{{game.Name}}</v-card-text>
-            </v-card>
-        </v-tabs-content>
-        <v-tabs-content id="Finished">
-            <v-card flat>
-                <v-card-text v-for="game in finishedGames" :key="game.Id">{{game.Name}}</v-card-text>
-            </v-card>
-        </v-tabs-content>
-    </v-tabs>
-</div>
+        <v-tabs dark>
+            <v-tabs-bar slot="activators">
+                <v-tabs-item
+                    v-for="tab in tabs"
+                    :key="tab"
+                    :href="'#' + tab"
+                    ripple
+                >
+                    {{tab}}
+                </v-tabs-item>
+            </v-tabs-bar>
+            <v-tabs-content id="Active">
+                <div v-if="!activeGames.length">Nothing here.</div>
+                <v-card flat>
+                    <game-list-item v-for="game in activeGames" :key="game.Id" :game="game"></game-list-item>
+                </v-card>
+            </v-tabs-content>
+            <v-tabs-content id="Waiting">
+                <div v-if="!waitingGames.length">Nothing here.</div>
+                <v-card flat>
+                    <game-list-item v-for="game in waitingGames" :key="game.Id" :game="game"></game-list-item>
+                </v-card>
+            </v-tabs-content>
+            <v-tabs-content id="Finished">
+                <div v-if="!finishedGames.length">Nothing here.</div>
+                <v-card flat>
+                    <game-list-item
+                        v-for="game in finishedGames"
+                        :key="game.Id"
+                        :game="game">
+                    </game-list-item>
+                </v-card>
+            </v-tabs-content>
+        </v-tabs>
+    </div>
 </template>
 
 <script>
+import GameListItem from '@/components/GameListItem';
+
 export default {
     name: 'usergames',
     data() {
         return {
             tabs: ['Active', 'Waiting', 'Finished']
         };
+    },
+    components: {
+        'game-list-item': GameListItem
     },
     computed: {
         activeGames() {
@@ -49,6 +61,7 @@ export default {
             return this.$store.state.user.games.finished;
         }
     },
+
     created() {
         this.$store.dispatch('fetchFinishedGames');
         this.$store.dispatch('fetchStagingGames');
