@@ -14,13 +14,21 @@
             <v-tabs-content id="Active">
                 <div v-if="!activeGames.length">Nothing here.</div>
                 <v-card flat>
-                    <game-list-item v-for="game in activeGames" :key="game.Id" :game="game"></game-list-item>
+                    <game-list-item
+                        v-for="game in activeGames"
+                        :key="game.Properties.Id"
+                        :game="game.Properties">
+                    </game-list-item>
                 </v-card>
             </v-tabs-content>
             <v-tabs-content id="Waiting">
                 <div v-if="!waitingGames.length">Nothing here.</div>
                 <v-card flat>
-                    <game-list-item v-for="game in waitingGames" :key="game.Id" :game="game"></game-list-item>
+                    <game-list-item
+                        v-for="game in waitingGames"
+                        :key="game.Properties.Id"
+                        :game="game.Properties">
+                    </game-list-item>
                 </v-card>
             </v-tabs-content>
             <v-tabs-content id="Finished">
@@ -28,8 +36,8 @@
                 <v-card flat>
                     <game-list-item
                         v-for="game in finishedGames"
-                        :key="game.Id"
-                        :game="game">
+                        :key="game.Properties.Id"
+                        :game="game.Properties">
                     </game-list-item>
                 </v-card>
             </v-tabs-content>

@@ -12,6 +12,10 @@ Client.interceptors.request.use(function(config) {
     const fakeID = Vue.localStorage.get('fakeID');
     const token = Vue.localStorage.get('token');
 
+    // /variants does not need authentication.
+    if (config.path === '/variants')
+        return config;
+
     // Assumed: fakeID or token is defined. This should be guaranteed by router's beforeEach().
     if (fakeID)
         config.params = { 'fake-id': fakeID };
@@ -22,5 +26,9 @@ Client.interceptors.request.use(function(config) {
 }, function(error) {
     return Promise.reject(error);
 });
+
+Client.extractData = function(result) {
+    return result.data.Properties;
+};
 
 export {Client};

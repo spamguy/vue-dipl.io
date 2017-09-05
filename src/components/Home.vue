@@ -4,12 +4,16 @@
 
 <script>
 import Auth from '@/utils/auth';
+import Variant from '@/api/variant';
 
 export default {
     name: 'home',
     methods: {
         async logIn() {
             const fakeID = this.$route.query['fake-id'];
+            const variants = await Variant.getAllVariants();
+            Variant.setVariants(variants.data.Properties);
+
             await Auth.logIn(fakeID);
         }
     }
