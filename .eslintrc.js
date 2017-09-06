@@ -20,7 +20,7 @@ module.exports = {
         'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
         "indent": ["error", 4, { "MemberExpression": 0 }],
         "space-before-function-paren": [2, "never"],
-        "one-var": [2, { var: "always", let: "never", const: "never" }],
+        "one-var": [2, { var: "always", let: "always", const: "never" }],
         "brace-style": [2, "stroustrup", { "allowSingleLine": true }],
         "curly": [2, "multi-or-nest", "consistent"],
         "dot-location": ["error", "property"],

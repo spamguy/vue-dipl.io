@@ -13,5 +13,10 @@ export default {
 
     setVariants(variantArray) {
         Vue.localStorage.set('variants', JSON.stringify(variantArray));
+    },
+
+    async setVariantMap(variant) {
+        const svg = await Client.get('/Variant/' + variant.Name + '/Map.svg');
+        Vue.localStorage.set('map.' + variant.Name, svg.data);
     }
 };

@@ -14,6 +14,10 @@ export default {
             const variants = await Variant.getAllVariants();
             Variant.setVariants(variants.data.Properties);
 
+            await Promise.all(
+                variants.data.Properties.map(async (v) => Variant.setVariantMap(v.Properties))
+            );
+
             await Auth.logIn(fakeID);
         }
     }

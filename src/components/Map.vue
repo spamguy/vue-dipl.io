@@ -1,18 +1,15 @@
 <template>
-    <div>
-        {{renderMapSVG()}}
-    </div>
+    <div v-html="svg"></div>
 </template>
 
 <script>
-    import Phase from '../api/phase';
     export default {
         name: 'diplomacy-map',
-        props: ['game', 'phase', 'variant'],
-        methods: {
-            async renderMapSVG() {
-                return Phase.getMapForPhase(this.phase);
-            }
+        props: ['game', 'phase'],
+        data() {
+            return {
+                svg: this.$localStorage.get('map.' + this.game.Variant)
+            };
         }
     };
 </script>

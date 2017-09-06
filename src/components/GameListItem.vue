@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="miniMap">
         <diplomacy-map :game="game" :phase="currentPhase"></diplomacy-map>
     </div>
 </template>
@@ -32,3 +32,6 @@
         }
     };
 </script>
+
+<style lang="scss">
+</style>

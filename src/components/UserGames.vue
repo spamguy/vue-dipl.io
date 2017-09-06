@@ -1,7 +1,7 @@
 <template>
     <div class="ma-3 elevation-1">
         <v-tabs dark>
-            <v-tabs-bar slot="activators">
+            <v-tabs-bar>
                 <v-tabs-item
                     v-for="tab in tabs"
                     :key="tab"
@@ -11,36 +11,38 @@
                     {{tab}}
                 </v-tabs-item>
             </v-tabs-bar>
-            <v-tabs-content id="Active">
-                <div v-if="!activeGames.length">Nothing here.</div>
-                <v-card flat>
-                    <game-list-item
-                        v-for="game in activeGames"
-                        :key="game.Properties.Id"
-                        :game="game.Properties">
-                    </game-list-item>
-                </v-card>
-            </v-tabs-content>
-            <v-tabs-content id="Waiting">
-                <div v-if="!waitingGames.length">Nothing here.</div>
-                <v-card flat>
-                    <game-list-item
-                        v-for="game in waitingGames"
-                        :key="game.Properties.Id"
-                        :game="game.Properties">
-                    </game-list-item>
-                </v-card>
-            </v-tabs-content>
-            <v-tabs-content id="Finished">
-                <div v-if="!finishedGames.length">Nothing here.</div>
-                <v-card flat>
-                    <game-list-item
-                        v-for="game in finishedGames"
-                        :key="game.Properties.Id"
-                        :game="game.Properties">
-                    </game-list-item>
-                </v-card>
-            </v-tabs-content>
+            <v-tabs-items>
+                <v-tabs-content id="Active">
+                    <div v-if="!activeGames.length">Nothing here.</div>
+                    <v-card flat>
+                        <game-list-item
+                            v-for="game in activeGames"
+                            :key="game.Properties.Id"
+                            :game="game.Properties">
+                        </game-list-item>
+                    </v-card>
+                </v-tabs-content>
+                <v-tabs-content id="Waiting">
+                    <div v-if="!waitingGames.length">Nothing here.</div>
+                    <v-card flat>
+                        <game-list-item
+                            v-for="game in waitingGames"
+                            :key="game.Properties.Id"
+                            :game="game.Properties">
+                        </game-list-item>
+                    </v-card>
+                </v-tabs-content>
+                <v-tabs-content id="Finished">
+                    <div v-if="!finishedGames.length">Nothing here.</div>
+                    <v-card flat>
+                        <game-list-item
+                            v-for="game in finishedGames"
+                            :key="game.Properties.Id"
+                            :game="game.Properties">
+                        </game-list-item>
+                    </v-card>
+                </v-tabs-content>
+            </v-tabs-items>
         </v-tabs>
     </div>
 </template>
