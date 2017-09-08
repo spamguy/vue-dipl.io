@@ -1,6 +1,15 @@
 <template>
-    <div class="miniMap">
-        <diplomacy-map :game="game" :phase="currentPhase"></diplomacy-map>
+    <div class="ma-2">
+        <v-layout row>
+            <v-flex>
+                <div class="miniMap">
+                    <diplomacy-map :game="game" :phase="currentPhase"></diplomacy-map>
+                </div>
+            </v-flex>
+            <v-flex>
+                <span>{{game.Desc}}</span>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 
@@ -34,4 +43,8 @@
 </script>
 
 <style lang="scss">
+    .miniMap
+    {
+        width: 100px;
+    }
 </style>
