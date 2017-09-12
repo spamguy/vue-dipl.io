@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from '@/components/Home';
 import AuthBase from '@/components/AuthBase';
 import UserGames from '@/components/UserGames';
+import Game from '@/components/Game';
 
 Vue.use(Router);
 
@@ -17,6 +18,10 @@ const router = new Router({
                 {
                     path: '/profile/games',
                     component: UserGames
+                },
+                {
+                    path: '/games/:id',
+                    component: Game
                 }
             ]
         }

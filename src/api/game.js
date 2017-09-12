@@ -11,5 +11,9 @@ export default {
 
     getAllActiveGamesForCurrentUser() {
         return Client.get('Games/My/Started');
+    },
+
+    async getGame(gameID) {
+        return Client.extractData(await Client.get('Game/' + gameID));
     }
 };
