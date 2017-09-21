@@ -1,16 +1,16 @@
 import {Client} from './base';
 
 export default {
-    getAllFinishedGamesForCurrentUser() {
-        return Client.get('Games/My/Finished');
+    async getAllFinishedGamesForCurrentUser() {
+        return Client.extractData(await Client.get('Games/My/Finished'));
     },
 
-    getAllStagingGamesForCurrentUser() {
-        return Client.get('Games/My/Staging');
+    async getAllStagingGamesForCurrentUser() {
+        return Client.extractData(await Client.get('Games/My/Staging'));
     },
 
-    getAllActiveGamesForCurrentUser() {
-        return Client.get('Games/My/Started');
+    async getAllActiveGamesForCurrentUser() {
+        return Client.extractData(await Client.get('Games/My/Started'));
     },
 
     async getGame(gameID) {

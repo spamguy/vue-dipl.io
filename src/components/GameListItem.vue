@@ -30,7 +30,7 @@
         },
         asyncComputed: {
             async phases() {
-                const phases = await Phase.getPhasesForGame(this.game);
+                const phases = await Phase.getPhasesForGame(this.game.ID);
                 return phases;
             }
         },

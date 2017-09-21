@@ -1,8 +1,8 @@
 import {Client} from './base';
 
 export default {
-    getPhasesForGame: async function(game) {
-        return Client.extractData(await Client.get('Game/' + game.ID + '/Phases'));
+    getPhasesForGame: async function(gameID) {
+        return Client.extractData(await Client.get('Game/' + gameID + '/Phases'));
     },
 
     getCurrentPhaseForGame(phases) {

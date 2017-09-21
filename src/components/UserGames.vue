@@ -48,36 +48,43 @@
 </template>
 
 <script>
-import GameListItem from '@/components/GameListItem';
+    import Game from '@/api/game';
+    import GameListItem from '@/components/GameListItem';
 
-export default {
-    name: 'usergames',
-    data() {
-        return {
-            tabs: ['Active', 'Waiting', 'Finished']
-        };
-    },
-    components: {
-        'game-list-item': GameListItem
-    },
-    computed: {
-        activeGames() {
-            return this.$store.state.user.games.active;
+    export default {
+        name: 'usergames',
+        data() {
+            return {
+                tabs: ['Active', 'Waiting', 'Finished']
+            };
         },
-        waitingGames() {
-            return this.$store.state.user.games.waiting;
+        components: {
+            'game-list-item': GameListItem
         },
-        finishedGames() {
-            return this.$store.state.user.games.finished;
+        asyncComputed: {
+            activeGames: {
+                async get() {
+                    const games = await Game.getAllActiveGamesForCurrentUser();
+                    return games;
+                },
+                default: [ ]
+            },
+            waitingGames: {
+                async get() {
+                    const games = await Game.getAllStagingGamesForCurrentUser();
+                    return games;
+                },
+                default: [ ]
+            },
+            finishedGames: {
+                async get() {
+                    const games = await Game.getAllFinishedGamesForCurrentUser();
+                    return games;
+                },
+                default: [ ]
+            }
         }
-    },
-
-    created() {
-        this.$store.dispatch('fetchFinishedGames');
-        this.$store.dispatch('fetchStagingGames');
-        this.$store.dispatch('fetchActiveGames');
-    }
-};
+    };
 </script>
 
 <style lang="scss">

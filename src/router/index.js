@@ -20,7 +20,7 @@ const router = new Router({
                     component: UserGames
                 },
                 {
-                    path: '/games/:id',
+                    path: '/games/:ID/:ordinal?',
                     component: Game
                 }
             ]

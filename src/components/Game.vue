@@ -1,5 +1,8 @@
 <template>
-    <h1>{{game ? game.Desc : ''}}</h1>
+    <div>
+        <h1>{{game.Desc}}</h1>
+        <map-phase-viewer :game="game"></map-phase-viewer>
+    </div>
 </template>
 
 <script>
@@ -11,9 +14,12 @@
             'map-phase-viewer': MapPhaseViewer
         },
         asyncComputed: {
-            async game() {
-                const game = Game.getGame(this.$route.params.id);
-                return game;
+            game: {
+                async get() {
+                    const game = Game.getGame(this.$route.params.ID);
+                    return game;
+                },
+                default: { }
             }
         }
     };

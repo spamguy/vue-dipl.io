@@ -11,11 +11,15 @@
         props: ['game', 'phase'],
         data() {
             return {
-                svg: Snap.parse(this.$localStorage.get('map.' + this.game.Variant))
+                svg: null
             };
         },
         watch: {
+            game(newGame) {
+                this.svg = Snap.parse(this.$localStorage.get('map.' + this.game.Variant));
+            },
             phase(newPhase) {
+                debugger;
                 let processedSVG;
                 if (newPhase) {
                     processedSVG = MapUtil.processSVGFragment(this.svg, this.game, newPhase);
