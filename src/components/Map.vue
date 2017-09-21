@@ -9,21 +9,22 @@
     export default {
         name: 'diplomacy-map',
         props: ['game', 'phase'],
-        data() {
-            return {
-                svg: null
-            };
-        },
         watch: {
-            game(newGame) {
-                this.svg = Snap.parse(this.$localStorage.get('map.' + this.game.Variant));
-            },
             phase(newPhase) {
-                debugger;
                 let processedSVG;
                 if (newPhase) {
-                    processedSVG = MapUtil.processSVGFragment(this.svg, this.game, newPhase);
+                    const t0 = performance.now();
+
+                    // Turn variant definition string into Snap object.
+                    const baseSVG = Snap.parse(this.$localStorage.get('map.' + this.game.Variant));
+
+                    // Turn Snap object into DOM.
+                    processedSVG = MapUtil.processSVGFragment(baseSVG, this.game, newPhase.Properties);
+
+                    // Append DOM.
                     Snap('#' + this.game.ID).append(processedSVG);
+                    const t1 = performance.now();
+                    console.log('SVG for game ' + this.game.ID + ' rendered in ' + (t1 - t0));
                 }
             }
         }

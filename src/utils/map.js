@@ -1,13 +1,25 @@
 import Snap from 'snapsvg-cjs';
 
+let _snapSVG,
+    _phase;
+
 export default {
     processSVGFragment(baseSVG, game, phase) {
-        let snapSVG = Snap(baseSVG.node.lastElementChild);
+        _phase = phase;
+        _snapSVG = Snap(baseSVG.node.lastElementChild);
+
+        colourSupplyCentres();
 
         // Get height/width, apply them to viewBox, then wipe height/width.
-        snapSVG.attr('viewBox', '0 0 ' + snapSVG.attr('width') + ' ' + snapSVG.attr('height'));
-        snapSVG.attr('height', '100%');
-        snapSVG.attr('width', '100%');
-        return baseSVG;
+        _snapSVG.attr('viewBox', '0 0 ' + _snapSVG.attr('width') + ' ' + _snapSVG.attr('height'));
+        _snapSVG.attr('height', '100%');
+        _snapSVG.attr('width', '100%');
+        return _snapSVG;
     }
 };
+
+function colourSupplyCentres() {
+    _phase.SCs.forEach(sc => {
+        // TODO: Select path#{sc.Province}Center and set fill to colour of sc.Nation.
+    });
+}

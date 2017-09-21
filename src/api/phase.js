@@ -8,6 +8,6 @@ export default {
     getCurrentPhaseForGame(phases) {
         if (!phases || !phases.length)
             return null;
-        return phases.slice(-1)[0].Properties;
+        return phases.slice(-1)[0];
     }
 };

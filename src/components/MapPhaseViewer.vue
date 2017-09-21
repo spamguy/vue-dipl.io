@@ -1,5 +1,5 @@
 <template>
-    <diplomacy-map :game="game" :phase="selectedPhase"></diplomacy-map>
+    <diplomacy-map :game="game" :phase="this.phases[this.currentPhaseIndex]"></diplomacy-map>
 </template>
 
 <script>
@@ -14,20 +14,24 @@
         },
         data() {
             return {
-                phases: [ ],
                 currentPhaseIndex: 0
             };
         },
-        watch: {
-            async game() {
-                this.phases = await Phase.getPhasesForGame(this.game.ID);
-                this.currentPhaseIndex = this.phases.length - 1;
-                this.$forceUpdate();
+        asyncComputed: {
+            phases: {
+                async get() {
+                    if (!this.game.ID)
+                        return [ ];
+                    const phases = await Phase.getPhasesForGame(this.game.ID);
+                    return phases;
+                },
+                default: [ ],
+                watch() { return this.game; }
             }
         },
         computed: {
             selectedPhase: () => {
-                return this.phases && this.phases.length ? this.phases[this.currentPhaseIndex].Properties : null;
+                return this.phases && this.phases.length ? this.phases[this.currentPhaseIndex] : null;
             }
         }
     };
