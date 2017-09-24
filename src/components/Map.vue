@@ -1,32 +1,37 @@
 <template>
-    <div :id="game.ID"></div>
+    <svg :id="game.ID" :height="dimensions.height" :width="dimensions.width">
+    </svg>
 </template>
 
 <script>
-    import Snap from 'snapsvg-cjs';
-    import MapUtil from '../utils/map';
+    import MapProcessor from '../utils/map';
 
     export default {
         name: 'diplomacy-map',
         props: ['game', 'phase'],
+        data() {
+            return {
+                dimensions: {
+                    height: 0,
+                    width: 0
+                }
+            };
+        },
         watch: {
             phase(newPhase) {
-                let processedSVG;
                 if (newPhase) {
-                    const t0 = performance.now();
+                    let processor = new MapProcessor(this.$localStorage.get('map.' + this.game.Variant));
 
-                    // Turn variant definition string into Snap object.
-                    const baseSVG = Snap.parse(this.$localStorage.get('map.' + this.game.Variant));
-
-                    // Turn Snap object into DOM.
-                    processedSVG = MapUtil.processSVGFragment(baseSVG, this.game, newPhase.Properties);
-
-                    // Append DOM.
-                    Snap('#' + this.game.ID).append(processedSVG);
-                    const t1 = performance.now();
-                    console.log('SVG for game ' + this.game.ID + ' rendered in ' + (t1 - t0));
+                    this.dimensions = processor.getDimensions();
                 }
             }
         }
     };
 </script>
+
+<style lang="scss">
+    svg g[inkscape\:label="supply centers"] path
+    {
+        stroke: #fff500 !important;
+    }
+</style>
