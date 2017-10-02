@@ -9,5 +9,9 @@ export default {
         if (!phases || !phases.length)
             return null;
         return phases.slice(-1)[0];
+    },
+
+    getMapForPhase(phase) {
+        return Client.get('Game/' + phase.gameID + '/Phase/' + phase.PhaseOrdinal + '/Map');
     }
 };

@@ -8,25 +8,19 @@
             v-model="isDrawerOpen"
         >
             <v-list dense>
-                <template v-for="item in menuItems">
-                    <v-layout row>
-                        <v-list-tile>
-                            <v-list-tile-content>
-                                <v-list-tile-title>
-                                    <router-link to="item.path">{{item.text}}</router-link>
-                                </v-list-tile-title>
-                            </v-list-tile-content>
-                        </v-list-tile>
-                    </v-layout>
-                </template>
+                <v-list-tile v-for="item in menuItems" :key="item.text">
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                            <router-link :to="item.path">{{item.text}}</router-link>
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
 
-                <v-layout row>
-                    <v-list-tile @click.native.stop="logOut()">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Log out</v-list-tile-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-layout>
+                <v-list-tile @click.native.stop="logOut()">
+                    <v-list-tile-content>
+                        <v-list-tile-title>Log out</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
             </v-list>
         </v-navigation-drawer>
 
@@ -47,6 +41,7 @@ export default {
     data: () => ({
         isDrawerOpen: false,
         menuItems: [
+            { text: 'My games', path: '/profile/games' }
         ]
     }),
     methods: {
