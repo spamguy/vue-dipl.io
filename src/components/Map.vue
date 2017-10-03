@@ -1,5 +1,5 @@
 <template>
-    <svg :id="game.ID" :height="dimensions.height" :width="dimensions.width">
+    <svg :id="game.ID" height="100%" width="100%" :viewBox="getViewBox()">
     </svg>
 </template>
 
@@ -20,10 +20,16 @@
         watch: {
             phase(newPhase) {
                 if (newPhase) {
-                    let processor = new MapProcessor(this.$localStorage.get('map.' + this.game.Variant));
+                    let processor = new MapProcessor(this.$localStorage.get('map.' + this.game.Variant), newPhase.Properties);
 
                     this.dimensions = processor.getDimensions();
+                    processor.copyGroups();
                 }
+            }
+        },
+        methods: {
+            getViewBox() {
+                return '0 0 ' + this.dimensions.width + ' ' + this.dimensions.height;
             }
         }
     };
