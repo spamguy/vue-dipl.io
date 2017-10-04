@@ -24,6 +24,7 @@
 
                     this.dimensions = processor.getDimensions();
                     processor.copyGroups();
+                    processor.replaceSupplyCentreIcons();
                 }
             }
         },
@@ -36,8 +37,13 @@
 </script>
 
 <style lang="scss">
-    svg g[inkscape\:label="supply centers"] path
+    g#supply-centers
     {
-        stroke: #fff500 !important;
+        path
+        {
+            fill: #fcff57;
+            stroke-width: 20px;
+            stroke: #000;
+        }
     }
 </style>

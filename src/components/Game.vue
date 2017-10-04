@@ -4,13 +4,21 @@
 
         <v-container fluid>
             <v-layout v-bind="layout">
-                <v-flex sm8 xs12>
+                <v-flex md8 sm12>
                     <map-phase-viewer :game="game"></map-phase-viewer>
                 </v-flex>
-                <v-flex sm4 xs12>
-                    <div style="border:1px solid green">
-                        <!-- TODO: Game tools go here -->
-                    </div>
+                <v-flex md4 sm12>
+                    <v-tabs grow>
+                        <v-tabs-bar class="cyan">
+                            <v-tabs-item href="#orders">Orders</v-tabs-item>
+                            <v-tabs-item href="#press">Press</v-tabs-item>
+                        </v-tabs-bar>
+                        <v-tabs-items>
+                            <v-tabs-content id="orders">
+                                <v-card>Hi</v-card>
+                            </v-tabs-content>
+                        </v-tabs-items>
+                    </v-tabs>
                 </v-flex>
             </v-layout>
         </v-container>

@@ -24,7 +24,7 @@ describe('API', () => {
     });
 
     describe('User', () => {
-        it('fetches a user token', async () => {
+        it('fetches a user token', async() => {
             mock.onGet('Auth/Login', { params: { 'redirect-to': encodeURIComponent('undefined/main/login') } }).reply(200, {
                 ID: 'abc123'
             });
@@ -34,35 +34,35 @@ describe('API', () => {
     });
 
     describe('Game', () => {
-        it('fetches finished games', async () => {
+        it('fetches finished games', async() => {
             mock.onGet('Games/My/Finished').reply(200, {
                 Properties: [{ name: 'Game 1 ' }, { name: 'Game 2' }]
             });
             const games = await Game.getAllFinishedGamesForCurrentUser();
-            expect(games.data.Properties.length).to.equal(2);
+            expect(games.length).to.equal(2);
         });
 
-        it('fetches active games', async () => {
+        it('fetches active games', async() => {
             mock.onGet('Games/My/Started').reply(200, {
                 Properties: [{ name: 'Game 1 ' }, { name: 'Game 2' }]
             });
             const games = await Game.getAllActiveGamesForCurrentUser();
-            expect(games.data.Properties.length).to.equal(2);
+            expect(games.length).to.equal(2);
         });
 
-        it('fetches staging games', async () => {
+        it('fetches staging games', async() => {
             mock.onGet('Games/My/Staging').reply(200, {
                 Properties: [{ name: 'Game 1 ' }, { name: 'Game 2' }]
             });
             const games = await Game.getAllStagingGamesForCurrentUser();
-            expect(games.data.Properties.length).to.equal(2);
+            expect(games.length).to.equal(2);
         });
     });
 
     describe('Variant', () => {
         afterEach(() => localStorage.clear());
 
-        it('fetches all variants', async () => {
+        it('fetches all variants', async() => {
             mock.onGet('Variants').reply(200, {
                 Properties: [{ Name: 'Classical' }, { Name: 'France vs. Austria' }, { Name: 'Ancient Mediterranian' }]
             });
