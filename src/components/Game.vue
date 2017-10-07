@@ -4,10 +4,10 @@
 
         <v-container fluid>
             <v-layout v-bind="layout">
-                <v-flex md8 sm12>
+                <v-flex md8 sm12 id="mapContainer">
                     <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
                 </v-flex>
-                <v-flex md4 sm12>
+                <v-flex fluid>
                     <v-tabs grow>
                         <v-tabs-bar class="cyan">
                             <v-tabs-item href="#orders">Orders</v-tabs-item>
@@ -68,3 +68,10 @@
         }
     };
 </script>
+
+<style lang="scss">
+    #mapContainer
+    {
+        max-width: 700px;
+    }
+</style>

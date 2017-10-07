@@ -1,10 +1,11 @@
 <template>
     <div>
         <v-navigation-drawer
-            class="pb-0"
             :right="true"
             persistent
-            absolute
+            clipped
+            enable-resize-watcher
+            app
             v-model="isDrawerOpen"
         >
             <v-list dense>
@@ -24,10 +25,10 @@
             </v-list>
         </v-navigation-drawer>
 
-        <v-toolbar dark class="primary">
+        <v-toolbar fixed clipped-right app class="primary">
             <v-toolbar-title class="white--text">dipl.io</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-side-icon @click.native.stop="isDrawerOpen = !isDrawerOpen"></v-toolbar-side-icon>
+            <v-toolbar-side-icon @click.stop="isDrawerOpen = !isDrawerOpen"></v-toolbar-side-icon>
         </v-toolbar>
 
         <router-view></router-view>
