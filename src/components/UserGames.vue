@@ -1,5 +1,5 @@
 <template>
-    <div class="ma-3 elevation-1">
+    <div class="elevation-1">
         <v-tabs dark>
             <v-tabs-bar>
                 <v-tabs-item

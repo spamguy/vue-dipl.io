@@ -46,7 +46,16 @@ export default class {
             provinceCoordinates = { };
 
         // Get each supply centre's coordinates.
-        [...supplyCentres.children].forEach(sc => (provinceCoordinates[sc.id] = sc.getBoundingClientRect()));
+        [...supplyCentres.children].forEach(sc => {
+            const bbRect = sc.getBoundingClientRect();
+            provinceCoordinates[sc.id] = {
+                x: bbRect.x,
+                y: bbRect.y,
+                height: bbRect.height,
+                width: bbRect.width,
+                isSC: true
+            };
+        });
 
         // Get the physical centre of all other provinces.
         [...otherProvinces.children].forEach(sc => {

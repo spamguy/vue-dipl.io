@@ -1,10 +1,8 @@
 <template>
     <div>
         <v-navigation-drawer
-            :right="true"
             persistent
             clipped
-            enable-resize-watcher
             app
             v-model="isDrawerOpen"
         >
@@ -26,12 +24,23 @@
         </v-navigation-drawer>
 
         <v-toolbar fixed clipped-right app class="primary">
-            <v-toolbar-title class="white--text">dipl.io</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-side-icon @click.stop="isDrawerOpen = !isDrawerOpen"></v-toolbar-side-icon>
+            <v-toolbar-title class="white--text">
+                <v-toolbar-side-icon @click.stop="isDrawerOpen = !isDrawerOpen"></v-toolbar-side-icon>
+                <span>dipl.io</span>
+            </v-toolbar-title>
         </v-toolbar>
 
-        <router-view></router-view>
+        <main>
+            <v-content>
+                <v-container fill-height fluid>
+                    <v-layout row>
+                        <v-flex>
+                            <router-view></router-view>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+            </v-content>
+        </main>
     </div>
 </template>
 
