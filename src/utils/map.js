@@ -31,7 +31,7 @@ export default class {
     copyGroups() {
         let definitionGroups = this._mapDefinition.getElementsByTagName('g'),
             svg = this._svg;
-        const supplyCentreNode = this._svg.getElementById('supplyCentres');
+        const supplyCentreNode = this._svg.getElementById('supplyCentreLayer');
 
         /*
          * HTMLCollection is not iterable, but it is with a spread operator.
@@ -40,16 +40,28 @@ export default class {
         [...definitionGroups].forEach(g => svg.insertBefore(g, supplyCentreNode));
     }
 
-    getSupplyCentreCoordinates() {
+    getProvinceCoordinates() {
         let supplyCentres = this._svg.getElementById('supply-centers'),
-            supplyCentreCoordinates = { };
+            otherProvinces = this._svg.getElementById('province-centers'),
+            provinceCoordinates = { };
 
         // Get each supply centre's coordinates.
-        [...supplyCentres.children].forEach(sc => (supplyCentreCoordinates[sc.id] = sc.getBoundingClientRect()));
+        [...supplyCentres.children].forEach(sc => (provinceCoordinates[sc.id] = sc.getBoundingClientRect()));
+
+        // Get the physical centre of all other provinces.
+        [...otherProvinces.children].forEach(sc => {
+            const bbRect = sc.getBoundingClientRect();
+            provinceCoordinates[sc.id] = {
+                x: bbRect.x + (bbRect.width / 2),
+                y: bbRect.y + (bbRect.height / 2),
+                height: bbRect.height,
+                width: bbRect.width
+            };
+        });
 
         // Nuke the original group.
         supplyCentres.remove();
 
-        return supplyCentreCoordinates;
+        return provinceCoordinates;
     }
 }
