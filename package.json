@@ -17,11 +17,10 @@
     "axios": "0.16.2",
     "moment": "2.18.1",
     "vue": "2.4.4",
-    "vue-async-computed": "3.3.1",
     "vue-localstorage": "0.3.0",
     "vue-router": "2.7.0",
     "vue-shortkey": "3.0.2",
-    "vuetify": "0.16.4",
+    "vuetify": "0.16.5",
     "vuex": "2.3.1"
   },
   "devDependencies": {

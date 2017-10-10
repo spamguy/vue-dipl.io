@@ -8,10 +8,11 @@
                     <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
                 </v-flex>
                 <v-flex fluid>
-                    <v-tabs grow>
+                    <v-tabs grow class="elevation-1">
                         <v-tabs-bar class="cyan">
                             <v-tabs-item href="#orders">Orders</v-tabs-item>
                             <v-tabs-item href="#press">Press</v-tabs-item>
+                            <v-tabs-item href="#actions">Actions</v-tabs-item>
                         </v-tabs-bar>
                         <v-tabs-items>
                             <v-tabs-content id="orders">
@@ -19,6 +20,9 @@
                             </v-tabs-content>
                             <v-tabs-content id="press">
                                 <v-card>there</v-card>
+                            </v-tabs-content>
+                            <v-tabs-content id="actions">
+                                <v-card>buddy</v-card>
                             </v-tabs-content>
                         </v-tabs-items>
                     </v-tabs>

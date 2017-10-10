@@ -53,35 +53,28 @@
 
     export default {
         name: 'usergames',
-        data() {
-            return {
-                tabs: ['Active', 'Waiting', 'Finished']
-            };
-        },
+        data: () => ({
+            tabs: ['Active', 'Waiting', 'Finished'],
+            finishedGames: [],
+            waitingGames: [],
+            activeGames: []
+        }),
         components: {
             'game-list-item': GameListItem
         },
-        asyncComputed: {
-            activeGames: {
-                async get() {
-                    const games = await Game.getAllActiveGamesForCurrentUser();
-                    return games;
-                },
-                default: [ ]
-            },
-            waitingGames: {
-                async get() {
-                    const games = await Game.getAllStagingGamesForCurrentUser();
-                    return games;
-                },
-                default: [ ]
-            },
-            finishedGames: {
-                async get() {
-                    const games = await Game.getAllFinishedGamesForCurrentUser();
-                    return games;
-                },
-                default: [ ]
+        async beforeRouteEnter(to, from, next) {
+            const result = await Promise.all([
+                Game.getAllActiveGamesForCurrentUser(),
+                Game.getAllStagingGamesForCurrentUser(),
+                Game.getAllFinishedGamesForCurrentUser()
+            ]);
+            next(vm => vm.setData(result));
+        },
+        methods: {
+            setData(result) {
+                this.activeGames = result[0];
+                this.finishedGames = result[1];
+                this.waitingGames = result[2];
             }
         }
     };

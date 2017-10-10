@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <v-toolbar dense>
+    <div class="elevation-1">
+        <v-toolbar dense flat>
             <v-toolbar-title>{{mapHeader()}}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon v-for="action in availableActions" :key="action.icon"></v-btn>
         </v-toolbar>
         <diplomacy-map :game="game" :phase="currentPhase()"></diplomacy-map>
-        <v-toolbar dense v-if="game.Started">
+        <v-toolbar dense flat v-if="game.Started">
         </v-toolbar>
     </div>
 </template>

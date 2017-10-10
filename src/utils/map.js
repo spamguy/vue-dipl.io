@@ -40,15 +40,17 @@ export default class {
         [...definitionGroups].forEach(g => svg.insertBefore(g, supplyCentreNode));
     }
 
-    getProvinceCoordinates() {
+    getProvinceData() {
         let supplyCentres = this._svg.getElementById('supply-centers'),
             otherProvinces = this._svg.getElementById('province-centers'),
-            provinceCoordinates = { };
+            provincePathsNode = this._svg.getElementById('provinces'),
+            provinceCoordinates = { },
+            provincePaths = { };
 
         // Get each supply centre's coordinates.
         [...supplyCentres.children].forEach(sc => {
             const bbRect = sc.getBoundingClientRect();
-            provinceCoordinates[sc.id] = {
+            provinceCoordinates[sc.id.substring(0, sc.id.length - 6)] = {
                 x: bbRect.x,
                 y: bbRect.y,
                 height: bbRect.height,
@@ -60,7 +62,7 @@ export default class {
         // Get the physical centre of all other provinces.
         [...otherProvinces.children].forEach(sc => {
             const bbRect = sc.getBoundingClientRect();
-            provinceCoordinates[sc.id] = {
+            provinceCoordinates[sc.id.substring(0, sc.id.length - 6)] = {
                 x: bbRect.x + (bbRect.width / 2),
                 y: bbRect.y + (bbRect.height / 2),
                 height: bbRect.height,
@@ -68,9 +70,16 @@ export default class {
             };
         });
 
-        // Nuke the original group.
-        supplyCentres.remove();
+        // Get each province's d (SVG path).
+        [...provincePathsNode.children].forEach(p => {
+            (provincePaths[p.id] = p.getAttribute('d'));
+        });
 
-        return provinceCoordinates;
+        // Nuke the original groups.
+        supplyCentres.remove();
+        otherProvinces.remove();
+        provincePathsNode.remove();
+
+        return { coords: provinceCoordinates, paths: provincePaths };
     }
 }

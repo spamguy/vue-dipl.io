@@ -3,19 +3,19 @@
         <v-layout row>
             <v-flex>
                 <div class="miniMap">
-                    <diplomacy-map :game="game" :phase="currentPhase()"></diplomacy-map>
+                    <diplomacy-map :game="game" :phase="phase"></diplomacy-map>
                 </div>
             </v-flex>
             <router-link :to="'/games/' + game.ID" class="flex">
-                <span>{{game.Desc}}</span>
+                <span>{{game.Desc || 'Untitled game'}}</span>
             </router-link>
         </v-layout>
     </div>
 </template>
 
 <script>
+    import Phase from '@/api/phase';
     import DiplomacyMap from '@/components/Map';
-    import Phase from '../api/phase';
 
     export default {
         name: 'gamelistitem',
@@ -23,17 +23,12 @@
         components: {
             'diplomacy-map': DiplomacyMap
         },
-        asyncComputed: {
-            phases: {
-                async get() {
-                    const phases = await Phase.getPhasesForGame(this.game.ID);
-                    return phases;
-                },
-                watch() { return this.game; }
-            }
-        },
-        methods: {
-            currentPhase() { return Phase.getCurrentPhaseForGame(this.phases); }
+        data: () => ({
+            phase: null
+        }),
+        async created() {
+            const phases = await Phase.getPhasesForGame(this.game.ID);
+            this.phase = Phase.getCurrentPhaseForGame(phases);
         }
     };
 </script>
