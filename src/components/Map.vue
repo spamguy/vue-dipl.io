@@ -37,7 +37,9 @@
                 :key="p"
                 :d="d"
                 class="province"
+                @click.stop="handleProvinceClick"
                 :transform="getProvinceTransform()"
+                :class="{clicked: clickedProvinces.indexOf(p) > -1}"
             />
         </g>
         <g id="supplyCentreLayer">
@@ -69,18 +71,17 @@
     export default {
         name: 'diplomacy-map',
         props: ['game', 'phase'],
-        data() {
-            return {
-                dimensions: {
-                    height: 0,
-                    width: 0
-                },
-                svgBoundingClientRect: { },
-                provinceCoordinates: { },
-                provincePaths: { },
-                processor: null
-            };
-        },
+        data: () => ({
+            dimensions: {
+                height: 0,
+                width: 0
+            },
+            svgBoundingClientRect: { },
+            provinceCoordinates: { },
+            provincePaths: { },
+            processor: null,
+            clickedProvinces: [ ]
+        }),
         mounted() {
             const t0 = performance.now();
             let processor = new MapProcessor(this.$localStorage.get('map.' + this.game.Variant), this.game);
@@ -123,6 +124,9 @@
             getProvinceTransform() {
                 // HACK: I have no idea why this particular translation works all the time.
                 return 'translate(603, 514)';
+            },
+            handleProvinceClick(e) {
+                this.clickedProvinces.push(e.target.id);
             }
         }
     };
@@ -134,6 +138,20 @@
         path
         {
             fill: #fff;
+
+            &:hover
+            {
+                fill: #eee;
+                cursor: pointer;
+            }
+
+            &.clicked
+            {
+                transition-property: fill, fill-opacity;
+                transition-duration: 0.2s;
+                transition-timing-function: linear;
+                fill: #ffece4
+            }
         }
     }
 
