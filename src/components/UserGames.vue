@@ -63,12 +63,16 @@
             'game-list-item': GameListItem
         },
         async beforeRouteEnter(to, from, next) {
-            const result = await Promise.all([
-                Game.getAllActiveGamesForCurrentUser(),
-                Game.getAllStagingGamesForCurrentUser(),
-                Game.getAllFinishedGamesForCurrentUser()
-            ]);
-            next(vm => vm.setData(result));
+            next(async(vm) => {
+                if (to.query.token)
+                    vm.$localStorage.set('token', to.query.token);
+                const result = await Promise.all([
+                    Game.getAllActiveGamesForCurrentUser(),
+                    Game.getAllStagingGamesForCurrentUser(),
+                    Game.getAllFinishedGamesForCurrentUser()
+                ]);
+                vm.setData(result);
+            });
         },
         methods: {
             setData(result) {

@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import router from '@/router';
 
-import User from '../api/user';
-
 export default {
     async logIn(fakeID) {
         if (fakeID) {
@@ -10,12 +8,8 @@ export default {
             router.push('profile/games');
         }
         else {
-            const token = await User.getUserToken();
-
-            if (token) {
-                Vue.localStorage.set('token', token);
-                router.push('profile/games');
-            }
+            window.location = process.env.DIPLICITY_ENDPOINT + '/Auth/Login?redirect-to=' +
+                    encodeURIComponent(process.env.DOMAIN + '/profile/games');
         }
     },
 
