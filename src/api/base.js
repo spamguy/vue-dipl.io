@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Vue from 'vue';
 
+import auth from '@/utils/auth';
+
 let Client = axios.create({
     baseURL: process.env.DIPLICITY_ENDPOINT,
     headers: {
@@ -24,6 +26,12 @@ Client.interceptors.request.use(function(config) {
 
     return config;
 }, function(error) {
+    return Promise.reject(error);
+});
+
+Client.interceptors.response.use(config => { return config; }, error => {
+    if (!error.response)
+        auth.logOut();
     return Promise.reject(error);
 });
 

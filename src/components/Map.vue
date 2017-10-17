@@ -40,6 +40,7 @@
                 @click.stop="handleProvinceClick"
                 :transform="getProvinceTransform()"
                 :class="{clicked: clickedProvinces.indexOf(p) > -1}"
+                :style="getProvinceStyle(p)"
             />
         </g>
         <g id="supplyCentreLayer">
@@ -67,11 +68,12 @@
 
 <script>
     import MapProcessor from '../utils/map';
+    import Colors from '@/utils/colors';
 
     export default {
         name: 'diplomacy-map',
         props: ['game', 'phase'],
-        data: () => ({
+        data: (config) => ({
             dimensions: {
                 height: 0,
                 width: 0
@@ -80,7 +82,8 @@
             provinceCoordinates: { },
             provincePaths: { },
             processor: null,
-            clickedProvinces: [ ]
+            clickedProvinces: [ ],
+            colourSet: Colors.getColorSetForVariant(config.game.Variant)
         }),
         mounted() {
             const t0 = performance.now();
@@ -117,13 +120,25 @@
             getUnitTransform(coordinates) {
                 if (!coordinates)
                     return '';
-                const x = coordinates.x - coordinates.width;
+                // Nudge the unit a little off the SC point.
+                const x = coordinates.x - (coordinates.width * 1.5);
                 const y = coordinates.y - this.svgBoundingClientRect.y;
                 return 'translate(' + x + ',' + y + ') scale(0.06)';
             },
             getProvinceTransform() {
                 // HACK: I have no idea why this particular translation works all the time.
-                return 'translate(603, 514)';
+                return 'translate(601, 512)';
+            },
+            getProvinceStyle(province) {
+                const sc = this.phase.SCs.find(sc => sc.Province === province);
+                const baseColour = sc ? this.colourSet[sc.Owner] : '#fff';
+
+                return {
+                    fill: baseColour,
+                    fillOpacity: 0.2,
+                    stroke: baseColour,
+                    strokeWidth: sc ? '5px' : '0px'
+                };
             },
             handleProvinceClick(e) {
                 this.clickedProvinces.push(e.target.id);
@@ -137,8 +152,6 @@
     {
         path
         {
-            fill: #fff;
-
             &:hover
             {
                 fill: #eee;
