@@ -8,24 +8,7 @@
                     <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
                 </v-flex>
                 <v-flex fluid>
-                    <v-tabs grow class="elevation-1">
-                        <v-tabs-bar class="cyan">
-                            <v-tabs-item href="#orders">Orders</v-tabs-item>
-                            <v-tabs-item href="#press">Press</v-tabs-item>
-                            <v-tabs-item href="#actions">Actions</v-tabs-item>
-                        </v-tabs-bar>
-                        <v-tabs-items>
-                            <v-tabs-content id="orders">
-                                <v-card>Hi</v-card>
-                            </v-tabs-content>
-                            <v-tabs-content id="press">
-                                <v-card>there</v-card>
-                            </v-tabs-content>
-                            <v-tabs-content id="actions">
-                                <v-card>buddy</v-card>
-                            </v-tabs-content>
-                        </v-tabs-items>
-                    </v-tabs>
+                    <game-tools :game="game" :phases="phases"></game-tools>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -36,11 +19,13 @@
     import Game from '@/api/game';
     import Phase from '@/api/phase';
     import MapPhaseViewer from './MapPhaseViewer';
+    import GameTools from './GameTools';
 
     export default {
         name: 'game',
         components: {
-            'map-phase-viewer': MapPhaseViewer
+            'map-phase-viewer': MapPhaseViewer,
+            'game-tools': GameTools
         },
         data() {
             return {

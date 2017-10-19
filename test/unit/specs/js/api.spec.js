@@ -1,4 +1,3 @@
-import User from '../../../../src/api/user';
 import Game from '../../../../src/api/game';
 import Variant from '../../../../src/api/variant';
 import {Client} from '../../../../src/api/base';
@@ -21,16 +20,6 @@ describe('API', () => {
     it('extracts data from a response object', () => {
         const bogusResponse = { data: { Properties: [ { } ] } };
         expect(Client.extractData(bogusResponse)).to.be.an('Array');
-    });
-
-    describe('User', () => {
-        it('fetches a user token', async() => {
-            mock.onGet('Auth/Login', { params: { 'redirect-to': encodeURIComponent('undefined/main/login') } }).reply(200, {
-                ID: 'abc123'
-            });
-            const user = await User.getUserToken();
-            expect(user.data.ID).to.equal('abc123');
-        });
     });
 
     describe('Game', () => {
@@ -71,7 +60,7 @@ describe('API', () => {
         });
 
         it('fetches one variant', () => {
-            Vue.localStorage.set('variants', '[{ "Name": "Classical" }, { "Name": "France vs. Austria" }, { "Name": "Ancient Mediterranian" }]');
+            Vue.localStorage.set('variants', '[{ "Properties": { "Name": "Classical" } }, { "Properties": { "Name": "France vs. Austria" } }, { "Properties": { "Name": "Ancient Mediterranian" } }]');
             const variant = Variant.getVariant('France vs. Austria');
             expect(variant.Name).to.equal('France vs. Austria');
         });

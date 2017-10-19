@@ -8,7 +8,8 @@ export default {
 
     getVariant(name) {
         const variants = JSON.parse(Vue.localStorage.get('variants'));
-        return variants.find(v => v.Name === name);
+        const foundVariant = variants.find(v => v.Properties.Name === name);
+        return foundVariant ? foundVariant.Properties : null;
     },
 
     setVariants(variantArray) {

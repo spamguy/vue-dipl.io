@@ -127,9 +127,11 @@
             },
             getProvinceTransform() {
                 // HACK: I have no idea why this particular translation works all the time.
-                return 'translate(601, 512)';
+                return 'translate(602, 513)';
             },
             getProvinceStyle(province) {
+                if (!this.phase)
+                    return { };
                 const sc = this.phase.SCs.find(sc => sc.Province === province);
                 const baseColour = sc ? this.colourSet[sc.Owner] : '#fff';
 
