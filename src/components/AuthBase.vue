@@ -56,6 +56,9 @@ export default {
     }),
     methods: {
         logOut() { Auth.logOut(); }
+    },
+    created() {
+        // TODO: Put variant data in Vuex here. Do not use local storage.
     }
 };
 </script>

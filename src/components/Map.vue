@@ -121,9 +121,9 @@
                 if (!coordinates)
                     return '';
                 // Nudge the unit a little off the SC point.
-                const x = coordinates.x - (coordinates.width * 1.5);
+                const x = coordinates.x - (coordinates.width * 1.8);
                 const y = coordinates.y - this.svgBoundingClientRect.y;
-                return 'translate(' + x + ',' + y + ') scale(0.06)';
+                return 'translate(' + x + ',' + y + ') scale(0.05)';
             },
             getProvinceTransform() {
                 // HACK: I have no idea why this particular translation works all the time.
@@ -185,6 +185,8 @@
         use
         {
             fill: green;
+            stroke: black;
+            stroke-width: 1px;
         }
     }
 </style>

@@ -4,7 +4,7 @@ export default {
         default: return {
             Austria: '#f00',
             England: '#00f',
-            Russia: '#fff',
+            Russia: '#bbb',
             France: '#f0f',
             Germany: '#000',
             Italy: '#0f0',

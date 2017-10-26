@@ -1,6 +1,6 @@
 <template>
     <v-tabs grow class="elevation-1">
-        <v-tabs-bar class="cyan">
+        <v-tabs-bar color="primary">
             <v-tabs-item href="#orders">Orders</v-tabs-item>
             <v-tabs-item href="#press">Press</v-tabs-item>
             <v-tabs-item href="#actions">Actions</v-tabs-item>
@@ -60,6 +60,7 @@
         .nationSubheader
         {
             background-color: #eee;
+            font-size: 110%;
         }
     }
 </style>
