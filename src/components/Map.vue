@@ -78,16 +78,17 @@
                 height: 0,
                 width: 0
             },
-            svgBoundingClientRect: { },
-            provinceCoordinates: { },
-            provincePaths: { },
+            svgBoundingClientRect: {},
+            provinceCoordinates: {},
+            provincePaths: {},
             processor: null,
-            clickedProvinces: [ ],
+            clickedProvinces: [],
             colourSet: Colors.getColorSetForVariant(config.game.Variant)
         }),
         mounted() {
             const t0 = performance.now();
-            let processor = new MapProcessor(this.$localStorage.get('map.' + this.game.Variant), this.game);
+            const variant = this.$store.getters.getVariant(this.game.Variant);
+            let processor = new MapProcessor(this.game, variant);
 
             this.dimensions = processor.getDimensions();
             this.svgBoundingClientRect = processor.getYShift();

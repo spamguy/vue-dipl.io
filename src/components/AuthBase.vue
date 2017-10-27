@@ -31,7 +31,7 @@
         </v-toolbar>
 
         <main>
-            <v-content>
+            <v-content v-if="variantsAreFetched">
                 <v-container fill-height fluid>
                     <v-layout row>
                         <v-flex>
@@ -45,20 +45,31 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import Auth from '@/utils/auth';
+
 export default {
     name: 'authbase',
     data: () => ({
         isDrawerOpen: false,
+        variantsAreFetched: false,
         menuItems: [
             { text: 'My games', path: '/profile/games' }
         ]
     }),
     methods: {
-        logOut() { Auth.logOut(); }
+        ...mapActions([ // eslint-disable-line no-use-before-define
+            'setVariants',
+            'setVariantMap'
+        ]),
+        logOut: Auth.logOut
     },
-    created() {
-        // TODO: Put variant data in Vuex here. Do not use local storage.
+    async created() {
+        await this.setVariants();
+
+        // Flag the view to render content that may need variant data.
+        this.$nextTick(() => { this.variantsAreFetched = true; });
     }
 };
 </script>

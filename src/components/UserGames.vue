@@ -13,34 +13,52 @@
             </v-tabs-bar>
             <v-tabs-items>
                 <v-tabs-content id="Active">
-                    <div v-if="!activeGames.length">Nothing here.</div>
-                    <v-card flat>
-                        <game-list-item
-                            v-for="game in activeGames"
-                            :key="game.Properties.Id"
-                            :game="game.Properties">
-                        </game-list-item>
-                    </v-card>
+                    <!-- <v-container fluid> -->
+                        <v-layout column justify-center>
+                            <v-flex>
+                                <v-progress-circular v-if="loading" indeterminate :size="50" color="primary"></v-progress-circular>
+                                <div v-if="!loading && !activeGames.length">Nothing here.</div>
+
+                                <game-list-item
+                                    v-for="game in activeGames"
+                                    :key="game.Properties.Id"
+                                    :game="game.Properties">
+                                </game-list-item>
+                            </v-flex>
+                        </v-layout>
+                    <!-- </v-container> -->
                 </v-tabs-content>
                 <v-tabs-content id="Waiting">
-                    <div v-if="!waitingGames.length">Nothing here.</div>
-                    <v-card flat>
-                        <game-list-item
-                            v-for="game in waitingGames"
-                            :key="game.Properties.Id"
-                            :game="game.Properties">
-                        </game-list-item>
-                    </v-card>
+                    <!-- <v-container fluid> -->
+                        <v-layout column justify-center>
+                            <v-flex>
+                                <v-progress-circular v-if="loading" indeterminate :size="50" color="primary"></v-progress-circular>
+                                <div v-if="!loading && !waitingGames.length">Nothing here.</div>
+
+                                <game-list-item
+                                    v-for="game in waitingGames"
+                                    :key="game.Properties.Id"
+                                    :game="game.Properties">
+                                </game-list-item>
+                            </v-flex>
+                        </v-layout>
+                    <!-- </v-container> -->
                 </v-tabs-content>
                 <v-tabs-content id="Finished">
-                    <div v-if="!finishedGames.length">Nothing here.</div>
-                    <v-card flat>
-                        <game-list-item
-                            v-for="game in finishedGames"
-                            :key="game.Properties.Id"
-                            :game="game.Properties">
-                        </game-list-item>
-                    </v-card>
+                    <!-- <v-container fluid> -->
+                        <v-layout column justify-center>
+                            <v-flex>
+                                <v-progress-circular v-if="loading" indeterminate :size="50" color="primary"></v-progress-circular>
+                                <div v-if="!loading && !finishedGames.length">Nothing here.</div>
+
+                                <game-list-item
+                                    v-for="game in finishedGames"
+                                    :key="game.Properties.Id"
+                                    :game="game.Properties">
+                                </game-list-item>
+                            </v-flex>
+                        </v-layout>
+                    <!-- </v-container> -->
                 </v-tabs-content>
             </v-tabs-items>
         </v-tabs>
@@ -57,7 +75,8 @@
             tabs: ['Active', 'Waiting', 'Finished'],
             finishedGames: [],
             waitingGames: [],
-            activeGames: []
+            activeGames: [],
+            loading: true
         }),
         components: {
             'game-list-item': GameListItem
@@ -74,11 +93,25 @@
                 vm.setData(result);
             });
         },
+        // async created() {
+        //     if (this.$route.query.token)
+        //         this.$localStorage.set('token', this.$route.query.token);
+        //     const result = await Promise.all([
+        //         Game.getAllActiveGamesForCurrentUser(),
+        //         Game.getAllStagingGamesForCurrentUser(),
+        //         Game.getAllFinishedGamesForCurrentUser()
+        //     ]);
+        //
+        //     this.activeGames = result[0];
+        //     this.finishedGames = result[1];
+        //     this.waitingGames = result[2];
+        // }
         methods: {
             setData(result) {
                 this.activeGames = result[0];
                 this.finishedGames = result[1];
                 this.waitingGames = result[2];
+                this.loading = false;
             }
         }
     };

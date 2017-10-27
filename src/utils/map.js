@@ -1,9 +1,11 @@
 export default class {
-    constructor(definition, game) {
-        let parser = new DOMParser();
-        this._mapDefinition = parser.parseFromString(definition, 'image/svg+xml').documentElement;
+    constructor(game, variant) {
+        this._variant = variant;
         this._game = game;
         this._svg = document.getElementById(this._game.ID);
+
+        let parser = new DOMParser();
+        this._mapDefinition = parser.parseFromString(this._variant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
     }
 
     /**
@@ -37,7 +39,10 @@ export default class {
          * HTMLCollection is not iterable, but it is with a spread operator.
          * Append groups before those declared explicitly in Map.vue.
          */
-        [...definitionGroups].forEach(g => svg.insertBefore(g, supplyCentreNode));
+        [...definitionGroups].forEach(g => {
+            let clone = document.importNode(g, true);
+            svg.insertBefore(clone, supplyCentreNode);
+        });
     }
 
     getProvinceData() {

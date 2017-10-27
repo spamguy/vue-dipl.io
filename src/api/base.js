@@ -39,4 +39,4 @@ Client.extractData = function(result) {
     return result.data.Properties;
 };
 
-export {Client};
+export { Client };

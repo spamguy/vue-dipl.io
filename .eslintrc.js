@@ -8,7 +8,8 @@ module.exports = {
         parser: 'babel-eslint'
     },
     env: {
-        browser: true
+        browser: true,
+        es6: true
     },
     // required to lint *.vue files
     plugins: [
@@ -38,6 +39,8 @@ module.exports = {
         'curly': [2, 'multi-or-nest', 'consistent'],
         'dot-location': ['error', 'property'],
         'no-unneeded-ternary': ['error', { 'defaultAssignment': false }],
-        'max-nested-callbacks': ['error', 5]
+        'max-nested-callbacks': ['error', 5],
+        'array-bracket-spacing': ["error", "never"],
+        'object-curly-spacing': ["error", "always", { "objectsInObjects": false }]
     }
 };

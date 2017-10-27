@@ -30,7 +30,6 @@
 </template>
 
 <script>
-    import Variant from '@/api/variant';
     import Phase from '@/api/phase';
     import ProvinceListItem from './ProvinceListItem';
 
@@ -44,7 +43,7 @@
             variant: { }
         }),
         created() {
-            this.variant = Variant.getVariant(this.game.Variant);
+            this.variant = this.$store.getters.getVariant(this.game.Variant);
         },
         methods: {
             getCurrentPhase() {

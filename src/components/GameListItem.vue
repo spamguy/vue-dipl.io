@@ -1,5 +1,5 @@
 <template>
-    <div class="ma-2">
+    <v-container fluid class="gameListItemContainer">
         <v-layout row>
             <v-flex>
                 <div class="miniMap">
@@ -10,7 +10,7 @@
                 <span>{{game.Desc || 'Untitled game'}}</span>
             </router-link>
         </v-layout>
-    </div>
+    </v-container>
 </template>
 
 <script>

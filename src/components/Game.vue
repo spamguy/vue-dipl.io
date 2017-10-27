@@ -1,17 +1,19 @@
 <template>
     <div v-if="game">
-        <h1>{{game.Desc}}</h1>
+        <v-layout column justify-center>
+            <v-flex><h1 class="text-xs-center">{{game.Desc}}</h1></v-flex>
 
-        <v-container fluid>
-            <v-layout v-bind="layout">
-                <v-flex md8 sm12 id="mapContainer">
-                    <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
-                </v-flex>
-                <v-flex fluid>
-                    <game-tools :game="game" :phases="phases"></game-tools>
-                </v-flex>
-            </v-layout>
-        </v-container>
+            <v-flex>
+                <v-layout v-bind="layout">
+                    <v-flex md8 sm12 id="mapContainer">
+                        <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
+                    </v-flex>
+                    <v-flex fluid>
+                        <game-tools :game="game" :phases="phases"></game-tools>
+                    </v-flex>
+                </v-layout>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 

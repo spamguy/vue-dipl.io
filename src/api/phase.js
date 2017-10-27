@@ -1,4 +1,4 @@
-import {Client} from './base';
+import { Client } from './base';
 
 export default {
     getPhasesForGame: async function(gameID) {
