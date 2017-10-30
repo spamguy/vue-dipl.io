@@ -1,13 +1,13 @@
 <template>
-    <v-container fluid class="gameListItemContainer">
+    <v-container grid-list-md fluid class="gameListItemContainer">
         <v-layout row>
-            <v-flex>
-                <div class="miniMap">
-                    <diplomacy-map :game="game" :phase="phase"></diplomacy-map>
-                </div>
+            <v-flex xs1>
+                <diplomacy-map :game="game" :phase="phase"></diplomacy-map>
             </v-flex>
-            <router-link :to="'/games/' + game.ID" class="flex">
-                <span>{{game.Desc || 'Untitled game'}}</span>
+
+            <!-- Making router-link a flexbox so the whole region triggers a redirect. -->
+            <router-link :to="'/games/' + game.ID" class="flex xs11 gameDetails">
+                <h4>{{game.Desc || 'Untitled game'}}</h4>
             </router-link>
         </v-layout>
     </v-container>
@@ -34,8 +34,14 @@
 </script>
 
 <style lang="scss">
-    .miniMap
+    .gameListItemContainer .gameDetails
     {
-        width: 100px;
+        text-decoration: none;
+        color: #000;
+
+        &:hover
+        {
+            color: #8ea8ec;
+        }
     }
 </style>
