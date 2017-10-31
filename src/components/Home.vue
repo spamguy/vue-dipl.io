@@ -4,7 +4,6 @@
 
 <script>
 import Auth from '@/utils/auth';
-// import Variant from '@/api/variant';
 
 export default {
     name: 'home',

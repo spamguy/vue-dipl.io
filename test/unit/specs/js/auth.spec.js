@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import VueLocalStorage from 'vue-localstorage';
-import Auth from '../../../../src/utils/auth';
+import Auth from '@/utils/auth';
 
 Vue.use(VueLocalStorage);
 
 describe('Authentication utility', () => {
     afterEach(() => localStorage.clear());
 
-    it('retains fake IDs', async () => {
+    it('retains fake IDs', async() => {
         await Auth.logIn('my-bogus-name');
         expect(Vue.localStorage.get('fakeID')).to.equal('my-bogus-name');
         expect(Vue.localStorage.get('token')).to.be.null;

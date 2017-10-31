@@ -46,8 +46,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-
-import Auth from '@/utils/auth';
+import { logOut } from '@/utils/auth';
 
 export default {
     name: 'authbase',
@@ -63,7 +62,7 @@ export default {
             'setVariants',
             'setVariantMap'
         ]),
-        logOut: Auth.logOut
+        logOut: logOut // eslint-disable-line no-use-before-define
     },
     async created() {
         await this.setVariants();
