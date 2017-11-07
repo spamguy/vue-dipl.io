@@ -5,7 +5,7 @@
             <v-spacer></v-spacer>
             <v-btn icon v-for="action in availableActions" :key="action.icon"></v-btn>
         </v-toolbar>
-        <diplomacy-map :game="game" :phase="currentPhase()"></diplomacy-map>
+        <diplomacy-map :readonly="false" :game="game" :phase="currentPhase()"></diplomacy-map>
         <v-toolbar dark dense flat class="white--text" color="primary" v-if="game.Started">
             <v-btn icon :disabled="!currentPhaseIndex" @click="currentPhaseIndex = 0">
                 <v-icon>first_page</v-icon>

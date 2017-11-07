@@ -51,9 +51,10 @@ import { logOut } from '@/utils/auth';
 export default {
     name: 'authbase',
     data: () => ({
-        isDrawerOpen: false,
+        isDrawerOpen: false, // TODO: This belongs in Vuex.
         variantsAreFetched: false,
         menuItems: [
+            { text: 'New game', path: '/games/new' },
             { text: 'My games', path: '/profile/games' }
         ]
     }),

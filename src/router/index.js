@@ -5,6 +5,7 @@ import Home from '@/components/Home';
 import AuthBase from '@/components/AuthBase';
 import UserGames from '@/components/UserGames';
 import Game from '@/components/Game';
+import NewGame from '@/components/NewGame';
 
 Vue.use(Router);
 
@@ -19,8 +20,10 @@ const router = new Router({
                 {
                     path: '/profile/games',
                     component: UserGames
-                },
-                {
+                }, {
+                    path: '/games/new',
+                    component: NewGame
+                }, {
                     path: '/games/:ID/:ordinal?',
                     component: Game
                 }

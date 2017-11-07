@@ -72,7 +72,7 @@
 
     export default {
         name: 'diplomacy-map',
-        props: ['game', 'phase'],
+        props: ['readonly', 'game', 'phase'],
         data: (config) => ({
             dimensions: {
                 height: 0,
@@ -144,6 +144,10 @@
                 };
             },
             handleProvinceClick(e) {
+                // Ignore clicks in readonly mode.
+                if (!this.readonly)
+                    return;
+
                 this.clickedProvinces.push(e.target.id);
             }
         }
