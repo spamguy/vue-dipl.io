@@ -4,7 +4,7 @@
             persistent
             clipped
             app
-            v-model="isDrawerOpen"
+            :value="isDrawerOpen"
         >
             <v-list dense>
                 <v-list-tile v-for="item in menuItems" :key="item.text">
@@ -25,7 +25,7 @@
 
         <v-toolbar fixed clipped-right app class="primary">
             <v-toolbar-title class="white--text">
-                <v-toolbar-side-icon @click.stop="isDrawerOpen = !isDrawerOpen"></v-toolbar-side-icon>
+                <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
                 <span>dipl.io</span>
             </v-toolbar-title>
         </v-toolbar>
@@ -45,13 +45,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { logOut } from '@/utils/auth';
+import vuex from 'vuex';
+import Auth from '@/utils/auth';
 
 export default {
     name: 'authbase',
     data: () => ({
-        isDrawerOpen: false, // TODO: This belongs in Vuex.
         variantsAreFetched: false,
         menuItems: [
             { text: 'New game', path: '/games/new' },
@@ -59,11 +58,17 @@ export default {
         ]
     }),
     methods: {
-        ...mapActions([ // eslint-disable-line no-use-before-define
+        ...vuex.mapActions([
+            'toggleDrawer',
             'setVariants',
             'setVariantMap'
         ]),
-        logOut: logOut // eslint-disable-line no-use-before-define
+        logOut: Auth.logOut
+    },
+    computed: {
+        ...vuex.mapState({
+            isDrawerOpen: state => state.user.isDrawerOpen
+        })
     },
     async created() {
         await this.setVariants();
