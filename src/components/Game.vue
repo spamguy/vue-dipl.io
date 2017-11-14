@@ -14,6 +14,13 @@
                 </v-layout>
             </v-flex>
         </v-layout>
+
+        <v-snackbar
+            :timeout="6000"
+            v-model="isNew"
+            color="green">
+            Your new game was created.
+        </v-snackbar>
     </div>
 </template>
 
@@ -31,6 +38,7 @@
         },
         data() {
             return {
+                isNew: false,
                 game: null,
                 phases: []
             };
@@ -41,6 +49,10 @@
                 Phase.getPhasesForGame(to.params.ID)
             ]);
             next(vm => vm.setData(result));
+        },
+        mounted() {
+            if (this.$route.query.new)
+                this.isNew = true;
         },
         computed: {
             layout() {

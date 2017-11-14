@@ -15,5 +15,9 @@ export default {
 
     async getGame(gameID) {
         return Client.extractData(await Client.get('Game/' + gameID));
+    },
+
+    createGame(game) {
+        return Client.post('/Game', game);
     }
 };
