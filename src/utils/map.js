@@ -33,7 +33,7 @@ export default class {
     copyGroups() {
         let definitionGroups = this._mapDefinition.getElementsByTagName('g'),
             svg = this._svg;
-        const supplyCentreNode = this._svg.getElementById('supplyCentreLayer');
+        const supplyCentreNode = this._svg.getElementById('provinceLayer');
 
         /*
          * HTMLCollection is not iterable, but it is with a spread operator.

@@ -5,10 +5,10 @@
 
             <v-flex>
                 <v-layout v-bind="layout">
-                    <v-flex md8 sm12 id="mapContainer">
+                    <v-flex md8 sm12 id="mapContainer" class="mr-2 mb-2">
                         <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
                     </v-flex>
-                    <v-flex fluid>
+                    <v-flex fluid class="mr-2 mb-2">
                         <game-tools :game="game" :phases="phases"></game-tools>
                     </v-flex>
                 </v-layout>

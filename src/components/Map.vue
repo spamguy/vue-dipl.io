@@ -38,7 +38,6 @@
                 :d="d"
                 class="province"
                 @click.stop="handleProvinceClick"
-                :transform="getProvinceTransform()"
                 :class="{clicked: clickedProvinces.indexOf(p) > -1}"
                 :style="getProvinceStyle(p)"
             />
@@ -125,10 +124,6 @@
                 const x = coordinates.x - (coordinates.width * 1.8);
                 const y = coordinates.y - this.svgBoundingClientRect.y;
                 return 'translate(' + x + ',' + y + ') scale(0.05)';
-            },
-            getProvinceTransform() {
-                // HACK: I have no idea why this particular translation works all the time.
-                return 'translate(602, 513)';
             },
             getProvinceStyle(province) {
                 if (!this.phase)
