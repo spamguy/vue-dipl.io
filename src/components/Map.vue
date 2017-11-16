@@ -59,6 +59,7 @@
                 :xlink:href="getUnitIcon(unit)"
                 :key="unit.Province + 'Unit'"
                 :id="unit.Province + 'Unit'"
+                :style="getUnitStyle(unit)"
                 :transform="getUnitTransform(provinceCoordinates[unit.Province])"
             />
         </g>
@@ -138,6 +139,11 @@
                     strokeWidth: sc ? '5px' : '0px'
                 };
             },
+            getUnitStyle(unit) {
+                return {
+                    fill: this.colourSet[unit.Unit.Nation]
+                };
+            },
             handleProvinceClick(e) {
                 // Ignore clicks in readonly mode.
                 if (!this.readonly)
@@ -184,7 +190,6 @@
     {
         use
         {
-            fill: green;
             stroke: black;
             stroke-width: 1px;
         }
