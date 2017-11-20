@@ -14,5 +14,9 @@ export default {
 
     getMapForPhase(phase) {
         return Client.get('Game/' + phase.gameID + '/Phase/' + phase.PhaseOrdinal + '/Map');
+    },
+
+    publishOrder(game, phase, order) {
+        return Client.post(`/Game/${game.ID}/Phase/${phase.PhaseOrdinal}`, order);
     }
 };

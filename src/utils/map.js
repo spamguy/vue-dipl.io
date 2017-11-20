@@ -1,3 +1,5 @@
+import Phase from '@/api/phase';
+
 export default class {
     constructor(game, variant) {
         this._variant = variant;
@@ -86,5 +88,9 @@ export default class {
         provincePathsNode.remove();
 
         return { coords: provinceCoordinates, paths: provincePaths };
+    }
+
+    async inputOrder(id) {
+        await Phase.inputOrder(id);
     }
 }
