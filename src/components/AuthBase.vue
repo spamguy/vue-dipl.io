@@ -2,6 +2,7 @@
     <div>
         <v-navigation-drawer
             persistent
+            absolute
             clipped
             app
             :value="isDrawerOpen"
@@ -30,17 +31,15 @@
             </v-toolbar-title>
         </v-toolbar>
 
-        <main>
-            <v-content v-if="variantsAreFetched">
-                <v-container fill-height fluid>
-                    <v-layout row>
-                        <v-flex>
-                            <router-view></router-view>
-                        </v-flex>
-                    </v-layout>
-                </v-container>
-            </v-content>
-        </main>
+        <v-content v-if="variantsAreFetched">
+            <v-container fill-height fluid>
+                <v-layout row>
+                    <v-flex>
+                        <router-view></router-view>
+                    </v-flex>
+                </v-layout>
+            </v-container>
+        </v-content>
     </div>
 </template>
 

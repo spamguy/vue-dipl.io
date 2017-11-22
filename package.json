@@ -15,12 +15,14 @@
   },
   "dependencies": {
     "axios": "0.16.2",
+    "firebase": "4.6.2",
     "moment": "2.18.1",
-    "vue": "2.5.3",
+    "vue": "2.5.8",
     "vue-localstorage": "0.5.0",
     "vue-router": "3.0.1",
     "vue-shortkey": "3.0.2",
-    "vuetify": "0.16.9",
+    "vuefire": "1.4.4",
+    "vuetify": "0.17.2",
     "vuex": "3.0.0"
   },
   "devDependencies": {
@@ -82,9 +84,9 @@
     "sinon": "2.3.8",
     "sinon-chai": "2.14.0",
     "url-loader": "0.5.8",
-    "vue-loader": "13.4.0",
+    "vue-loader": "13.5.0",
     "vue-style-loader": "3.0.3",
-    "vue-template-compiler": "2.5.3",
+    "vue-template-compiler": "2.5.8",
     "webpack": "3.8.1",
     "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-middleware": "1.12.0",

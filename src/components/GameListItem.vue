@@ -7,7 +7,7 @@
 
             <!-- Making router-link a flexbox so the whole region triggers a redirect. -->
             <router-link :to="'/games/' + game.ID" class="flex xs11 gameDetails">
-                <h4>{{game.Desc || 'Untitled game'}}</h4>
+                <h5 class="headline">{{game.Desc || 'Untitled game'}}</h5>
             </router-link>
         </v-layout>
     </v-container>

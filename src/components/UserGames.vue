@@ -1,7 +1,7 @@
 <template>
     <div class="elevation-1">
-        <v-tabs dark>
-            <v-tabs-bar>
+        <v-tabs>
+            <v-tabs-bar color="primary">
                 <v-tabs-item
                     v-for="tab in tabs"
                     :key="tab"

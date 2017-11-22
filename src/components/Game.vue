@@ -1,7 +1,7 @@
 <template>
     <div v-if="game">
         <v-layout column justify-center>
-            <v-flex><h1 class="text-xs-center">{{game.Desc}}</h1></v-flex>
+            <v-flex><h2 class="display-3 text-xs-center">{{game.Desc}}</h2></v-flex>
 
             <v-flex>
                 <v-layout v-bind="layout">
