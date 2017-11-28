@@ -1,0 +1,3 @@
+<template>
+    <path></path>
+</template>

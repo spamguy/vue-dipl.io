@@ -4,14 +4,16 @@
             <v-flex><h2 class="display-3 text-xs-center">{{game.Desc}}</h2></v-flex>
 
             <v-flex>
-                <v-layout v-bind="layout">
-                    <v-flex md8 sm12 id="mapContainer" class="mr-2 mb-2">
-                        <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
-                    </v-flex>
-                    <v-flex fluid class="mr-2 mb-2">
-                        <game-tools :game="game" :phases="phases"></game-tools>
-                    </v-flex>
-                </v-layout>
+                <v-container fluid>
+                    <v-layout v-bind="layout">
+                        <v-flex sm8 xs12 id="mapContainer" class="mr-2 mb-2">
+                            <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
+                        </v-flex>
+                        <v-flex fluid class="mr-2 mb-2">
+                            <game-tools :game="game" :phases="phases"></game-tools>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
             </v-flex>
         </v-layout>
 
@@ -40,13 +42,15 @@
             return {
                 isNew: false,
                 game: null,
-                phases: []
+                phases: [],
+                orders: []
             };
         },
         async beforeRouteEnter(to, from, next) {
             const result = await Promise.all([
                 Game.getGame(to.params.ID),
-                Phase.getPhasesForGame(to.params.ID)
+                Phase.getPhasesForGame(to.params.ID),
+                Phase.getOrders(to.params.ID, to.params.ordinal || 1) // FIXME: Orders get fetched after phases for a variety of reasons.
             ]);
             next(vm => vm.setData(result));
         },
@@ -67,6 +71,7 @@
             setData(result) {
                 this.game = result[0];
                 this.phases = result[1];
+                this.orders = result[2];
             }
         }
     };

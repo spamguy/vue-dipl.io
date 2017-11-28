@@ -31,7 +31,6 @@
                 </filter>
             </defs>
             <g id="provinceLayer">
-                <!-- COMBAK: I want to use Map, but Vue doesn't support that yet. :( See ticket 2410. -->
                 <path
                     v-for="(d, p) in provincePaths"
                     :id="p"
@@ -64,6 +63,13 @@
                     :transform="getUnitTransform(provinceCoordinates[unit.Province])"
                 />
             </g>
+
+            <g id="orderLayer" v-if="orders">
+                <map-order v-for="order in orders"
+                    :key="order.Properties.Parts[0]"
+                    :id="order.Properties.Parts[0] + '-order'"
+                />
+            </g>
         </svg>
 
         <!-- TODO: Display snackbar within map element only. -->
@@ -78,10 +84,14 @@
 <script>
     import MapProcessor from '../utils/map';
     import Colors from '@/utils/colors';
+    import MapOrder from './MapOrder';
 
     export default {
         name: 'diplomacy-map',
-        props: ['readonly', 'game', 'phase'],
+        components: {
+            'map-order': MapOrder
+        },
+        props: ['readonly', 'game', 'phase', 'orders'],
         data: (config) => ({
             dimensions: {
                 height: 0,

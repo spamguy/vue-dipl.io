@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer
+        <!-- <v-navigation-drawer
             persistent
             absolute
             clipped
@@ -22,11 +22,11 @@
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
-        </v-navigation-drawer>
+        </v-navigation-drawer> -->
 
         <v-toolbar fixed clipped-right app class="primary">
             <v-toolbar-title class="white--text">
-                <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon>
+                <!-- <v-toolbar-side-icon @click.stop="toggleDrawer"></v-toolbar-side-icon> -->
                 <span>dipl.io</span>
             </v-toolbar-title>
         </v-toolbar>
@@ -64,11 +64,11 @@ export default {
         ]),
         logOut: Auth.logOut
     },
-    computed: {
-        ...vuex.mapState({
-            isDrawerOpen: state => state.user.isDrawerOpen
-        })
-    },
+    // computed: {
+    //     ...vuex.mapState({
+    //         isDrawerOpen: state => state.user.isDrawerOpen
+    //     })
+    // },
     async created() {
         await this.setVariants();
 
