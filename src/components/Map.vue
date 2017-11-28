@@ -139,7 +139,7 @@
             },
             getProvinceStyle(province) {
                 if (!this.phase)
-                    return { };
+                    return { display: 'none' };
                 const sc = this.phase.SCs.find(sc => sc.Province === province);
                 const baseColour = sc ? this.colourSet[sc.Owner] : '#fff';
 

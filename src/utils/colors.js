@@ -1,6 +1,13 @@
 export default {
     getColorSetForVariant(variant) {
         switch (variant) {
+        case 'Ancient Mediterranian': return {
+            Rome: '#f00',
+            Greece: '#00f',
+            Egypt: '#bbb',
+            Persia: '#f0f',
+            Carthage: '#0f0'
+        };
         default: return {
             Austria: '#f00',
             England: '#00f',
