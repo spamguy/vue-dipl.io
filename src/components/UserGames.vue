@@ -93,19 +93,6 @@
                 vm.setData(result);
             });
         },
-        // async created() {
-        //     if (this.$route.query.token)
-        //         this.$localStorage.set('token', this.$route.query.token);
-        //     const result = await Promise.all([
-        //         Game.getAllActiveGamesForCurrentUser(),
-        //         Game.getAllStagingGamesForCurrentUser(),
-        //         Game.getAllFinishedGamesForCurrentUser()
-        //     ]);
-        //
-        //     this.activeGames = result[0];
-        //     this.finishedGames = result[1];
-        //     this.waitingGames = result[2];
-        // }
         methods: {
             setData(result) {
                 this.activeGames = result[0];

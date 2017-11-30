@@ -8,10 +8,10 @@
         <v-tabs-items>
             <v-tabs-content id="orders">
                 <v-list subheader v-if="game.Started" dense>
-                    <div v-for="power in variant.Nations" :key="power + 'UnitSection'">
+                    <div v-for="power in gameVariant.Nations" :key="power + 'UnitSection'">
                         <v-subheader class="nationSubheader">{{power}}</v-subheader>
                         <province-list-item
-                            v-for="unit in getCurrentPhase().Units"
+                            v-for="unit in phase.Units"
                             v-if="unit.Unit.Nation === power"
                             :key="unit.Province"
                             :unit="unit">
@@ -30,25 +30,16 @@
 </template>
 
 <script>
-    import Phase from '@/api/phase';
+    import { mapGetters } from 'vuex';
     import ProvinceListItem from './ProvinceListItem';
 
     export default {
         name: 'gametools',
-        props: ['game', 'phases'],
         components: {
             'province-list-item': ProvinceListItem
         },
-        data: () => ({
-            variant: { }
-        }),
-        created() {
-            this.variant = this.$store.getters.getVariant(this.game.Variant);
-        },
-        methods: {
-            getCurrentPhase() {
-                return Phase.getCurrentPhaseForGame(this.phases);
-            }
+        computed: {
+            ...mapGetters(['game', 'gameVariant', 'phase', 'orders'])
         }
     };
 </script>

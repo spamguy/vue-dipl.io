@@ -82,7 +82,8 @@
 </template>
 
 <script>
-    import MapProcessor from '../utils/map';
+    import { mapGetters } from 'vuex';
+    // import MapProcessor from '../utils/map';
     import Colors from '@/utils/colors';
     import MapOrder from './MapOrder';
 
@@ -91,35 +92,39 @@
         components: {
             'map-order': MapOrder
         },
-        props: ['readonly', 'game', 'phase', 'orders'],
-        data: (config) => ({
-            dimensions: {
-                height: 0,
-                width: 0
-            },
-            svgBoundingClientRect: {},
-            provinceCoordinates: {},
-            provincePaths: {},
-            processor: null,
-            clickedProvinces: [],
-            colourSet: Colors.getColorSetForVariant(config.game.Variant),
-            mapDidError: false,
-            mapErrorMessage: null
-        }),
+        props: ['readonly'],
+        data() {
+            return {
+                dimensions: {
+                    height: 0,
+                    width: 0
+                },
+                svgBoundingClientRect: {},
+                provinceCoordinates: {},
+                provincePaths: {},
+                // processor: null,
+                clickedProvinces: [],
+                colourSet: this.game ? Colors.getColorSetForVariant(this.game.Variant) : { },
+                mapDidError: false,
+                mapErrorMessage: null
+            };
+        },
         mounted() {
             const t0 = performance.now();
-            const variant = this.$store.getters.getVariant(this.game.Variant);
-            let processor = new MapProcessor(this.game, variant);
+            // let processor = new MapProcessor(this.game, this.gameVariant);
 
-            this.dimensions = processor.getDimensions();
-            this.svgBoundingClientRect = processor.getYShift();
-            processor.copyGroups();
+            // this.dimensions = processor.getDimensions();
+            // this.svgBoundingClientRect = processor.getYShift();
+            // processor.copyGroups();
 
-            const data = processor.getProvinceData();
-            this.provinceCoordinates = data.coords;
-            this.provincePaths = data.paths;
+            // const data = processor.getProvinceData();
+            // this.provinceCoordinates = data.coords;
+            // this.provincePaths = data.paths;
             const t1 = performance.now();
             console.log('SVG rendered in ' + (t1 - t0) + ' ms');
+        },
+        computed: {
+            ...mapGetters(['game', 'phase', 'gameVariant', 'orders'])
         },
         methods: {
             getViewBox() {

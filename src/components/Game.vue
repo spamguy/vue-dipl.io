@@ -7,10 +7,10 @@
                 <v-container fluid>
                     <v-layout v-bind="layout">
                         <v-flex sm8 xs12 id="mapContainer" class="mr-2 mb-2">
-                            <map-phase-viewer :game="game" :phases="phases"></map-phase-viewer>
+                            <map-phase-viewer></map-phase-viewer>
                         </v-flex>
                         <v-flex fluid class="mr-2 mb-2">
-                            <game-tools :game="game" :phases="phases"></game-tools>
+                            <game-tools></game-tools>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -27,8 +27,8 @@
 </template>
 
 <script>
-    import Game from '@/api/game';
-    import Phase from '@/api/phase';
+    import { mapGetters, mapActions } from 'vuex';
+
     import MapPhaseViewer from './MapPhaseViewer';
     import GameTools from './GameTools';
 
@@ -38,40 +38,25 @@
             'map-phase-viewer': MapPhaseViewer,
             'game-tools': GameTools
         },
-        data() {
-            return {
-                isNew: false,
-                game: null,
-                phases: [],
-                orders: []
-            };
-        },
-        async beforeRouteEnter(to, from, next) {
-            const result = await Promise.all([
-                Game.getGame(to.params.ID),
-                Phase.getPhasesForGame(to.params.ID),
-                Phase.getOrders(to.params.ID, to.params.ordinal || 1) // FIXME: Orders get fetched after phases for a variety of reasons.
-            ]);
-            next(vm => vm.setData(result));
-        },
-        mounted() {
+        data: () => ({
+            isNew: false
+        }),
+        created() {
             if (this.$route.query.new)
                 this.isNew = true;
+            this.setGameData(this.$route.params.ID, this.$route.params.ordinal);
+        },
+        methods: {
+            ...mapActions(['setGameData'])
         },
         computed: {
+            ...mapGetters(['game']),
             layout() {
                 const binding = { };
 
                 if (!this.$vuetify.breakpoint.mdAndUp) binding.column = true;
 
                 return binding;
-            }
-        },
-        methods: {
-            setData(result) {
-                this.game = result[0];
-                this.phases = result[1];
-                this.orders = result[2];
             }
         }
     };
