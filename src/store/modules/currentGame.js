@@ -21,6 +21,10 @@ const getters = {
         return state.currentGame.Variant
             ? rootGetters.getVariant(state.currentGame.Variant)
             : { };
+    },
+    mapDefinition: (state, getters) => {
+        const parser = new DOMParser();
+        return parser.parseFromString(getters.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
     }
 };
 
@@ -50,6 +54,8 @@ const actions = {
 
         if (orders.length)
             commit(MutationTypes.SET_CURRENT_GAME_ORDERS, orders);
+
+        return game;
     }
 };
 

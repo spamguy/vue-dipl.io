@@ -1,5 +1,5 @@
 export default {
-    getColorSetForVariant(variant) {
+    getColourSetForVariant(variant) {
         switch (variant) {
         case 'Ancient Mediterranian': return {
             Rome: '#f00',

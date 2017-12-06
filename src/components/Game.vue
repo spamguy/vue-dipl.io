@@ -7,7 +7,7 @@
                 <v-container fluid>
                     <v-layout v-bind="layout">
                         <v-flex sm8 xs12 id="mapContainer" class="mr-2 mb-2">
-                            <map-phase-viewer></map-phase-viewer>
+                            <map-phase-viewer :promise="gameDataPromise"></map-phase-viewer>
                         </v-flex>
                         <v-flex fluid class="mr-2 mb-2">
                             <game-tools></game-tools>
@@ -38,19 +38,21 @@
             'map-phase-viewer': MapPhaseViewer,
             'game-tools': GameTools
         },
-        data: () => ({
-            isNew: false
-        }),
-        created() {
+        data() {
+            return {
+                isNew: false,
+                gameDataPromise: this.setGameData(this.$route.params.ID, this.$route.params.ordinal)
+            };
+        },
+        mounted() {
             if (this.$route.query.new)
                 this.isNew = true;
-            this.setGameData(this.$route.params.ID, this.$route.params.ordinal);
         },
         methods: {
             ...mapActions(['setGameData'])
         },
         computed: {
-            ...mapGetters(['game']),
+            ...mapGetters(['game', 'mapDefinition']),
             layout() {
                 const binding = { };
 

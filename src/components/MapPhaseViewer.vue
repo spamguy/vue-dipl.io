@@ -5,7 +5,7 @@
             <v-spacer></v-spacer>
             <v-btn icon v-for="action in availableActions" :key="action.icon"></v-btn>
         </v-toolbar>
-        <diplomacy-map :readonly="false"></diplomacy-map>
+        <diplomacy-map :readonly="false" :promise="promise"></diplomacy-map>
         <v-toolbar dark dense flat class="white--text" color="primary" v-if="game.Started">
             <v-btn icon :disabled="!currentPhaseIndex" @click="currentPhaseIndex = 0">
                 <v-icon>first_page</v-icon>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import DiplomacyMap from '@/components/Map';
+    import DiplomacyMap from '@/components/map/Map';
     import { mapGetters } from 'vuex';
 
     export default {
@@ -33,6 +33,7 @@
         components: {
             'diplomacy-map': DiplomacyMap
         },
+        props: ['promise'],
         data() {
             return {
                 currentPhaseIndex: 0,

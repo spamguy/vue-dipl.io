@@ -16,14 +16,10 @@
 
 <script>
     import Phase from '@/api/phase';
-    import DiplomacyMap from '@/components/Map';
 
     export default {
         name: 'gamelistitem',
         props: ['game'],
-        components: {
-            'diplomacy-map': DiplomacyMap
-        },
         data: () => ({
             phase: null
         }),

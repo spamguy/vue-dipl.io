@@ -7,6 +7,12 @@ const state = {
 
 const getters = {
     getVariant: state => variantName => state.variants.find(v => v.Name === variantName)
+    // getSCs: (state, getters) => variantName => {
+    //     const variant = getters.getVariant(variantName);
+
+    //     // Return all graph nodes containing SC info.
+    //     return variant ? ;
+    // }
 };
 
 const actions = {
