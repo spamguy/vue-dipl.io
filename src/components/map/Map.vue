@@ -47,14 +47,14 @@
                     :id="sc.Name + 'Center'"
                     :data="provinces[sc.Name]"
                 />
+            </g>
 
-                <!-- <map-province
-                    v-for="(provinceData, key) in provinces"
-                    v-if="provinceData.sc"
-                    :key="key + 'Center'"
-                    :id="key + 'Center'"
-                    :data="provinceData"
-                /> -->
+            <g id="unitLayer" v-if="phase">
+                <map-unit v-for="unit in phase.Units"
+                    :key="unit.Province + 'Unit'"
+                    :unit="unit"
+                    :data="provinces[unit.Province]">
+                </map-unit>
             </g>
         </svg>
 
@@ -69,18 +69,19 @@
 
 <script>
     import { mapGetters } from 'vuex';
-    // import MapProcessor from '../utils/map';
     import Colours from '@/utils/colours';
     import MapOrder from './MapOrder';
     import MapProvince from './MapProvince';
     import MapSupplyCentre from './MapSupplyCentre';
+    import MapUnit from './MapUnit';
 
     export default {
         name: 'diplomacy-map',
         components: {
             'map-order': MapOrder,
             'map-province': MapProvince,
-            'map-supply-centre': MapSupplyCentre
+            'map-supply-centre': MapSupplyCentre,
+            'map-unit': MapUnit
         },
         props: ['readonly', 'promise'],
         data: () => ({
@@ -88,22 +89,6 @@
             mapDidError: false,
             mapErrorMessage: null
         }),
-        // data() {
-        //     return {
-        //         dimensions: {
-        //             height: 0,
-        //             width: 0
-        //         },
-        //         svgBoundingClientRect: {},
-        //         provinceCoordinates: {},
-        //         provincePaths: {},
-        //         // processor: null,
-        //         clickedProvinces: [],
-        //         colourSet: this.game ? Colors.getColorSetForVariant(this.game.Variant) : { },
-        //         mapDidError: false,
-        //         mapErrorMessage: null
-        //     };
-        // },
         async mounted() {
             // Let game data fetch triggered outside this component resolve first.
             await this.promise;
@@ -164,14 +149,16 @@
 
                 // Get each supply centre's coordinates.
                 [...supplyCentres.children].forEach(scSVG => {
-                    const bbRect = scSVG.getBoundingClientRect();
+                    const bbRect = scSVG.getBBox();
                     const scID = that.getSupplyCentreID(scSVG);
+                    const sc = this.phase.SCs.find(sc => sc.Province === scID);
 
                     that.provinces[scID] = {
                         x: bbRect.x,
                         y: bbRect.y,
                         height: bbRect.height,
-                        width: bbRect.width
+                        width: bbRect.width,
+                        colour: sc ? that.colourSet[sc.Owner] : '#fff'
                     };
                 });
 
