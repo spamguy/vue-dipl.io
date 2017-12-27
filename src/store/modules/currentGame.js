@@ -52,7 +52,7 @@ const actions = {
         commit(MutationTypes.SET_CURRENT_GAME_PHASES, phases);
         commit(MutationTypes.SET_CURRENT_GAME_ORDINAL, phaseOrdinal);
 
-        if (orders.length)
+        if (orders && orders.length)
             commit(MutationTypes.SET_CURRENT_GAME_ORDERS, orders);
 
         return game;

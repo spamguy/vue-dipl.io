@@ -1,3 +1,0 @@
-<template>
-    <path></path>
-</template>

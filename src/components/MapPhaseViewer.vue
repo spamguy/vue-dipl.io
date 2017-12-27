@@ -14,10 +14,10 @@
                 <v-icon>chevron_left</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal" @click="currentPhaseIndex++">
+            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" @click="currentPhaseIndex++">
                 <v-icon>chevron_right</v-icon>
             </v-btn>
-            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal" @click="currentPhaseIndex = phases.length - 1">
+            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" @click="currentPhaseIndex = phases.length - 1">
                 <v-icon>last_page</v-icon>
             </v-btn>
         </v-toolbar>

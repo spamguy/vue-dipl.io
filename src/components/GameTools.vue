@@ -1,9 +1,9 @@
 <template>
     <v-tabs grow class="elevation-1">
         <v-tabs-bar color="primary">
-            <v-tabs-item href="#orders">Orders</v-tabs-item>
-            <v-tabs-item href="#press">Press</v-tabs-item>
-            <v-tabs-item href="#actions">Actions</v-tabs-item>
+            <v-tabs-item href="#orders" :disabled="!game.Started">Orders</v-tabs-item>
+            <v-tabs-item href="#press" :disabled="!game.Started">Press</v-tabs-item>
+            <v-tabs-item href="#actions" :disabled="!game.Started">Actions</v-tabs-item>
         </v-tabs-bar>
         <v-tabs-items>
             <v-tabs-content id="orders">
@@ -18,6 +18,7 @@
                         </province-list-item>
                     </div>
                 </v-list>
+                <h1 v-else-if="game.Started === false">The game has not started yet.</h1>
             </v-tabs-content>
             <v-tabs-content id="press">
                 <v-card>there</v-card>
@@ -47,6 +48,11 @@
 <style lang="scss">
     #orders
     {
+        h1
+        {
+            text-align: center;
+        }
+
         .nationSubheader
         {
             background-color: #eee;

@@ -1,8 +1,11 @@
 <template>
     <div v-if="game">
         <v-layout column justify-center>
-            <v-flex><h2 class="display-3 text-xs-center">{{game.Desc}}</h2></v-flex>
-
+            <v-flex>
+                <h2 class="display-3 text-xs-center">{{game.Desc}}</h2>
+                <!-- TODO: Requires retaining user data in session first. -->
+                <!-- <h4 v-if="currentPlayer">Playing as {{currentPlayer}}</h4> -->
+            </v-flex>
             <v-flex>
                 <v-container fluid>
                     <v-layout v-bind="layout">
@@ -41,7 +44,8 @@
         data() {
             return {
                 isNew: false,
-                gameDataPromise: this.setGameData(this.$route.params.ID, this.$route.params.ordinal)
+                gameDataPromise: this.setGameData(this.$route.params.ID, this.$route.params.ordinal),
+                colour: '#000'
             };
         },
         mounted() {

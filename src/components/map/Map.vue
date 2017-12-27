@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :class="{'notStarted': !phase}">
         <svg :id="game.ID" height="100%" width="100%" :viewBox="viewBox">
             <defs>
                 <marker id="move" viewBox="0 -5 10 10" markerWidth="5" markerHeight="5" orient="auto">
@@ -40,7 +40,7 @@
                 />
             </g>
 
-            <g id="supplyCentreLayer">
+            <g id="supplyCentreLayer" v-if="phase">
                 <map-supply-centre
                     v-for="sc in SCs"
                     :key="sc.Name + 'Center'"
@@ -56,6 +56,16 @@
                     :data="provinces[unit.Province]">
                 </map-unit>
             </g>
+
+            <g id="orderLayer" v-if="orders">
+                <hold-order v-for="order in orders"
+                    v-if="order.Properties.Parts[1] === 'Hold'"
+                    :key="order.Properties.Parts[0] + 'Hold'"
+                    :province="order.Properties.Parts[0]"
+                    :x="provinces[order.Properties.Parts[0]].x"
+                    :y="provinces[order.Properties.Parts[0]].y"
+                />
+            </g>
         </svg>
 
         <!-- TODO: Display snackbar within map element only. -->
@@ -70,15 +80,16 @@
 <script>
     import { mapGetters } from 'vuex';
     import Colours from '@/utils/colours';
-    import MapOrder from './MapOrder';
     import MapProvince from './MapProvince';
     import MapSupplyCentre from './MapSupplyCentre';
     import MapUnit from './MapUnit';
 
+    import HoldOrder from './orders/HoldOrder';
+
     export default {
         name: 'diplomacy-map',
         components: {
-            'map-order': MapOrder,
+            'hold-order': HoldOrder,
             'map-province': MapProvince,
             'map-supply-centre': MapSupplyCentre,
             'map-unit': MapUnit
@@ -148,35 +159,37 @@
                     that = this;
 
                 // Get each supply centre's coordinates.
-                [...supplyCentres.children].forEach(scSVG => {
-                    const bbRect = scSVG.getBBox();
-                    const scID = that.getSupplyCentreID(scSVG);
-                    const sc = this.phase.SCs.find(sc => sc.Province === scID);
+                if (this.phase) {
+                    [...supplyCentres.children].forEach(scSVG => {
+                        const bbRect = scSVG.getBBox();
+                        const scID = that.getSupplyCentreID(scSVG);
+                        const sc = this.phase.SCs.find(sc => sc.Province === scID);
 
-                    that.provinces[scID] = {
-                        x: bbRect.x,
-                        y: bbRect.y,
-                        height: bbRect.height,
-                        width: bbRect.width,
-                        colour: sc ? that.colourSet[sc.Owner] : '#fff'
-                    };
-                });
+                        that.provinces[scID] = {
+                            x: bbRect.x,
+                            y: bbRect.y,
+                            height: bbRect.height,
+                            width: bbRect.width,
+                            colour: sc ? that.colourSet[sc.Owner] : '#fff'
+                        };
+                    });
 
-                // Get the physical centre of all other provinces.
-                [...otherProvinces.children].forEach(sc => {
-                    const bbRect = sc.getBoundingClientRect();
-                    const scID = that.getSupplyCentreID(sc);
+                    // Get the physical centre of all other provinces.
+                    [...otherProvinces.children].forEach(sc => {
+                        const bbRect = sc.getBoundingClientRect();
+                        const scID = that.getSupplyCentreID(sc);
 
-                    that.provinces[scID] = {
-                        x: bbRect.x + (bbRect.width / 2),
-                        y: bbRect.y + (bbRect.height / 2),
-                        height: bbRect.height,
-                        width: bbRect.width
-                    };
-                });
+                        that.provinces[scID] = {
+                            x: bbRect.x + (bbRect.width / 2),
+                            y: bbRect.y + (bbRect.height / 2),
+                            height: bbRect.height,
+                            width: bbRect.width
+                        };
+                    });
 
-                // Get each province's d (SVG path).
-                [...provincePathsNode.children].forEach(p => (that.provinces[p.id].path = p.getAttribute('d')));
+                    // Get each province's d (SVG path).
+                    [...provincePathsNode.children].forEach(p => (that.provinces[p.id].path = p.getAttribute('d')));
+                }
 
                 // Nuke the original groups.
                 supplyCentres.remove();
@@ -187,48 +200,6 @@
                 return sc.id.substring(0, sc.id.length - 6);
             }
         }
-        // methods: {
-
-        //     getSCTransform(coordinates) {
-        //         if (!coordinates)
-        //             return '';
-        //         const x = coordinates.x - coordinates.width;
-        //         const y = coordinates.y - this.svgBoundingClientRect.y;
-        //         return 'translate(' + x + ',' + y + ') scale(0.04)';
-        //     },
-        //     getUnitIcon(unit) {
-        //         switch (unit.Unit.Type) {
-        //         case 'Army': return '/static/army.svg#army';
-        //         case 'Fleet': return '/static/fleet.svg#fleet';
-        //         default: return '';
-        //         }
-        //     },
-        //     getUnitTransform(coordinates) {
-        //         if (!coordinates)
-        //             return '';
-        //         // Nudge the unit a little off the SC point.
-        //         const x = coordinates.x - (coordinates.width * 1.8);
-        //         const y = coordinates.y - this.svgBoundingClientRect.y;
-        //         return 'translate(' + x + ',' + y + ') scale(0.05)';
-        //     },
-        //     getProvinceStyle(province) {
-        //         if (!this.phase)
-        //             return { display: 'none' };
-        //         const sc = this.phase.SCs.find(sc => sc.Province === province);
-        //         const baseColour = sc ? this.colourSet[sc.Owner] : '#fff';
-
-        //         return {
-        //             fill: baseColour,
-        //             fillOpacity: 0.2,
-        //             stroke: baseColour,
-        //             strokeWidth: sc ? '5px' : '0px'
-        //         };
-        //     },
-        //     getUnitStyle(unit) {
-        //         return {
-        //             fill: this.colourSet[unit.Unit.Nation]
-        //         };
-        //     },
         //     async handleProvinceClick(e) {
         //         let id = e.target.id,
         //             order;
@@ -264,6 +235,11 @@
 </script>
 
 <style lang="scss">
+    .notStarted
+    {
+        opacity: 0.2
+    }
+
     g#supplyCentreLayer
     {
         path
