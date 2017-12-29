@@ -1,16 +1,15 @@
 import MutationTypes from '../mutation-types';
 
 const state = {
-    isDrawerOpen: false,
     user: { }
 };
 
 const mutations = {
-    [MutationTypes.TOGGLE_DRAWER]: (state) => (state.isDrawerOpen = !state.isDrawerOpen)
+    [MutationTypes.SET_USER]: (state, user) => (state.user = user.data.Properties.User)
 };
 
 const actions = {
-    toggleDrawer: ({ commit }) => commit(MutationTypes.TOGGLE_DRAWER)
+    setUser: ({ commit }, user) => commit(MutationTypes.SET_USER, user)
 };
 
 export default {

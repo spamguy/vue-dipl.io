@@ -19,5 +19,9 @@ export default {
 
     createGame(game) {
         return Client.post('/Game', game);
+    },
+
+    getUserData() {
+        return Client.get('/');
     }
 };

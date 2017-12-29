@@ -45,7 +45,9 @@
 
 <script>
 import vuex from 'vuex';
+
 import Auth from '@/utils/auth';
+import Game from '@/api/game';
 
 export default {
     name: 'authbase',
@@ -60,17 +62,14 @@ export default {
         ...vuex.mapActions([
             'toggleDrawer',
             'setVariants',
-            'setVariantMap'
+            'setVariantMap',
+            'setUser'
         ]),
         logOut: Auth.logOut
     },
-    // computed: {
-    //     ...vuex.mapState({
-    //         isDrawerOpen: state => state.user.isDrawerOpen
-    //     })
-    // },
     async created() {
         await this.setVariants();
+        this.setUser(await Game.getUserData());
 
         // Flag the view to render content that may need variant data.
         this.$nextTick(() => { this.variantsAreFetched = true; });
