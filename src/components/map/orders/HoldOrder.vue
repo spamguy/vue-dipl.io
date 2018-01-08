@@ -1,5 +1,6 @@
 <template>
-    <circle r="14"
+    <circle
+        r="14"
         :cx="x"
         :cy="y"
         :id="province + 'Hold'"
@@ -7,10 +8,23 @@
 </template>
 
 <script>
-    export default {
-        name: 'hold-order',
-        props: ['x', 'y', 'province']
-    };
+export default {
+    name: 'HoldOrder',
+    props: {
+        x: {
+            type: Number,
+            required: true
+        },
+        y: {
+            type: Number,
+            required: true
+        },
+        province: {
+            type: String,
+            required: true
+        }
+    }
+};
 </script>
 
 <style lang="scss">

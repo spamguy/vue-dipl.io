@@ -2,8 +2,8 @@
     <v-container grid-list-md fluid class="gameListItemContainer">
         <v-layout row>
             <v-flex xs1>
-                <!-- TODO: Reinstitute map as a hover. -->
-                <!-- <diplomacy-map :readonly="true" :game="game" :phase="phase"></diplomacy-map> -->
+            <!-- TODO: Reinstitute map as a hover. -->
+            <!-- <diplomacy-map :readonly="true" :game="game" :phase="phase"></diplomacy-map> -->
             </v-flex>
 
             <!-- Making router-link a flexbox so the whole region triggers a redirect. -->
@@ -15,19 +15,24 @@
 </template>
 
 <script>
-    import Phase from '@/api/phase';
+import Phase from '@/api/phase';
 
-    export default {
-        name: 'gamelistitem',
-        props: ['game'],
-        data: () => ({
-            phase: null
-        }),
-        async created() {
-            const phases = await Phase.getPhasesForGame(this.game.ID);
-            this.phase = Phase.getCurrentPhaseForGame(phases);
+export default {
+    name: 'GameListItem',
+    props: {
+        game: {
+            type: Object,
+            required: true
         }
-    };
+    },
+    data: () => ({
+        phase: null
+    }),
+    async created() {
+        const phases = await Phase.getPhasesForGame(this.game.ID);
+        this.phase = Phase.getCurrentPhaseForGame(phases);
+    }
+};
 </script>
 
 <style lang="scss">

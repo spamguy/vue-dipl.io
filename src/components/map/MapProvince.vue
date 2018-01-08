@@ -1,27 +1,31 @@
 <template>
-    <path
-        :d="data.path"
-        class="province"
-        :style="provinceStyle"
+    <path :d="data.path"
+          class="province"
+          :style="provinceStyle"
     />
 </template>
 
 <script>
-    export default {
-        name: 'map-province',
-        props: ['data'],
-        computed: {
-            provinceStyle() {
-                if (!this.data.colour)
-                    return { fill: '#fff' };
-                return {
-                    fill: this.data.colour,
-                    stroke: this.data.colour,
-                    strokeWidth: this.data.colour !== '#fff' ? '5px' : '0px'
-                };
-            }
+export default {
+    name: 'MapProvince',
+    props: {
+        data: {
+            type: Object,
+            required: true
         }
-    };
+    },
+    computed: {
+        provinceStyle() {
+            if (!this.data.colour)
+                return { fill: '#fff' };
+            return {
+                fill: this.data.colour,
+                stroke: this.data.colour,
+                strokeWidth: this.data.colour !== '#fff' ? '5px' : '0px'
+            };
+        }
+    }
+};
 </script>
 
 <style lang="scss">

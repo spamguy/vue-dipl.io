@@ -4,6 +4,10 @@ const state = {
     user: { }
 };
 
+const getters = {
+    currentUserID: state => state.user.ID
+};
+
 const mutations = {
     [MutationTypes.SET_USER]: (state, user) => (state.user = user.data.Properties.User)
 };
@@ -14,6 +18,7 @@ const actions = {
 
 export default {
     state,
+    getters,
     mutations,
     actions
 };

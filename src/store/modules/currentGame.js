@@ -3,7 +3,9 @@ import Game from '@/api/game';
 import Phase from '@/api/phase';
 
 const state = {
-    currentGame: {},
+    currentGame: {
+        Members: []
+    },
     phases: [],
     orders: [],
     phaseOrdinal: 1
@@ -25,6 +27,10 @@ const getters = {
     mapDefinition: (state, getters) => {
         const parser = new DOMParser();
         return parser.parseFromString(getters.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
+    },
+    currentUserAsPlayer: (state, getters) => {
+        debugger;
+        return state.currentGame.Members.find(m => m.Id === getters.currentUserID);
     }
 };
 

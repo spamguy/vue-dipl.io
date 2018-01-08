@@ -6,7 +6,7 @@
 import Auth from '@/utils/auth';
 
 export default {
-    name: 'home',
+    name: 'Home',
     methods: {
         async logIn() {
             const fakeID = this.$route.query['fake-id'];

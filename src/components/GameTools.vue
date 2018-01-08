@@ -10,12 +10,10 @@
                 <v-list subheader v-if="game.Started" dense>
                     <div v-for="power in gameVariant.Nations" :key="power + 'UnitSection'">
                         <v-subheader class="nationSubheader">{{power}}</v-subheader>
-                        <province-list-item
-                            v-for="unit in phase.Units"
-                            v-if="unit.Unit.Nation === power"
-                            :key="unit.Province"
-                            :unit="unit">
-                        </province-list-item>
+                        <province-list-item v-for="unit in phase.Units"
+                                            v-if="unit.Unit.Nation === power"
+                                            :key="unit.Province"
+                                            :unit="unit" />
                     </div>
                 </v-list>
                 <h1 v-else-if="game.Started === false">The game has not started yet.</h1>
@@ -31,18 +29,18 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    import ProvinceListItem from './ProvinceListItem';
+import { mapGetters } from 'vuex';
+import ProvinceListItem from './ProvinceListItem';
 
-    export default {
-        name: 'gametools',
-        components: {
-            'province-list-item': ProvinceListItem
-        },
-        computed: {
-            ...mapGetters(['game', 'gameVariant', 'phase', 'orders'])
-        }
-    };
+export default {
+    name: 'GameTools',
+    components: {
+        'province-list-item': ProvinceListItem
+    },
+    computed: {
+        ...mapGetters(['game', 'gameVariant', 'phase', 'orders'])
+    }
+};
 </script>
 
 <style lang="scss">
