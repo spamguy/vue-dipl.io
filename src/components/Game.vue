@@ -3,13 +3,13 @@
         <v-layout column justify-center>
             <v-flex>
                 <h2 class="display-3 text-xs-center">{{game.Desc}}</h2>
-                <h3 class="display-1 text-xs-center" v-if="currentUserAsPlayer">Playing as {{currentUserAsPlayer.Nation}}</h3>
-                <h3 class="display-1 text-xs-center" v-else>Spectating</h3>
+                <h3 v-if="currentUserAsPlayer" class="display-1 text-xs-center">Playing as {{currentUserAsPlayer.Nation}}</h3>
+                <h3 v-else class="display-1 text-xs-center">Spectating</h3>
             </v-flex>
             <v-flex>
                 <v-container fluid>
                     <v-layout v-bind="layout">
-                        <v-flex sm8 xs12 id="mapContainer" class="mr-2 mb-2">
+                        <v-flex id="mapContainer" class="mr-2 mb-2" sm8 xs12>
                             <map-phase-viewer :promise="gameDataPromise" />
                         </v-flex>
                         <v-flex fluid class="mr-2 mb-2">

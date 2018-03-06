@@ -1,6 +1,6 @@
 <template>
     <div :class="{'notStarted': !phase}">
-        <svg :id="game.ID" height="100%" width="100%" :viewBox="viewBox">
+        <svg :id="game.ID" :viewBox="viewBox" height="100%" width="100%">
             <defs>
                 <marker id="move"
                         viewBox="0 -5 10 10"
@@ -74,21 +74,21 @@
                               :data="provinceData" />
             </g>
 
-            <g id="supplyCentreLayer" v-if="phase">
+            <g v-if="phase" id="supplyCentreLayer">
                 <map-supply-centre v-for="sc in SCs"
                                    :key="sc.Name + 'Center'"
                                    :id="sc.Name + 'Center'"
                                    :data="provinces[sc.Name]" />
             </g>
 
-            <g id="unitLayer" v-if="phase">
+            <g v-if="phase" id="unitLayer">
                 <map-unit v-for="unit in phase.Units"
                           :key="unit.Province + 'Unit'"
                           :unit="unit"
                           :data="provinces[unit.Province]" />
             </g>
 
-            <g id="orderLayer" v-if="orders">
+            <g v-if="orders" id="orderLayer">
                 <hold-order v-for="order in orders"
                             v-if="order.Properties.Parts[1] === 'Hold'"
                             :key="order.Properties.Parts[0] + 'Hold'"

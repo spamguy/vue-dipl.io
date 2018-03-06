@@ -8,9 +8,9 @@
                     </div>
                 </v-card-title>
                 <v-card-text>
-                    <v-form v-model="game.isValid" ref="form">
-                        <v-text-field label="Name"
-                                      v-model="game.Desc"
+                    <v-form ref="form" v-model="game.isValid">
+                        <v-text-field v-model="game.Desc"
+                                      label="Name"
                                       required />
 
                         <!-- TODO: Need something more user friendly here. -->
@@ -21,7 +21,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn flat @click.stop="$router.push('/profile/games')">Cancel</v-btn>
-                    <v-btn flat color="primary" :disabled="!game.isValid" @click.stop="submit">Create</v-btn>
+                    <v-btn :disabled="!game.isValid" flat color="primary" @click.stop="submit">Create</v-btn>
                 </v-card-actions>
             </v-card>
         </v-flex>

@@ -1,13 +1,13 @@
 <template>
     <v-tabs grow class="elevation-1">
         <v-tabs-bar color="primary">
-            <v-tabs-item href="#orders" :disabled="!game.Started">Orders</v-tabs-item>
-            <v-tabs-item href="#press" :disabled="!game.Started">Press</v-tabs-item>
-            <v-tabs-item href="#actions" :disabled="!game.Started">Actions</v-tabs-item>
+            <v-tabs-item :disabled="!game.Started" href="#orders">Orders</v-tabs-item>
+            <v-tabs-item :disabled="!game.Started" href="#press">Press</v-tabs-item>
+            <v-tabs-item :disabled="!game.Started" href="#actions">Actions</v-tabs-item>
         </v-tabs-bar>
         <v-tabs-items>
             <v-tabs-content id="orders">
-                <v-list subheader v-if="game.Started" dense>
+                <v-list v-if="game.Started" subheader dense>
                     <div v-for="power in gameVariant.Nations" :key="power + 'UnitSection'">
                         <v-subheader class="nationSubheader">{{power}}</v-subheader>
                         <province-list-item v-for="unit in phase.Units"

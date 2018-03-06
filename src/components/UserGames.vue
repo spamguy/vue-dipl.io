@@ -13,7 +13,7 @@
                 <v-tabs-content id="Active">
                     <v-layout column justify-center>
                         <v-flex>
-                            <v-progress-circular v-if="loading" indeterminate :size="50" color="primary" />
+                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
                             <div v-if="!loading && !activeGames.length">Nothing here.</div>
 
                             <game-list-item v-for="game in activeGames"
@@ -25,7 +25,7 @@
                 <v-tabs-content id="Waiting">
                     <v-layout column justify-center>
                         <v-flex>
-                            <v-progress-circular v-if="loading" indeterminate :size="50" color="primary" />
+                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
                             <div v-if="!loading && !waitingGames.length">Nothing here.</div>
 
                             <game-list-item v-for="game in waitingGames"
@@ -37,7 +37,7 @@
                 <v-tabs-content id="Finished">
                     <v-layout column justify-center>
                         <v-flex>
-                            <v-progress-circular v-if="loading" indeterminate :size="50" color="primary" />
+                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
                             <div v-if="!loading && !finishedGames.length">Nothing here.</div>
 
                             <game-list-item v-for="game in finishedGames"

@@ -2,8 +2,8 @@
     <v-container grid-list-md fluid class="gameListItemContainer">
         <v-layout row>
             <v-flex xs1>
-            <!-- TODO: Reinstitute map as a hover. -->
-            <!-- <diplomacy-map :readonly="true" :game="game" :phase="phase"></diplomacy-map> -->
+                <!-- TODO: Reinstitute map as a hover. -->
+                <!-- <diplomacy-map :readonly="true" :game="game" :phase="phase"></diplomacy-map> -->
             </v-flex>
 
             <!-- Making router-link a flexbox so the whole region triggers a redirect. -->

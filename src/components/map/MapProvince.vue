@@ -1,7 +1,7 @@
 <template>
     <path :d="data.path"
-          class="province"
           :style="provinceStyle"
+          class="province"
     />
 </template>
 

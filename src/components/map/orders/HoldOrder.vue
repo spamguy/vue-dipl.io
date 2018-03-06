@@ -1,10 +1,11 @@
 <template>
     <circle
-        r="14"
         :cx="x"
         :cy="y"
         :id="province + 'Hold'"
-        class="hold" />
+        r="14"
+        class="hold"
+    />
 </template>
 
 <script>

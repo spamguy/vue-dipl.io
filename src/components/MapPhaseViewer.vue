@@ -6,23 +6,23 @@
             <map-order-menu phase-type="phase.Type" />
         </v-toolbar>
         <diplomacy-map :readonly="false" :promise="promise" />
-        <v-toolbar dark
+        <v-toolbar v-if="game.Started"
+                   dark
                    dense
                    flat
                    class="white--text"
-                   color="primary"
-                   v-if="game.Started">
-            <v-btn icon :disabled="!currentPhaseIndex" @click="currentPhaseIndex = 0">
+                   color="primary">
+            <v-btn :disabled="!currentPhaseIndex" icon @click="currentPhaseIndex = 0">
                 <v-icon>first_page</v-icon>
             </v-btn>
-            <v-btn icon :disabled="!currentPhaseIndex" @click="currentPhaseIndex--">
+            <v-btn :disabled="!currentPhaseIndex" icon @click="currentPhaseIndex--">
                 <v-icon>chevron_left</v-icon>
             </v-btn>
             <v-spacer />
-            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" @click="currentPhaseIndex++">
+            <v-btn :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" icon @click="currentPhaseIndex++">
                 <v-icon>chevron_right</v-icon>
             </v-btn>
-            <v-btn icon :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" @click="currentPhaseIndex = phases.length - 1">
+            <v-btn :disabled="currentPhaseIndex === lastPhaseOrdinal - 1" icon @click="currentPhaseIndex = phases.length - 1">
                 <v-icon>last_page</v-icon>
             </v-btn>
         </v-toolbar>
