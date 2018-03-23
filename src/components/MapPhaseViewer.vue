@@ -3,7 +3,7 @@
         <v-toolbar dark dense flat color="primary">
             <v-toolbar-title>{{mapHeader()}}</v-toolbar-title>
             <v-spacer />
-            <v-btn icon v-for="action in availableActions" :key="action.icon" />
+            <map-order-menu phase-type="phase.Type" />
         </v-toolbar>
         <diplomacy-map :readonly="false" :promise="promise" />
         <v-toolbar dark
@@ -30,13 +30,16 @@
 </template>
 
 <script>
-import DiplomacyMap from '@/components/map/Map';
 import { mapGetters } from 'vuex';
+
+import DiplomacyMap from '@/components/map/Map';
+import MapOrderMenu from '@/components/map/MapOrderMenu';
 
 export default {
     name: 'MapPhaseViewer',
     components: {
-        'diplomacy-map': DiplomacyMap
+        'diplomacy-map': DiplomacyMap,
+        'map-order-menu': MapOrderMenu
     },
     props: {
         promise: {
