@@ -1,9 +1,8 @@
 <template>
     <v-btn-toggle mandatory>
-        <v-btn icon
-               v-for="action in availableActions"
+        <v-btn v-for="action in availableActions"
                :key="action.icon"
-        />
+               icon />
     </v-btn-toggle>
 </template>
 

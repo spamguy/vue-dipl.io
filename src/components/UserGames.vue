@@ -1,16 +1,14 @@
 <template>
     <div class="elevation-1">
         <v-tabs>
-            <v-tabs-bar color="primary">
-                <v-tabs-item v-for="tab in tabs"
-                             :key="tab"
-                             :href="'#' + tab"
-                             ripple>
-                    {{tab}}
-                </v-tabs-item>
-            </v-tabs-bar>
+            <v-tab v-for="tab in tabs"
+                   :key="tab"
+                   :href="'#' + tab"
+                   ripple>
+                {{tab}}
+            </v-tab>
             <v-tabs-items>
-                <v-tabs-content id="Active">
+                <v-tab-item id="Active">
                     <v-layout column justify-center>
                         <v-flex>
                             <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
@@ -21,8 +19,8 @@
                                             :game="game.Properties" />
                         </v-flex>
                     </v-layout>
-                </v-tabs-content>
-                <v-tabs-content id="Waiting">
+                </v-tab-item>
+                <v-tab-item id="Waiting">
                     <v-layout column justify-center>
                         <v-flex>
                             <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
@@ -33,8 +31,8 @@
                                             :game="game.Properties" />
                         </v-flex>
                     </v-layout>
-                </v-tabs-content>
-                <v-tabs-content id="Finished">
+                </v-tab-item>
+                <v-tab-item id="Finished">
                     <v-layout column justify-center>
                         <v-flex>
                             <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
@@ -45,7 +43,7 @@
                                             :game="game.Properties" />
                         </v-flex>
                     </v-layout>
-                </v-tabs-content>
+                </v-tab-item>
             </v-tabs-items>
         </v-tabs>
     </div>

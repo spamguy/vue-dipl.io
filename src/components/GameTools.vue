@@ -1,12 +1,10 @@
 <template>
     <v-tabs grow class="elevation-1">
-        <v-tabs-bar color="primary">
-            <v-tabs-item :disabled="!game.Started" href="#orders">Orders</v-tabs-item>
-            <v-tabs-item :disabled="!game.Started" href="#press">Press</v-tabs-item>
-            <v-tabs-item :disabled="!game.Started" href="#actions">Actions</v-tabs-item>
-        </v-tabs-bar>
+        <v-tab :disabled="!game.Started" href="#orders">Orders</v-tab>
+        <v-tab :disabled="!game.Started" href="#press">Press</v-tab>
+        <v-tab :disabled="!game.Started" href="#actions">Actions</v-tab>
         <v-tabs-items>
-            <v-tabs-content id="orders">
+            <v-tab-item id="orders">
                 <v-list v-if="game.Started" subheader dense>
                     <div v-for="power in gameVariant.Nations" :key="power + 'UnitSection'">
                         <v-subheader class="nationSubheader">{{power}}</v-subheader>
@@ -17,13 +15,13 @@
                     </div>
                 </v-list>
                 <h1 v-else-if="game.Started === false">The game has not started yet.</h1>
-            </v-tabs-content>
-            <v-tabs-content id="press">
+            </v-tab-item>
+            <v-tab-item id="press">
                 <v-card>there</v-card>
-            </v-tabs-content>
-            <v-tabs-content id="actions">
+            </v-tab-item>
+            <v-tab-item id="actions">
                 <v-card>buddy</v-card>
-            </v-tabs-content>
+            </v-tab-item>
         </v-tabs-items>
     </v-tabs>
 </template>
