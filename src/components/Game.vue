@@ -1,5 +1,5 @@
 <template>
-    <div v-if="game">
+    <div v-if="gameIsLoaded">
         <v-layout column justify-center>
             <v-flex>
                 <h2 class="display-3 text-xs-center">{{game.Desc}}</h2>
@@ -10,7 +10,7 @@
                 <v-container fluid>
                     <v-layout v-bind="layout">
                         <v-flex id="mapContainer" class="mr-2 mb-2" sm8 xs12>
-                            <map-phase-viewer :promise="gameDataPromise" />
+                            <map-phase-viewer />
                         </v-flex>
                         <v-flex fluid class="mr-2 mb-2">
                             <game-tools />
@@ -44,12 +44,11 @@ export default {
     data() {
         return {
             isNew: false,
-            gameDataPromise: this.setGameData(this.$route.params.ID, this.$route.params.ordinal),
             colour: '#000'
         };
     },
     computed: {
-        ...mapGetters(['game', 'mapDefinition', 'currentUserAsPlayer']),
+        ...mapGetters(['game', 'mapDefinition', 'currentUserAsPlayer', 'gameIsLoaded']),
         layout() {
             const binding = { };
 
@@ -58,12 +57,23 @@ export default {
             return binding;
         }
     },
-    mounted() {
+    watch: {
+        async '$route'(to, from) {
+            // Catch in-game phase navigation, and load relevant data.
+            if (to.params.ID === from.params.ID)
+                await this.setOrdinal({ ID: to.params.ID, ordinal: to.params.ordinal });
+        }
+    },
+    async created() {
         if (this.$route.query.new)
             this.isNew = true;
+
+        const { ID, ordinal } = this.$route.params;
+        await this.setGameData(ID);
+        await this.setOrdinal({ ID, ordinal });
     },
     methods: {
-        ...mapActions(['setGameData'])
+        ...mapActions(['setGameData', 'setOrdinal'])
     }
 };
 </script>

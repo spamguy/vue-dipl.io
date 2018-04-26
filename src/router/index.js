@@ -24,6 +24,7 @@ const router = new Router({
                     path: '/games/new',
                     component: NewGame
                 }, {
+                    name: 'game',
                     path: '/games/:ID/:ordinal?',
                     component: Game
                 }

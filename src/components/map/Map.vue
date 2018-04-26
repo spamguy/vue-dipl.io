@@ -76,6 +76,7 @@
 
             <g v-if="phase" id="supplyCentreLayer">
                 <map-supply-centre v-for="sc in SCs"
+                                   v-if="provinces[sc.Name]"
                                    :key="sc.Name + 'Center'"
                                    :id="sc.Name + 'Center'"
                                    :data="provinces[sc.Name]" />
@@ -83,6 +84,7 @@
 
             <g v-if="phase" id="unitLayer">
                 <map-unit v-for="unit in phase.Units"
+                          v-if="provinces[unit.Province]"
                           :key="unit.Province + 'Unit'"
                           :unit="unit"
                           :data="provinces[unit.Province]" />
@@ -126,10 +128,6 @@ export default {
         readonly: {
             type: Boolean,
             default: false
-        },
-        promise: {
-            type: Promise,
-            required: true
         }
     },
     data: () => ({
@@ -140,6 +138,7 @@ export default {
     computed: {
         ...mapGetters([
             'game',
+            'gameIsLoaded',
             'phase',
             'gameVariant',
             'orders',
@@ -159,9 +158,10 @@ export default {
             return this.gameVariant.Graph ? Object.values(this.gameVariant.Graph.Nodes).filter(n => n.SC) : [];
         }
     },
-    async mounted() {
-        // Let game data fetch triggered outside this component resolve first.
-        await this.promise;
+    mounted() {
+        // Game is not loaded yet.
+        if (!this.gameIsLoaded)
+            return;
 
         // Set colour scheme for this variant.
         this.colourSet = Colours.getColourSetForVariant(this.game.Variant);

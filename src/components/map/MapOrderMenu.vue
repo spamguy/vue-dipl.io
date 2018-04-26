@@ -1,8 +1,16 @@
 <template>
-    <v-btn-toggle mandatory>
-        <v-btn v-for="action in availableActions"
-               :key="action.icon"
-               icon />
+    <v-btn-toggle v-model="selectedAction" mandatory>
+        <v-tooltip v-for="action in actions"
+                   v-if="orderIsAvailableThisPhase(action.phaseTypes)"
+                   :key="action.icon"
+                   bottom>
+            <v-btn slot="activator"
+                   :value="action.name"
+                   flat>
+                <v-icon>{{action.icon}}</v-icon>
+            </v-btn>
+            <span>{{action.name}}</span>
+        </v-tooltip>
     </v-btn-toggle>
 </template>
 
@@ -15,16 +23,34 @@ export default {
             required: true
         }
     },
-    computed: {
-        availableActions: () => {
-            let availableActions = [];
-
-            switch (this.phaseType) {
-            case 'Movement':
-                break;
-            }
-
-            return availableActions;
+    data: () => ({
+        actions: [{
+            name: 'Hold',
+            icon: 'pan_tool',
+            phaseTypes: ['Movement']
+        }, {
+            name: 'Move',
+            icon: 'trending_flat',
+            phaseTypes: ['Movement', 'Retreat']
+        }, {
+            name: 'Support',
+            icon: 'call_merge',
+            phaseTypes: ['Movement']
+        }, {
+            name: 'Build Army',
+            icon: 'add',
+            phaseTypes: ['Adjustment']
+        }, {
+            name: 'Build Fleet',
+            icon: 'add_box',
+            phaseTypes: ['Adjustment']
+        }],
+        selectedAction: 'Hold'
+    }),
+    methods: {
+        orderIsAvailableThisPhase(phaseTypes) {
+            // TODO: Hide adjustment buttons that aren't useful during adjustment phase.
+            return phaseTypes.indexOf(this.phaseType) > -1;
         }
     }
 };

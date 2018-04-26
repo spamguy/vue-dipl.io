@@ -13,6 +13,7 @@ const state = {
 
 const getters = {
     game: (state) => state.currentGame,
+    gameIsLoaded: (state) => state.currentGame.Variant !== undefined,
     phase: (state) => state.phases.length
         ? state.phases[state.phaseOrdinal - 1].Properties
         : null,
@@ -39,26 +40,32 @@ const mutations = {
 };
 
 const actions = {
-    setGameData: async({ commit }, gameID, phaseOrdinal) => {
-        const game = await Game.getGame(gameID);
-        const phases = await Phase.getPhasesForGame(gameID);
-
-        if (!phaseOrdinal)
-            phaseOrdinal = phases.length;
-
-        // No phases = no orders.
-        let orders;
-        if (phaseOrdinal > 0)
-            orders = await Phase.getOrders(gameID, phaseOrdinal);
+    setGameData: async({ commit }, ID) => {
+        const game = await Game.getGame(ID);
+        const phases = await Phase.getPhasesForGame(ID);
 
         commit(MutationTypes.SET_CURRENT_GAME, game);
         commit(MutationTypes.SET_CURRENT_GAME_PHASES, phases);
-        commit(MutationTypes.SET_CURRENT_GAME_ORDINAL, phaseOrdinal);
+
+        return game;
+    },
+
+    setOrdinal: async({ commit, state }, { ID, ordinal }) => {
+        // Undefined/invalid ordinal is set to last phase by default.
+        if (!ordinal || ordinal < 0 || ordinal > state.phases.length)
+            ordinal = state.phases.length;
+
+        commit(MutationTypes.SET_CURRENT_GAME_ORDINAL, ordinal);
+
+        // No phases = no orders.
+        let orders;
+        if (ordinal > 0)
+            orders = await Phase.getOrders(ID, ordinal);
 
         if (orders && orders.length)
             commit(MutationTypes.SET_CURRENT_GAME_ORDERS, orders);
 
-        return game;
+        return orders;
     }
 };
 
