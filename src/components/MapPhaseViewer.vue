@@ -1,9 +1,9 @@
 <template>
-    <div v-if="phase" class="elevation-1">
+    <div class="elevation-1">
         <v-toolbar dark dense flat color="primary">
-            <v-toolbar-title>{{mapHeader()}}</v-toolbar-title>
+            <v-toolbar-title>{{fullPhaseDescription()}}</v-toolbar-title>
             <v-spacer />
-            <map-order-menu v-if="phase.PhaseOrdinal === lastPhaseOrdinal"
+            <map-order-menu v-if="game.Started && !game.Finished && phase.PhaseOrdinal === lastPhaseOrdinal"
                             :phase-type="phase.Type" />
         </v-toolbar>
         <diplomacy-map :readonly="false" />
@@ -43,6 +43,7 @@ import { mapGetters } from 'vuex';
 
 import DiplomacyMap from '@/components/map/Map';
 import MapOrderMenu from '@/components/map/MapOrderMenu';
+import GameMixin from '@/mixins/game';
 
 export default {
     name: 'MapPhaseViewer',
@@ -50,16 +51,9 @@ export default {
         'diplomacy-map': DiplomacyMap,
         'map-order-menu': MapOrderMenu
     },
+    mixins: [GameMixin],
     computed: {
         ...mapGetters(['game', 'phase', 'lastPhaseOrdinal'])
-    },
-    methods: {
-        mapHeader() {
-            if (this.phase)
-                return this.phase.Season + ' ' + this.phase.Type + ' ' + this.phase.Year;
-            else if (!this.game.Started)
-                return '[not started]';
-        }
     }
 };
 </script>

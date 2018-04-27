@@ -9,40 +9,31 @@
             </v-tab>
             <v-tabs-items>
                 <v-tab-item id="Active">
-                    <v-layout column justify-center>
-                        <v-flex>
-                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                            <div v-if="!loading && !activeGames.length">Nothing here.</div>
-
-                            <game-list-item v-for="game in activeGames"
-                                            :key="game.Properties.Id"
-                                            :game="game.Properties" />
-                        </v-flex>
-                    </v-layout>
+                    <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
+                    <div v-else-if="!activeGames.length">Nothing here.</div>
+                    <v-list v-else two-line>
+                        <game-list-item v-for="game in activeGames"
+                                        :key="game.Properties.Id"
+                                        :game="game.Properties" />
+                    </v-list>
                 </v-tab-item>
                 <v-tab-item id="Waiting">
-                    <v-layout column justify-center>
-                        <v-flex>
-                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                            <div v-if="!loading && !waitingGames.length">Nothing here.</div>
-
-                            <game-list-item v-for="game in waitingGames"
-                                            :key="game.Properties.Id"
-                                            :game="game.Properties" />
-                        </v-flex>
-                    </v-layout>
+                    <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
+                    <div v-else-if="!waitingGames.length">Nothing here.</div>
+                    <v-list v-else two-line>
+                        <game-list-item v-for="game in waitingGames"
+                                        :key="game.Properties.Id"
+                                        :game="game.Properties" />
+                    </v-list>
                 </v-tab-item>
                 <v-tab-item id="Finished">
-                    <v-layout column justify-center>
-                        <v-flex>
-                            <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                            <div v-if="!loading && !finishedGames.length">Nothing here.</div>
-
-                            <game-list-item v-for="game in finishedGames"
-                                            :key="game.Properties.Id"
-                                            :game="game.Properties" />
-                        </v-flex>
-                    </v-layout>
+                    <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
+                    <div v-else-if="!finishedGames.length">Nothing here.</div>
+                    <v-list v-else two-line>
+                        <game-list-item v-for="game in finishedGames"
+                                        :key="game.Properties.Id"
+                                        :game="game.Properties" />
+                    </v-list>
                 </v-tab-item>
             </v-tabs-items>
         </v-tabs>
@@ -80,8 +71,8 @@ export default {
     methods: {
         setData(result) {
             this.activeGames = result[0];
-            this.finishedGames = result[1];
-            this.waitingGames = result[2];
+            this.waitingGames = result[1];
+            this.finishedGames = result[2];
             this.loading = false;
         }
     }

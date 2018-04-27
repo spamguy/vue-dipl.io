@@ -2,9 +2,22 @@
     <div v-if="gameIsLoaded">
         <v-layout column justify-center>
             <v-flex>
-                <h2 class="display-3 text-xs-center">{{game.Desc}}</h2>
-                <h3 v-if="currentUserAsPlayer" class="display-1 text-xs-center">Playing as {{currentUserAsPlayer.Nation}}</h3>
-                <h3 v-else class="display-1 text-xs-center">Spectating</h3>
+                <div class="display-3 text-xs-center">{{gameDescriptionOrUntitled()}}</div>
+                <div class="display-1 text-xs-center">
+                    <div v-if="game.Finished">
+                        {{fullGameStatus()}}
+                    </div>
+
+                    <div v-if="game.Started && currentUserAsPlayer">
+                        Playing as {{currentUserAsPlayer.Nation}}
+                    </div>
+                    <div v-else-if="!game.Started && currentUserAsPlayer">
+                        (Joined; waiting for {{missingPlayers}}...)
+                    </div>
+                    <div v-else>
+                        Spectating
+                    </div>
+                </div>
             </v-flex>
             <v-flex>
                 <v-container fluid>
@@ -31,9 +44,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import pluralize from 'pluralize';
 
 import MapPhaseViewer from './MapPhaseViewer';
 import GameTools from './GameTools';
+import GameMixin from '@/mixins/game';
 
 export default {
     name: 'Game',
@@ -41,6 +56,7 @@ export default {
         'map-phase-viewer': MapPhaseViewer,
         'game-tools': GameTools
     },
+    mixins: [GameMixin],
     data() {
         return {
             isNew: false,
@@ -48,13 +64,17 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['game', 'mapDefinition', 'currentUserAsPlayer', 'gameIsLoaded']),
+        ...mapGetters(['game', 'gameVariant', 'mapDefinition', 'currentUserAsPlayer', 'gameIsLoaded']),
         layout() {
             const binding = { };
 
             if (!this.$vuetify.breakpoint.mdAndUp) binding.column = true;
 
             return binding;
+        },
+        missingPlayers() {
+            const missingPlayerCount = this.gameVariant.Nations.length - this.game.Members.length;
+            return `${missingPlayerCount} more ${pluralize('player', missingPlayerCount)}`;
         }
     },
     watch: {
