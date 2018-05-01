@@ -1,6 +1,5 @@
 <template>
     <router-link :to="'/games/' + game.ID" tag="div">
-        <!-- eslint-disable-next-line vue/valid-v-on -->
         <v-list-tile @click="">
             <v-list-tile-content>
                 <v-list-tile-title>{{gameDescriptionOrUntitled()}}</v-list-tile-title>
@@ -13,20 +12,6 @@
             </v-list-tile-action>
         </v-list-tile>
     </router-link>
-    <!-- <v-container grid-list-md fluid class="gameListItemContainer">
-        <v-layout row>
-            <v-flex xs1>
-                TODO: Reinstitute map as a hover.
-                <diplomacy-map :readonly="true" :game="game" :phase="phase"></diplomacy-map>
-            </v-flex>
-
-            Making router-link a flexbox so the whole region triggers a redirect.
-            <router-link :to="'/games/' + game.ID" class="flex xs11 gameDetails">
-                <div class="display-1">{{game.Desc || 'Untitled game'}}</div>
-                <div class="subheading">{{fullPhaseDescriptionOrGameStatus()}}</div>
-            </router-link>
-        </v-layout>
-    </v-container>-->
 </template>
 
 <script>

@@ -1,11 +1,13 @@
 import MutationTypes from '../mutation-types';
 
 const state = {
-    user: { }
+    user: {
+        Name: '?'
+    }
 };
 
 const getters = {
-    currentUserID: state => state.user.ID
+    user: state => state.user
 };
 
 const mutations = {

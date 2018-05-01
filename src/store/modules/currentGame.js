@@ -29,7 +29,7 @@ const getters = {
         const parser = new DOMParser();
         return parser.parseFromString(getters.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
     },
-    currentUserAsPlayer: (state, getters) => state.currentGame.Members.find(m => m.Id === getters.currentUserID)
+    currentUserAsPlayer: (state, getters) => state.currentGame.Members.find(m => m.Id === getters.user.ID)
 };
 
 const mutations = {

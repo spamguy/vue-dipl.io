@@ -50,6 +50,7 @@ module.exports = {
                 allowFirstLine: true
             }
         }],
-        'vue/mustache-interpolation-spacing': [2, 'never']
+        'vue/mustache-interpolation-spacing': [2, 'never'],
+        'vue/valid-v-on': 'off'
     }
 };

@@ -10,7 +10,7 @@
             <v-tabs-items>
                 <v-tab-item id="Active">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!activeGames.length">Nothing here.</div>
+                    <div v-else-if="!activeGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in activeGames"
                                         :key="game.Properties.Id"
@@ -19,7 +19,7 @@
                 </v-tab-item>
                 <v-tab-item id="Waiting">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!waitingGames.length">Nothing here.</div>
+                    <div v-else-if="!waitingGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in waitingGames"
                                         :key="game.Properties.Id"
@@ -28,7 +28,7 @@
                 </v-tab-item>
                 <v-tab-item id="Finished">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!finishedGames.length">Nothing here.</div>
+                    <div v-else-if="!finishedGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in finishedGames"
                                         :key="game.Properties.Id"

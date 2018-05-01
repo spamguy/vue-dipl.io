@@ -4,6 +4,25 @@
             <v-toolbar-title class="white--text">
                 <span>dipl.io</span>
             </v-toolbar-title>
+            <v-spacer />
+            <v-menu>
+                <v-btn slot="activator"
+                       color="red"
+                       dark
+                       small
+                       depressed
+                       fab>
+                    <span class="white--text">{{user.Name[0]}}</span>
+                </v-btn>
+                <v-list>
+                    <v-list-tile v-for="(item, i) in menuItems"
+                                 :key="i"
+                                 :to="item.path"
+                                 @click="">
+                        <v-list-tile-title>{{item.text}}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
         </v-toolbar>
 
         <v-content v-if="variantsAreFetched">
@@ -33,6 +52,11 @@ export default {
             { text: 'My games', path: '/profile/games' }
         ]
     }),
+    computed: {
+        ...vuex.mapGetters([
+            'user'
+        ])
+    },
     async created() {
         await this.setVariants();
         this.setUser(await Game.getUserData());
