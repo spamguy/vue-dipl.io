@@ -4,7 +4,7 @@ import Vue from 'vue';
 import auth from '@/utils/auth';
 
 let Client = axios.create({
-    baseURL: process.env.DIPLICITY_ENDPOINT,
+    baseURL: process.env.VUE_APP_DIPLICITY_ENDPOINT,
     headers: {
         Accept: 'application/json'
     }

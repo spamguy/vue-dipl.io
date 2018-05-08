@@ -146,13 +146,15 @@ export default {
         ]),
         viewBox() {
             let width = 0,
-                height = 0;
+                height = 0,
+                viewBox = null;
             if (this.mapDefinition) {
                 width = this.mapDefinition.getAttribute('width');
                 height = this.mapDefinition.getAttribute('height');
+                viewBox = this.mapDefinition.getAttribute('viewBox');
             }
 
-            return `0 0 ${width} ${height}`;
+            return viewBox || `0 0 ${width} ${height}`;
         },
         SCs() {
             return this.gameVariant.Graph ? Object.values(this.gameVariant.Graph.Nodes).filter(n => n.SC) : [];

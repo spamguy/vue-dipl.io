@@ -22,8 +22,8 @@ export default {
     computed: {
         unitIcon() {
             switch (this.unit.Unit.Type) {
-            case 'Army': return '/static/army.svg#army';
-            case 'Fleet': return '/static/fleet.svg#fleet';
+            case 'Army': return '/army.svg#army';
+            case 'Fleet': return '/fleet.svg#fleet';
             default: return '';
             }
         },

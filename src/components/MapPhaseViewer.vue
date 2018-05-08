@@ -1,13 +1,17 @@
 <template>
     <div class="elevation-1">
-        <v-toolbar dark dense flat color="primary">
+        <v-toolbar v-if="phase"
+                   dark
+                   dense
+                   flat
+                   color="primary">
             <v-toolbar-title>{{fullPhaseDescription()}}</v-toolbar-title>
             <v-spacer />
             <map-order-menu v-if="game.Started && !game.Finished && phase.PhaseOrdinal === lastPhaseOrdinal"
                             :phase-type="phase.Type" />
         </v-toolbar>
         <diplomacy-map :readonly="false" />
-        <v-toolbar v-if="game.Started"
+        <v-toolbar v-if="phase && game.Started"
                    dark
                    dense
                    flat

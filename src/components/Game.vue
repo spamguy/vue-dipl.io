@@ -64,7 +64,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['game', 'gameVariant', 'mapDefinition', 'currentUserAsPlayer', 'gameIsLoaded']),
+        ...mapGetters(['game', 'gameVariant', 'currentUserAsPlayer', 'gameIsLoaded']),
         layout() {
             const binding = { };
 

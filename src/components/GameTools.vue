@@ -5,7 +5,7 @@
         <v-tab :disabled="!game.Started" href="#actions">Actions</v-tab>
         <v-tabs-items>
             <v-tab-item id="orders">
-                <v-list v-if="game.Started" subheader dense>
+                <v-list v-if="phase" subheader dense>
                     <div v-for="power in gameVariant.Nations" :key="power + 'UnitSection'">
                         <v-subheader class="nationSubheader">{{power}}</v-subheader>
                         <province-list-item v-for="unit in phase.Units"

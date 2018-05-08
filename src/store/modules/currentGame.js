@@ -26,6 +26,9 @@ const getters = {
             : { };
     },
     mapDefinition: (state, getters) => {
+        if (!getters.gameVariant.MapString)
+            return null;
+
         const parser = new DOMParser();
         return parser.parseFromString(getters.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
     },
