@@ -25,13 +25,6 @@ const getters = {
             ? rootGetters.getVariant(state.currentGame.Variant)
             : { };
     },
-    mapDefinition: (state, getters) => {
-        if (!getters.gameVariant.MapString)
-            return null;
-
-        const parser = new DOMParser();
-        return parser.parseFromString(getters.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
-    },
     currentUserAsPlayer: (state, getters) => state.currentGame.Members.find(m => m.Id === getters.user.ID)
 };
 
@@ -51,6 +44,13 @@ const actions = {
         commit(MutationTypes.SET_CURRENT_GAME_PHASES, phases);
 
         return game;
+    },
+
+    clearGameData: ({ commit }) => {
+        commit(MutationTypes.SET_CURRENT_GAME, { Members: [] });
+        commit(MutationTypes.SET_CURRENT_GAME_PHASES, []);
+        commit(MutationTypes.SET_CURRENT_GAME_ORDERS, []);
+        commit(MutationTypes.SET_CURRENT_GAME_ORDINAL, 1);
     },
 
     setOrdinal: async({ commit, state }, { ID, ordinal }) => {

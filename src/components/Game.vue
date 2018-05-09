@@ -84,6 +84,10 @@ export default {
                 await this.setOrdinal({ ID: to.params.ID, ordinal: to.params.ordinal });
         }
     },
+    beforeRouteLeave: function(to, from, next) {
+        this.clearGameData();
+        next();
+    },
     async created() {
         if (this.$route.query.new)
             this.isNew = true;
@@ -93,7 +97,7 @@ export default {
         await this.setOrdinal({ ID, ordinal });
     },
     methods: {
-        ...mapActions(['setGameData', 'setOrdinal'])
+        ...mapActions(['setGameData', 'clearGameData', 'setOrdinal'])
     }
 };
 </script>

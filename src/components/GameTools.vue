@@ -14,7 +14,7 @@
                                             :unit="unit" />
                     </div>
                 </v-list>
-                <h1 v-else-if="game.Started === false">The game has not started yet.</h1>
+                <div v-else-if="game.Started === false" class="headline text-xs-center my-5">The game has not started yet.</div>
             </v-tab-item>
             <v-tab-item id="press">
                 <v-card>there</v-card>

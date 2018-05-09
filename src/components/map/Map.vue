@@ -141,8 +141,7 @@ export default {
             'gameIsLoaded',
             'phase',
             'gameVariant',
-            'orders',
-            'mapDefinition'
+            'orders'
         ]),
         viewBox() {
             let width = 0,
@@ -158,6 +157,13 @@ export default {
         },
         SCs() {
             return this.gameVariant.Graph ? Object.values(this.gameVariant.Graph.Nodes).filter(n => n.SC) : [];
+        },
+        mapDefinition() {
+            if (!this.gameVariant.MapString)
+                return null;
+
+            const parser = new DOMParser();
+            return parser.parseFromString(this.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
         }
     },
     mounted() {
