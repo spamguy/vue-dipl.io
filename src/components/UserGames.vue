@@ -58,8 +58,6 @@ export default {
     }),
     async beforeRouteEnter(to, from, next) {
         next(async(vm) => {
-            if (to.query.token)
-                vm.$localStorage.set('token', to.query.token);
             const result = await Promise.all([
                 Game.getAllActiveGamesForCurrentUser(),
                 Game.getAllStagingGamesForCurrentUser(),

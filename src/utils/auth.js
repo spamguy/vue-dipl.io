@@ -8,8 +8,7 @@ export default {
             router.push('profile/games');
         }
         else {
-            window.location = process.env.VUE_APP_DIPLICITY_ENDPOINT + '/Auth/Login?redirect-to=' +
-                    encodeURIComponent(process.env.VUE_APP_DOMAIN + '/profile/games');
+            window.location = `${process.env.VUE_APP_DIPLICITY_ENDPOINT}/Auth/Login?redirect-to=${encodeURIComponent(process.env.VUE_APP_DOMAIN)}/login`;
         }
     },
 
