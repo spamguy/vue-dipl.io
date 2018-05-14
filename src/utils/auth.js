@@ -9,7 +9,7 @@ export default {
         }
         else {
             window.location = process.env.VUE_APP_DIPLICITY_ENDPOINT + '/Auth/Login?redirect-to=' +
-                    encodeURIComponent(process.env.BASE_URL + '/profile/games');
+                    encodeURIComponent(process.env.VUE_APP_DOMAIN + '/profile/games');
         }
     },
 

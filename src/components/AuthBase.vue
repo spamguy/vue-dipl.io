@@ -12,7 +12,7 @@
                        small
                        depressed
                        fab>
-                    <span class="white--text">{{user.Name[0]}}</span>
+                    <v-icon>more_vert</v-icon>
                 </v-btn>
                 <v-list>
                     <v-list-tile v-for="(item, i) in menuItems"
