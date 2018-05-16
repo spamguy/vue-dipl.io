@@ -2,12 +2,19 @@ import MutationTypes from '../mutation-types';
 
 const state = {
     user: {
-        Name: '?'
+        Glicko: {
+            PracticalRating: 0
+        },
+        User: {
+            Email: null,
+            Name: null
+        }
     }
 };
 
 const getters = {
-    user: state => state.user
+    user: state => state.user.User,
+    userStats: state => state.user.Glicko
 };
 
 const mutations = {

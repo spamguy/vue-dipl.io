@@ -1,19 +1,11 @@
 <template>
     <div>
         <v-toolbar fixed clipped-right app class="primary">
-            <v-toolbar-title class="white--text">
-                <span>dipl.io</span>
-            </v-toolbar-title>
-            <v-spacer />
-            <v-menu>
-                <v-btn slot="activator"
-                       color="red"
-                       dark
-                       small
-                       depressed
-                       fab>
-                    <v-icon>more_vert</v-icon>
-                </v-btn>
+            <v-menu v-model="showMenu" absolute>
+                <v-layout slot="activator" class="white--text" column v-ripple>
+                    <v-flex>{{userLabel}}</v-flex>
+                    <v-flex v-if="userStats.PracticalRating > 0">{{userStats.PracticalRating}} points</v-flex>
+                </v-layout>
                 <v-list>
                     <v-list-tile v-for="(item, i) in menuItems"
                                  :key="i"
@@ -21,8 +13,16 @@
                                  @click="">
                         <v-list-tile-title>{{item.text}}</v-list-tile-title>
                     </v-list-tile>
+                    <v-divider />
+                    <v-list-tile key="logOff" @click="logOut">
+                        <v-list-tile-title>Log off</v-list-tile-title>
+                    </v-list-tile>
                 </v-list>
             </v-menu>
+            <v-spacer />
+            <v-toolbar-title class="white--text">
+                <span>dipl.io</span>
+            </v-toolbar-title>
         </v-toolbar>
 
         <v-content v-if="variantsAreFetched">
@@ -46,6 +46,7 @@ import User from '@/api/user';
 export default {
     name: 'AuthBase',
     data: () => ({
+        showMenu: false,
         variantsAreFetched: false,
         menuItems: [
             { text: 'New game', path: '/games/new' },
@@ -54,8 +55,12 @@ export default {
     }),
     computed: {
         ...vuex.mapGetters([
-            'user'
-        ])
+            'user',
+            'userStats'
+        ]),
+        userLabel() {
+            return this.user.Email || this.user.Name;
+        }
     },
     async created() {
         // Get/cache all variant data. Requires no auth.
@@ -65,7 +70,6 @@ export default {
         const user = await User.getUser();
 
         // Get/cache user and user stats.
-        debugger;
         this.setUser(await User.getUserAndStats(user.User.Id));
 
 

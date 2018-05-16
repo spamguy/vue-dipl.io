@@ -25,7 +25,7 @@ const getters = {
             ? rootGetters.getVariant(state.currentGame.Variant)
             : { };
     },
-    currentUserAsPlayer: (state, getters) => state.currentGame.Members.find(m => m.Id === getters.user.ID)
+    currentUserAsPlayer: (state, getters) => state.currentGame.Members.find(m => m.User.Id === getters.user.Id)
 };
 
 const mutations = {

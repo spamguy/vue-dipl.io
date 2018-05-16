@@ -68,7 +68,6 @@ export default {
     },
     methods: {
         setData(result) {
-            debugger;
             this.activeGames = result[0];
             this.waitingGames = result[1];
             this.finishedGames = result[2];
