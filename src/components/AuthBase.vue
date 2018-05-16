@@ -41,7 +41,7 @@
 import vuex from 'vuex';
 
 import Auth from '@/utils/auth';
-import Game from '@/api/game';
+import User from '@/api/user';
 
 export default {
     name: 'AuthBase',
@@ -58,8 +58,16 @@ export default {
         ])
     },
     async created() {
+        // Get/cache all variant data. Requires no auth.
         await this.setVariants();
-        this.setUser(await Game.getUserData());
+
+        // Get the current user ID. Sadly redundant to next call, but required.
+        const user = await User.getUser();
+
+        // Get/cache user and user stats.
+        debugger;
+        this.setUser(await User.getUserAndStats(user.User.Id));
+
 
         // Flag the view to render content that may need variant data.
         this.$nextTick(() => { this.variantsAreFetched = true; });

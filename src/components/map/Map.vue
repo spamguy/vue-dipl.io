@@ -92,11 +92,11 @@
 
             <g v-if="orders" id="orderLayer">
                 <hold-order v-for="order in orders"
-                            v-if="order.Properties.Parts[1] === 'Hold'"
-                            :key="order.Properties.Parts[0] + 'Hold'"
-                            :province="order.Properties.Parts[0]"
-                            :x="provinces[order.Properties.Parts[0]].x"
-                            :y="provinces[order.Properties.Parts[0]].y" />
+                            v-if="order.Parts[1] === 'Hold'"
+                            :key="order.Parts[0] + 'Hold'"
+                            :province="order.Parts[0]"
+                            :x="provinces[order.Parts[0]].x"
+                            :y="provinces[order.Parts[0]].y" />
             </g>
         </svg>
 

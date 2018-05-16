@@ -15,7 +15,7 @@ const getters = {
     game: (state) => state.currentGame,
     gameIsLoaded: (state) => state.currentGame.Variant !== undefined,
     phase: (state) => state.phases.length
-        ? state.phases[state.phaseOrdinal - 1].Properties
+        ? state.phases[state.phaseOrdinal - 1]
         : null,
     orders: (state) => state.orders,
     lastPhaseOrdinal: (state) => state.phases.length,

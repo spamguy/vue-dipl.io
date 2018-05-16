@@ -32,9 +32,9 @@ export default {
     }),
     async created() {
         const phases = await Phase.getPhasesForGame(this.game.ID);
-        this.phase = Phase.getCurrentPhaseForGame(phases);
-        if (this.phase)
-            this.phase = this.phase.Properties;
+
+        // Get last (current) phase.
+        this.phase = phases[phases.length - 1];
     }
 };
 </script>

@@ -52,9 +52,9 @@ export default {
                 return;
 
             let result = await Game.createGame(this.game);
-            if (result.data) {
+            if (result) {
                 this.$router.push({
-                    path: '/games/' + result.data.Properties.ID,
+                    path: '/games/' + result.data.ID,
                     query: { new: '1' }
                 });
             }

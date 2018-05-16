@@ -29,14 +29,23 @@ Client.interceptors.request.use(function(config) {
     return Promise.reject(error);
 });
 
-Client.interceptors.response.use(config => { return config; }, error => {
+function extractDataFromResponse(response) {
+    // Most API responses have a Properties wrapper that needs to be stripped.
+    let data = response.data;
+    if (data.Properties)
+        data = response.data.Properties;
+
+    // If the desired data is an array, elements probably have a Properties wrapper too.
+    if (Array.isArray(data))
+        data = data.map(item => item.Properties); 
+
+    return data;
+}
+
+Client.interceptors.response.use(extractDataFromResponse, error => {
     if (!error.response)
         auth.logOut();
     return Promise.reject(error);
 });
-
-Client.extractData = function(result) {
-    return result.data.Properties;
-};
 
 export { Client };

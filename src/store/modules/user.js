@@ -11,7 +11,7 @@ const getters = {
 };
 
 const mutations = {
-    [MutationTypes.SET_USER]: (state, user) => (state.user = user.data.Properties.User)
+    [MutationTypes.SET_USER]: (state, user) => (state.user = user)
 };
 
 const actions = {

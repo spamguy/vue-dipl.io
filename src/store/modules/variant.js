@@ -26,14 +26,13 @@ const actions = {
 };
 
 const mutations = {
-    [MutationTypes.SET_VARIANTS]: (state, variants) => {
-        state.variants = variants.map(v => v.Properties);
-    },
+    [MutationTypes.SET_VARIANTS]: (state, variants) => (state.variants = variants),
+
     [MutationTypes.SET_VARIANT_MAP]: (state, payload) => {
         // HACK: Can't use getters inside mutations. Copy/paste from getters.getVariant().
         let variant = state.variants.find(v => v.Name === payload.name);
 
-        variant.MapString = payload.map.data;
+        variant.MapString = payload.map;
     }
 };
 

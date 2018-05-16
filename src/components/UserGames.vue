@@ -13,8 +13,8 @@
                     <div v-else-if="!activeGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in activeGames"
-                                        :key="game.Properties.Id"
-                                        :game="game.Properties" />
+                                        :key="game.Id"
+                                        :game="game" />
                     </v-list>
                 </v-tab-item>
                 <v-tab-item id="Waiting">
@@ -22,8 +22,8 @@
                     <div v-else-if="!waitingGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in waitingGames"
-                                        :key="game.Properties.Id"
-                                        :game="game.Properties" />
+                                        :key="game.Id"
+                                        :game="game" />
                     </v-list>
                 </v-tab-item>
                 <v-tab-item id="Finished">
@@ -31,8 +31,8 @@
                     <div v-else-if="!finishedGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in finishedGames"
-                                        :key="game.Properties.Id"
-                                        :game="game.Properties" />
+                                        :key="game.Id"
+                                        :game="game" />
                     </v-list>
                 </v-tab-item>
             </v-tabs-items>
@@ -68,6 +68,7 @@ export default {
     },
     methods: {
         setData(result) {
+            debugger;
             this.activeGames = result[0];
             this.waitingGames = result[1];
             this.finishedGames = result[2];

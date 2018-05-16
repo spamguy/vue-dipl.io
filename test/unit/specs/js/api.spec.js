@@ -17,13 +17,6 @@ describe('API', () => {
         mock.restore();
     });
 
-    it('extracts data from a response object', () => {
-        const bogusResponse = {
-            data: { Properties: [{ }] }
-        };
-        expect(Client.extractData(bogusResponse)).to.be.an('Array');
-    });
-
     describe('Game', () => {
         it('fetches finished games', async() => {
             mock.onGet('Games/My/Finished').reply(200, {
