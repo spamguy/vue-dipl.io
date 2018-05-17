@@ -97,6 +97,13 @@
                             :province="order.Parts[0]"
                             :x="provinces[order.Parts[0]].x"
                             :y="provinces[order.Parts[0]].y" />
+                <move-order v-else-if="order.Parts[1] === 'Move'"
+                            :key="order.Parts[0] + 'Move'"
+                            :province="order.Parts[0]"
+                            :origin-x="provinces[order.Parts[0]].x"
+                            :origin-y="provinces[order.Parts[0]].y"
+                            :target-x="provinces[order.Parts[2]].x"
+                            :target-y="provinces[order.Parts[2]].y" />
             </g>
         </svg>
 
@@ -115,11 +122,13 @@ import MapSupplyCentre from './MapSupplyCentre';
 import MapUnit from './MapUnit';
 
 import HoldOrder from './orders/HoldOrder';
+import MoveOrder from './orders/MoveOrder';
 
 export default {
     name: 'DiplomacyMap',
     components: {
         'hold-order': HoldOrder,
+        'move-order': MoveOrder,
         'map-province': MapProvince,
         'map-supply-centre': MapSupplyCentre,
         'map-unit': MapUnit
@@ -221,7 +230,7 @@ export default {
 
                 // Get the physical centre of all other provinces.
                 [...otherProvinces.children].forEach(sc => {
-                    const bbRect = sc.getBoundingClientRect();
+                    const bbRect = sc.getBBox();
                     const scID = that.getSupplyCentreID(sc);
 
                     that.provinces[scID] = {
@@ -231,6 +240,9 @@ export default {
                         width: bbRect.width
                     };
                 });
+
+                // Apply phase resolutions to dictionary.
+                this.phase.Resolutions.forEach(res => (that.provinces[res.Province].resolution = res.Resolution));
 
                 // Get each province's d (SVG path).
                 [...provincePathsNode.children].forEach(p => (that.provinces[p.id].path = p.getAttribute('d')));
