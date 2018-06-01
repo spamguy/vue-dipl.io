@@ -5,6 +5,8 @@ import Home from '@/components/Home';
 import Login from '@/components/Login';
 import AuthBase from '@/components/AuthBase';
 import UserGames from '@/components/UserGames';
+import OpenGames from '@/components/OpenGames';
+import ArchivedGames from '@/components/ArchivedGames';
 import Game from '@/components/Game';
 import NewGame from '@/components/NewGame';
 
@@ -25,6 +27,12 @@ const router = new Router({
                 }, {
                     path: '/games/new',
                     component: NewGame
+                }, {
+                    path: '/games/open',
+                    component: OpenGames
+                }, {
+                    path: '/games',
+                    component: ArchivedGames
                 }, {
                     name: 'game',
                     path: '/games/:ID/:ordinal?',

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import firebase from 'firebase';
 
 let messaging;
@@ -11,7 +12,7 @@ navigator.serviceWorker.register('/firebase-messaging-sw.js')
         databaseURL: process.env.VUE_APP_FB_DATABASE_URL,
         // projectId: process.env.VUE_APP_FB_PROJECT_ID,
         storageBucket: process.env.VUE_APP_FB_STORAGE_BUCKET,
-        messagingSenderId: process.env.VUE_APP_FB_MESSAGING_SENDER_ID
+        messagingSenderId: process.env.VUE_APP_FB_MESSAGING_SENDER_ID 
     });
 
     messaging = firebase.messaging().useServiceWorker(sw);

@@ -9,5 +9,23 @@ export default {
 
     getGame: gameID => Client.get('Game/' + gameID),
 
-    createGame: game => Client.post('/Game', game)
+    createGame: game => Client.post('/Game', game),
+
+    /**
+     * Gets all open (unstarted) games.
+     * @returns {Promise<object[]>} A list of games.
+     */
+    getAllOpenGames: () => Client.get('Games/Open'),
+
+    /**
+     * Gets all finished games.
+     * @returns {Promise<object[]>} A list of games.
+     */
+    getAllFinishedGames: () => Client.get('Games/Finished'),
+
+    /**
+     * Gets all active games.
+     * @returns {Promise<object[]>} A list of games.
+     */
+    getAllActiveGames: () => Client.get('Games/Started')
 };

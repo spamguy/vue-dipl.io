@@ -40,6 +40,9 @@
   },
   "eslintConfig": {
     "root": true,
+    "parserOptions": {
+      "ecmaVersion": 8
+    },
     "extends": [
       "semistandard",
       "plugin:vue/essential",
@@ -79,10 +82,6 @@
         {
           "defaultAssignment": false
         }
-      ],
-      "max-nested-callbacks": [
-        "error",
-        5
       ],
       "array-bracket-spacing": [
         "error",

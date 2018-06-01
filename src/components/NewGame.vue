@@ -51,10 +51,10 @@ export default {
             if (!this.$refs.form.validate())
                 return;
 
-            let result = await Game.createGame(this.game);
-            if (result) {
+            let newGame = await Game.createGame(this.game);
+            if (newGame) {
                 this.$router.push({
-                    path: '/games/' + result.data.ID,
+                    path: '/games/' + newGame.ID,
                     query: { new: '1' }
                 });
             }

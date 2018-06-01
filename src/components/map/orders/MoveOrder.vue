@@ -40,20 +40,20 @@ export default {
             * @return {String}    An SVG path.
             */
         arcPath() {
-            const LINK_UNIT_PADDING = 1,
-                dx = this.targetX - this.originX,
-                dy = this.targetY - this.originY,
-                dr = Math.sqrt(dx * dx + dy * dy),
-                offsetX = (dx * LINK_UNIT_PADDING) / dr,
-                offsetY = (dy * LINK_UNIT_PADDING) / dr;
+            const LINK_UNIT_PADDING = 1;
+            const dx = this.targetX - this.originX;
+            const dy = this.targetY - this.originY;
+            const dr = Math.sqrt(dx * dx + dy * dy);
+            const offsetX = (dx * LINK_UNIT_PADDING) / dr;
+            const offsetY = (dy * LINK_UNIT_PADDING) / dr;
 
             return `M${this.originX},${this.originY}A${dr},${dr} 0 0,1 ${this.targetX - offsetX},${this.targetY - offsetY}`;
         },
 
         markerEnd() {
             // See CSS file for why separate markers exist for failed orders.
-            const fullPath = this.$route.fullPath,
-                    failedClass = (this.failed && 'failed') || '';
+            const fullPath = this.$route.fullPath;
+            const failedClass = (this.failed && 'failed') || '';
             return `url(${fullPath}#${failedClass}move)`;
         }
     }

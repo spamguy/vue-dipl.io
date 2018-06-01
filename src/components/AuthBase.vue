@@ -50,7 +50,9 @@ export default {
         variantsAreFetched: false,
         menuItems: [
             { text: 'New game', path: '/games/new' },
-            { text: 'My games', path: '/profile/games' }
+            { text: 'Join a game', path: '/games/open' },
+            { text: 'My games', path: '/profile/games' },
+            { text: 'Game archive', path: '/games' }
         ]
     }),
     computed: {
