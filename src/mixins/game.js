@@ -24,6 +24,8 @@ export default {
 
         fullPhaseDescriptionOrGameStatus() {
             return this.fullGameStatus() || this.fullPhaseDescription();
-        }
+        },
+
+        getUserAsPlayer: (game, user) => game.Members.find(m => m.User.Id === user.Id)
     }
 };

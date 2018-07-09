@@ -1,17 +1,31 @@
 <template>
-    <router-link :to="'/games/' + game.ID" tag="div">
-        <v-list-tile @click="">
-            <v-list-tile-content>
-                <v-list-tile-title>{{gameDescriptionOrUntitled()}}</v-list-tile-title>
-                <v-list-tile-sub-title>{{fullPhaseDescriptionOrGameStatus()}}</v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
-                <v-btn icon ripple>
-                    <v-icon color="grey lighten-1">info</v-icon>
-                </v-btn>
-            </v-list-tile-action>
-        </v-list-tile>
-    </router-link>
+    <v-list-tile @click="">
+        <router-link :to="'/games/' + game.ID" tag="v-list-tile-content">
+            <v-list-tile-title>{{gameDescriptionOrUntitled()}}</v-list-tile-title>
+            <v-list-tile-sub-title>{{fullPhaseDescriptionOrGameStatus()}}</v-list-tile-sub-title>
+        </router-link>
+        <v-list-tile-action>
+            <v-dialog v-model="isDialogActive"
+                      :fullscreen="$vuetify.breakpoint.xsOnly">
+                <v-btn slot="activator" color="primary" dark>Info</v-btn>
+                <v-card>
+                    <v-card-title>
+                        <span class="headline">Details: {{gameDescriptionOrUntitled()}}</span>
+                    </v-card-title>
+                    <v-card-text>
+                        <span>hello</span>
+                    </v-card-text>
+                    <v-card-actions>
+                        <v-spacer />
+                        <v-btn @click.native="joinGame()" flat>Join</v-btn>
+                        <v-btn color="primary"
+                               @click.native="isDialogActive = false"
+                               flat>OK</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </v-list-tile-action>
+    </v-list-tile>
 </template>
 
 <script>
@@ -28,8 +42,14 @@ export default {
         }
     },
     data: () => ({
-        phase: null
+        phase: null,
+        isDialogActive: false
     }),
+    methods: {
+        joinGame() {
+
+        }
+    },
     async created() {
         const phases = await Phase.getPhasesForGame(this.game.ID);
 

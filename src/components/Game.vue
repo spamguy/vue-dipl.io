@@ -8,10 +8,10 @@
                         {{fullGameStatus()}}
                     </div>
 
-                    <div v-if="game.Started && currentUserAsPlayer">
-                        Playing as {{currentUserAsPlayer.Nation}}
+                    <div v-if="game.Started && currentPlayer">
+                        Playing as {{currentPlayer.Nation}}
                     </div>
-                    <div v-else-if="!game.Started && currentUserAsPlayer">
+                    <div v-else-if="!game.Started && currentPlayer">
                         (Joined; waiting for {{missingPlayers}}...)
                     </div>
                     <div v-else>
@@ -60,11 +60,12 @@ export default {
     data() {
         return {
             isNew: false,
-            colour: '#000'
+            colour: '#000',
+            currentPlayer: null
         };
     },
     computed: {
-        ...mapGetters(['game', 'gameVariant', 'currentUserAsPlayer', 'gameIsLoaded']),
+        ...mapGetters(['game', 'user', 'gameVariant', 'gameIsLoaded']),
         layout() {
             const binding = { };
 
@@ -95,6 +96,8 @@ export default {
         const { ID, ordinal } = this.$route.params;
         await this.setGameData(ID);
         await this.setOrdinal({ ID, ordinal });
+
+        this.currentPlayer = this.getUserAsPlayer(this.game, this.user);
     },
     methods: {
         ...mapActions(['setGameData', 'clearGameData', 'setOrdinal'])
