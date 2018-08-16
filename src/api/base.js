@@ -15,7 +15,7 @@ Client.interceptors.request.use(function(config) {
     const token = Vue.localStorage.get('token');
 
     // /variants does not need authentication.
-    if (config.path === '/variants')
+    if (config.url.toLowerCase() === 'variants')
         return config;
 
     // Assumed: fakeID or token is defined. This should be guaranteed by router's beforeEach().
