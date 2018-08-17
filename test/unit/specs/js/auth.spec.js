@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueLocalStorage from 'vue-localstorage';
-import Auth from '@/utils/auth';
+import Auth from '@/utils/Auth';
 
 Vue.use(VueLocalStorage);
 

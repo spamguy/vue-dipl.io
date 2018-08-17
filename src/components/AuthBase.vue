@@ -40,7 +40,7 @@
 <script>
 import vuex from 'vuex';
 
-import Auth from '@/utils/auth';
+import Auth from '@/utils/Auth';
 import User from '@/api/user';
 
 export default {

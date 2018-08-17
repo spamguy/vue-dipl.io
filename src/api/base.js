@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-import auth from '@/utils/auth';
+import auth from '@/utils/Auth';
 
 let Client = axios.create({
     baseURL: process.env.VUE_APP_DIPLICITY_ENDPOINT,

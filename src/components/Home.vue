@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Auth from '@/utils/auth';
+import Auth from '@/utils/Auth';
 
 export default {
     name: 'Home',

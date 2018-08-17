@@ -37,17 +37,20 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-tabs>
+        <game-details-dialog />
     </div>
 </template>
 
 <script>
 import Game from '@/api/game';
 import GameListItem from '@/components/GameListItem';
+import GameDetailsDialog from '@/components/GameDetailsDialog';
 
 export default {
     name: 'UserGames',
     components: {
-        'game-list-item': GameListItem
+        'game-list-item': GameListItem,
+        'game-details-dialog': GameDetailsDialog
     },
     data: () => ({
         tabs: ['Active', 'Waiting', 'Finished'],
@@ -57,6 +60,7 @@ export default {
         loading: true
     }),
     async beforeRouteEnter(to, from, next) {
+        // TODO: Lazy load tab data. Finished game data in particular can be heavy.
         next(async(vm) => {
             const result = await Promise.all([
                 Game.getAllActiveGamesForCurrentUser(),

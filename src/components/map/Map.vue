@@ -116,7 +116,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Colours from '@/utils/colours';
+import Colours from '@/utils/Colours';
 import MapProvince from './MapProvince';
 import MapSupplyCentre from './MapSupplyCentre';
 import MapUnit from './MapUnit';

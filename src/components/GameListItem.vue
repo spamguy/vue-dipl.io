@@ -5,30 +5,13 @@
             <v-list-tile-sub-title>{{fullPhaseDescriptionOrGameStatus()}}</v-list-tile-sub-title>
         </router-link>
         <v-list-tile-action>
-            <v-dialog v-model="isDialogActive"
-                      :fullscreen="$vuetify.breakpoint.xsOnly">
-                <v-btn slot="activator" color="primary" dark>Info</v-btn>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">Details: {{gameDescriptionOrUntitled()}}</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <span>hello</span>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer />
-                        <v-btn @click.native="joinGame()" flat>Join</v-btn>
-                        <v-btn color="primary"
-                               @click.native="isDialogActive = false"
-                               flat>OK</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+            <v-btn @click.prevent="openDetailsDialog(game.ID)">Info</v-btn>
         </v-list-tile-action>
     </v-list-tile>
 </template>
 
 <script>
+import EventBus from '@/utils/EventBus';
 import Phase from '@/api/phase';
 import GameMixin from '@/mixins/game';
 
@@ -42,12 +25,19 @@ export default {
         }
     },
     data: () => ({
-        phase: null,
-        isDialogActive: false
+        phase: null
     }),
     methods: {
         joinGame() {
 
+        },
+
+        /**
+         * Emits an event to open the details dialog.
+         * @param {String} gameID The game ID.
+         */
+        openDetailsDialog(gameID) {
+            EventBus.$emit('details', gameID);
         }
     },
     async created() {
