@@ -1,6 +1,6 @@
 <template>
-    <div :class="{'notStarted': !phase}">
-        <svg :id="game.ID" :viewBox="viewBox" height="100%" width="100%">
+    <div v-if="gameVariant" :class="{'notStarted': !phase}">
+        <svg :id="game.ID" :viewBox="gameVariant.MapDefinition.viewBox">
             <defs>
                 <marker id="move"
                         viewBox="0 -5 10 10"
@@ -68,18 +68,18 @@
             </defs>
 
             <g id="provinceLayer">
-                <map-province v-for="(provinceData, key) in provinces"
-                              :key="key"
-                              :id="key"
-                              :data="provinceData" />
+                <map-province v-for="(province, name) in gameVariant.Provinces"
+                              :key="name"
+                              :mapDefinition="gameVariant.MapDefinition.province(name)"
+                              :phaseContext="phase.SCs.find(sc => sc.Province === name)"
+                />
             </g>
 
             <g v-if="phase" id="supplyCentreLayer">
-                <map-supply-centre v-for="sc in SCs"
-                                   v-if="provinces[sc.Name]"
-                                   :key="sc.Name + 'Center'"
-                                   :id="sc.Name + 'Center'"
-                                   :data="provinces[sc.Name]" />
+                <map-supply-centre v-for="sc in phase.SCs"
+                                   :key="sc.Name"
+                                   :sc="sc"
+                />
             </g>
 
             <g v-if="phase" id="unitLayer">
@@ -116,7 +116,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Colours from '@/utils/Colours';
 import MapProvince from './MapProvince';
 import MapSupplyCentre from './MapSupplyCentre';
 import MapUnit from './MapUnit';
@@ -140,119 +139,19 @@ export default {
         }
     },
     data: () => ({
-        provinces: { },
+        provinces: [],
         mapDidError: false,
         mapErrorMessage: null
     }),
     computed: {
         ...mapGetters([
             'game',
-            'gameIsLoaded',
             'phase',
             'gameVariant',
             'orders'
-        ]),
-        viewBox() {
-            let width = 0,
-                height = 0,
-                viewBox = null;
-            if (this.mapDefinition) {
-                width = this.mapDefinition.getAttribute('width');
-                height = this.mapDefinition.getAttribute('height');
-                viewBox = this.mapDefinition.getAttribute('viewBox');
-            }
-
-            return viewBox || `0 0 ${width} ${height}`;
-        },
-        SCs() {
-            return this.gameVariant.Graph ? Object.values(this.gameVariant.Graph.Nodes).filter(n => n.SC) : [];
-        },
-        mapDefinition() {
-            if (!this.gameVariant.MapString)
-                return null;
-
-            const parser = new DOMParser();
-            return parser.parseFromString(this.gameVariant.MapString, 'image/svg+xml').getElementsByTagName('svg')[0];
-        }
-    },
-    mounted() {
-        // Game is not loaded yet.
-        if (!this.gameIsLoaded)
-            return;
-
-        // Set colour scheme for this variant.
-        this.colourSet = Colours.getColourSetForVariant(this.game.Variant);
-
-        const t0 = performance.now();
-        const svg = document.getElementById(this.game.ID);
-        const supplyCentreNode = svg.getElementById('provinceLayer');
-        const definitionGroups = this.mapDefinition.getElementsByTagName('g');
-
-        /*
-        * HTMLCollection is not iterable, but it is with a spread operator.
-        * Append groups before those declared explicitly in Map.vue.
-        */
-        [...definitionGroups].forEach(g => {
-            let clone = document.importNode(g, true);
-            svg.insertBefore(clone, supplyCentreNode);
-        });
-
-        this.getProvinceData(svg);
-
-        // Force update so SVG picks up on new province data.
-        this.$forceUpdate();
-
-        const t1 = performance.now();
-        console.log('SVG rendered in ' + (t1 - t0) + ' ms');
+        ])
     },
     methods: {
-        getProvinceData(svg) {
-            let supplyCentres = svg.getElementById('supply-centers'),
-                otherProvinces = svg.getElementById('province-centers'),
-                provincePathsNode = svg.getElementById('provinces'),
-                that = this;
-
-            // Get each supply centre's coordinates.
-            if (this.phase) {
-                [...supplyCentres.children].forEach(scSVG => {
-                    const bbRect = scSVG.getBBox();
-                    const scID = that.getSupplyCentreID(scSVG);
-                    const sc = this.phase.SCs.find(sc => sc.Province === scID);
-
-                    that.provinces[scID] = {
-                        x: bbRect.x,
-                        y: bbRect.y,
-                        height: bbRect.height,
-                        width: bbRect.width,
-                        colour: sc ? that.colourSet[sc.Owner] : '#fff'
-                    };
-                });
-
-                // Get the physical centre of all other provinces.
-                [...otherProvinces.children].forEach(sc => {
-                    const bbRect = sc.getBBox();
-                    const scID = that.getSupplyCentreID(sc);
-
-                    that.provinces[scID] = {
-                        x: bbRect.x + (bbRect.width / 2),
-                        y: bbRect.y + (bbRect.height / 2),
-                        height: bbRect.height,
-                        width: bbRect.width
-                    };
-                });
-
-                // Apply phase resolutions to dictionary.
-                this.phase.Resolutions.forEach(res => (that.provinces[res.Province].resolution = res.Resolution));
-
-                // Get each province's d (SVG path).
-                [...provincePathsNode.children].forEach(p => (that.provinces[p.id].path = p.getAttribute('d')));
-            }
-
-            // Nuke the original groups.
-            supplyCentres.remove();
-            otherProvinces.remove();
-            provincePathsNode.remove();
-        },
         getSupplyCentreID(sc) {
             return sc.id.substring(0, sc.id.length - 6);
         }

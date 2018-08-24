@@ -4,7 +4,8 @@ import Phase from '@/api/phase';
 
 const state = {
     currentGame: {
-        Members: []
+        Members: [],
+        Variant: null
     },
     phases: [],
     orders: [],
@@ -13,7 +14,6 @@ const state = {
 
 const getters = {
     game: (state) => state.currentGame,
-    gameIsLoaded: (state) => state.currentGame.Variant !== undefined,
     phase: (state) => state.phases.length
         ? state.phases[state.phaseOrdinal - 1]
         : null,
@@ -21,10 +21,8 @@ const getters = {
     lastPhaseOrdinal: (state) => state.phases.length,
     gameVariant: (state, getters, rootState, rootGetters) => {
         // Defer to an existing Vuex getter for this info.
-        return state.currentGame.Variant
-            ? rootGetters.getVariant(state.currentGame.Variant)
-            : { };
-    },
+        return state.currentGame.Variant ? rootGetters.getVariant(state.currentGame.Variant) : null;
+    }
 };
 
 const mutations = {

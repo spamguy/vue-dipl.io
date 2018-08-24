@@ -82,7 +82,6 @@ export default {
         ...vuex.mapActions([
             'toggleDrawer',
             'setVariants',
-            'setVariantMap',
             'setUser'
         ]),
         logOut: Auth.logOut

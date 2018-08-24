@@ -1,27 +1,36 @@
 <template>
-    <path :d="data.path"
+    <path :id="mapDefinition.name"
+          :d="mapDefinition.d"
           :style="provinceStyle"
           class="province"
     />
 </template>
 
 <script>
+import VariantMapProvince from '@/models/VariantMapProvince';
+import Colours from '@/utils/Colours';
+
 export default {
     name: 'MapProvince',
     props: {
-        data: {
-            type: Object,
+        mapDefinition: {
+            type: VariantMapProvince,
             required: true
+        },
+        phaseContext: {
+            type: Object
         }
     },
     computed: {
         provinceStyle() {
-            if (!this.data.colour)
-                return { fill: '#fff' };
+            if (!this.phaseContext)
+                return { };
+
+            const ownerColour = Colours.getColourSetForVariant(this.mapDefinition.Name)[this.phaseContext.Owner];
             return {
-                fill: this.data.colour,
-                stroke: this.data.colour,
-                strokeWidth: this.data.colour !== '#fff' ? '5px' : '0px'
+                fill: ownerColour,
+                stroke: ownerColour,
+                strokeWidth: ownerColour !== '#fff' ? '5px' : '0px'
             };
         }
     }
@@ -32,6 +41,10 @@ export default {
     .province
     {
         fill-opacity: 0.2;
+        fill: #fff;
+        stroke: black;
+        stroke-width: 1px;
+
         &:hover
         {
             fill: #eee;

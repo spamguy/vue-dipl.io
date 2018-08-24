@@ -1,5 +1,5 @@
 <template>
-    <div v-if="gameIsLoaded">
+    <div v-if="gameVariant">
         <v-layout column justify-center>
             <v-flex>
                 <div class="display-3 text-xs-center">{{gameDescriptionOrUntitled()}}</div>
@@ -65,7 +65,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['game', 'user', 'gameVariant', 'gameIsLoaded']),
+        ...mapGetters(['game', 'user', 'gameVariant']),
         layout() {
             const binding = { };
 
