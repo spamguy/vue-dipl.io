@@ -26,9 +26,8 @@ ${definition}`);
     VariantMap.prototype = {
         province(name) {
             const result = this.provinces.find(p => p.name === name);
-            if (!result) { debugger;
+            if (!result)
                 console.warn(`Province '${name}' was listed in variant '${_variantName}' but not found in corresponding map!`);
-            }
             return result;
         }
     }

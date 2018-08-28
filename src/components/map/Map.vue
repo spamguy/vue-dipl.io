@@ -71,7 +71,7 @@
                 <map-province v-for="(province, name) in gameVariant.Provinces"
                               :key="name"
                               :mapDefinition="gameVariant.MapDefinition.province(name)"
-                              :phaseContext="phase.SCs.find(sc => sc.Province === name)"
+                              :phaseContext="phase && phase.SCs.find(sc => sc.Province === name) || null"
                 />
             </g>
 
