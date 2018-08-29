@@ -21,26 +21,43 @@
 
         <v-dialog v-model="isInnerDialogActive" maxWidth="800">
             <v-card>
-                <v-card-title><span class="headline">Really join?</span></v-card-title>
                 <v-card-text>
                     <v-container grid-list-md>
                         <v-layout column>
-                            <v-flex xs12>
-                                <draggable class="nationBucket green lighten-4 elevation-5" :list="preferredNationBucket" :options="{group:'nations'}">
-                                    <v-chip v-for="preferred in preferredNationBucket" :key="preferred">{{preferred}}</v-chip>
-                                </draggable>
+                            <v-flex>
+                                <v-alert type="info" :value="true">
+                                    <span>By joining this game, you agree to:</span>
+                                
+                                    <ul>
+                                        <li>play to the end.</li>
+                                        <li>play with quality.</li>
+                                        <li>consistently meet deadlines (every {{game.PhaseLengthMinutes}} minutes).</li>
+                                    </ul>
+
+                                    <span>Failure to meet these expectations risks bans from future games.</span>
+                                </v-alert>
                             </v-flex>
 
-                            <v-flex xs12>
-                                <draggable class="nationBucket grey lighten-4 elevation-5" :list="mehNationBucket" :options="{group:'nations'}">
-                                    <v-chip v-for="meh in mehNationBucket" :key="meh">{{meh}}</v-chip>
-                                </draggable>
-                            </v-flex>
+                            <v-flex><h5 class="headline">Player Preferences</h5></v-flex>
 
-                            <v-flex xs12>
-                                <draggable class="nationBucket red lighten-4 elevation-5" :list="avoidNationBucket" :options="{group:'nations'}">
-                                    <v-chip v-for="avoid in avoidNationBucket" :key="avoid">{{avoid}}</v-chip>
-                                </draggable>
+                            <v-flex>
+                                <v-combobox v-if="gameVariant"
+                                            v-model="preferredNations"
+                                            label="Preferred nations (if any)"
+                                            :items="gameVariant.Nations"
+                                            :search-input.sync="nationSearch"
+                                            multiple
+                                            chips>
+                                    <template slot="selection" slot-scope="data">
+                                        <v-chip class="v-chip--select-multi"
+                                                :color="colours[data.item]"
+                                                :selected="data.selected"
+                                                :key="JSON.stringify(data.item)"
+                                                @input="data.parent.selectItem(data.item)">
+                                            {{data.item}}
+                                        </v-chip>
+                                    </template>
+                                </v-combobox>
                             </v-flex>
                         </v-layout>
                     </v-container>
@@ -58,9 +75,10 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
 import { mapGetters, mapActions } from 'vuex';
 
+import Colours from '@/utils/Colours';
+import Game from '@/api/game';
 import EventBus from '@/utils/EventBus';
 import DiplomacyMap from './map/Map';
 import GameMixin from '@/mixins/game';
@@ -69,19 +87,10 @@ export default {
     name: 'GameListItemDialog',
     mixins: [GameMixin],
     components: {
-        'diplomacy-map': DiplomacyMap,
-        draggable
+        'diplomacy-map': DiplomacyMap
     },
     computed: {
-        ...mapGetters(['game', 'user', 'gameVariant']),
-
-        layout() {
-            const binding = { };
-
-            if (!this.$vuetify.breakpoint.mdAndUp) binding.column = true;
-
-            return binding;
-        }
+        ...mapGetters(['game', 'user', 'gameVariant'])
     },
     methods: {
         ...mapActions(['setGameData', 'clearGameData']),
@@ -108,8 +117,20 @@ export default {
         /**
          * Passes user preferences and join request to API.
          */
-        reallyJoinGame() {
+        async reallyJoinGame() {
+            const options = { };
+            if (this.useAlias)
+                options.GameAlias = this.gameAlias;
+            if (this.preferredNations.length && this.preferredNations.length < this.gameVariant.Nations.length)
+                options.NationPreferences = this.preferredNations.join(',');
 
+            // TODO: Error handling.
+            await Game.joinGame(this.game.ID, options);
+
+            this.$router.push({
+                name: 'game',
+                params: { ID: this.game.ID }
+            });
         },
 
         closeDetailsDialog() {
@@ -121,16 +142,18 @@ export default {
     data: () => ({
         isDialogActive: false,
         isInnerDialogActive: false,
-        preferredNationBucket: [],
-        mehNationBucket: [],
-        avoidNationBucket: []
+        preferredNations: [],
+        nationSearch: '',
+        colours: { },
+        useAlias: false,
+        gameAlias: ''
     }),
     created() {
         const vm = this;
         EventBus.$on('details', async(gameID) => {
             await vm.setGameData(gameID);
             vm.isDialogActive = true;
-            vm.mehNationBucket = vm.gameVariant.Nations;
+            vm.colours = Colours.getColourSetForVariant(vm.gameVariant);
         });
     }
 };

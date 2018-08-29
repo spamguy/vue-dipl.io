@@ -27,5 +27,11 @@ export default {
      * Gets all active games.
      * @returns {Promise<object[]>} A list of games.
      */
-    getAllActiveGames: () => Client.get('Games/Started')
+    getAllActiveGames: () => Client.get('Games/Started'),
+
+    /**
+     * Joins a game.
+     * @returns {Promise<object>} The joined game.
+     */
+    joinGame: (gameID, options) => Client.post(`/Game/${gameID}/Member`, options)
 };

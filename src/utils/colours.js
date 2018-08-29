@@ -13,7 +13,7 @@ export default {
             England: '#00f',
             Russia: '#bbb',
             France: '#f0f',
-            Germany: '#000',
+            Germany: '#555',
             Italy: '#0f0',
             Turkey: '#fff500'
         };
