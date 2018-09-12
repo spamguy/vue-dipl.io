@@ -1,16 +1,18 @@
-import VariantMap from './VariantMap';
+import { VariantMap } from './VariantMap';
 
+const GRAPH_SYM = Symbol();
 /**
  * Static information about a Diplomacy variant.
  * @class Variant
  */
-export default (() => {
+export class Variant {
     /**
      * @constructs Variant
      * @param {Object} data The raw variant data.
      * @param {String} mapDefinition The variant map as a SVG+XML string.
      */
-    function Variant(data, mapDefinition) {
+    constructor(data, mapDefinition) {
+        this[GRAPH_SYM] = data.Graph;
         /**
          * @name Variant#Name
          * @type {String}
@@ -24,20 +26,16 @@ export default (() => {
          */
         this.Nations = data.Nations;
 
-        this.Provinces = Object.freeze(data.Graph.Nodes);
+        this.Provinces = Object.freeze(this[GRAPH_SYM].Nodes);
     
         this.MapDefinition = Object.freeze(new VariantMap(data.Name, mapDefinition));
     }
 
-    Variant.prototype = {
-        /**
-         * All provinces containing an SC.
-         * @returns {Array<Object>} An array of provinces.
-         */
-        SCs() { _graph.Nodes.filter(n => n.SC) },
+    /**
+     * All provinces containing an SC.
+     * @returns {Array<Object>} An array of provinces.
+     */
+    SCs() { this[GRAPH_SYM].Nodes.filter(n => n.SC) }
 
-        get PlayerCount() { this.Nations.length }
-    };
-
-    return Variant;
-})();
+    get PlayerCount() { this.Nations.length }
+}

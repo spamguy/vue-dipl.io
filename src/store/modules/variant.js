@@ -1,4 +1,4 @@
-import Variant from '@/models/Variant';
+import { Variant } from '@/models/Variant';
 import MutationTypes from '@/store/mutation-types';
 import VariantAPI from '@/api/variant';
 

@@ -71,7 +71,7 @@
                 <map-province v-for="(province, name) in gameVariant.Provinces"
                               :key="name"
                               :mapDefinition="gameVariant.MapDefinition.province(name)"
-                              :phaseContext="phase && phase.SCs.find(sc => sc.Province === name) || null"
+                              :phaseContext="phase && phase.SCs.find(sc => sc.Province === name)"
                 />
             </g>
 
@@ -143,6 +143,17 @@ export default {
         mapDidError: false,
         mapErrorMessage: null
     }),
+    mounted() {
+        /*
+         * Take any unhandled SVG groups from the map definition and inject them into the component.
+         * Their purposes vary, and the result sucks without them.
+         */
+        const renderedSVG = document.getElementById(this.game.ID);
+        const unknownSVGGroups = this.gameVariant.MapDefinition.unknownSVGGroups();
+
+        // Prepend these groups so they don't render over groups in the template.
+        renderedSVG.prepend(...unknownSVGGroups);
+    },
     computed: {
         ...mapGetters([
             'game',

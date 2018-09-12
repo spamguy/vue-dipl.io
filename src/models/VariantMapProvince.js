@@ -1,11 +1,10 @@
-export default (() => {
-    function VariantMapProvince(el) {
-        this.name = el.id;
-        this.d = el.getAttribute('d');
+const EL_SYM = Symbol();
+
+export class VariantMapProvince {
+    constructor(el) {
+        this[EL_SYM] = el;
+        this.name = this[EL_SYM].id;
     }
 
-    VariantMapProvince.prototype = {
-    }
-
-    return VariantMapProvince;
-})();
+    get d() { return this[EL_SYM].getAttribute('d'); }
+}
