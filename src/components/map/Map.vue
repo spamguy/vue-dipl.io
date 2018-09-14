@@ -78,23 +78,21 @@
             <g v-if="phase" id="supplyCentreLayer">
                 <map-supply-centre v-for="province in gameVariant.MapDefinition.provinces"
                                    v-if="province.isSC"
-                                   :key="province.Name"
-                                   :name="province.Name"
-                                   :x="province.centreCoordinates.x"
-                                   :y="province.centreCoordinates.y"
+                                   :key="province.name"
+                                   :name="province.name"
+                                   :coords="province.centreCoordinates"
                 />
             </g>
 
             <g v-if="phase" id="unitLayer">
                 <map-unit v-for="unit in phase.Units"
-                          v-if="provinces[unit.Province]"
                           :key="unit.Province + 'Unit'"
                           :unit="unit"
-                          :data="provinces[unit.Province]" />
+                          :coords="gameVariant.MapDefinition.province(unit.Province).centreCoordinates" />
             </g>
 
             <g v-if="orders" id="orderLayer">
-                <hold-order v-for="order in orders"
+                <!--<hold-order v-for="order in orders"
                             v-if="order.Parts[1] === 'Hold'"
                             :key="order.Parts[0] + 'Hold'"
                             :province="order.Parts[0]"
@@ -106,7 +104,7 @@
                             :origin-x="provinces[order.Parts[0]].x"
                             :origin-y="provinces[order.Parts[0]].y"
                             :target-x="provinces[order.Parts[2]].x"
-                            :target-y="provinces[order.Parts[2]].y" />
+                            :target-y="provinces[order.Parts[2]].y" /> -->
             </g>
         </svg>
 

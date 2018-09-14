@@ -33,6 +33,7 @@ ${definition}`);
     get supplyCenterGroupName() { return SUPPLY_CENTER_GROUP_NAME; }
 
     province(name) {
+        // TODO: Binary search this if it's not already.
         const result = this.provinces.find(p => p.name === name);
         if (!result)
             console.warn(`Province '${name}' was listed in variant '${this[VARIANT_NAME_SYM]}' but not found in corresponding map!`);

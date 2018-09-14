@@ -16,17 +16,13 @@ export default {
             type: String,
             required: true
         },
-        x: {
-            type: Number,
-            required: true
-        },
-        y: {
-            type: Number,
+        coords: {
+            type: Object,
             required: true
         }
     },
     computed: {
-        transform() { return `translate(${this.x - PX_NUDGE},${this.y - PX_NUDGE}) scale(0.04)`; }
+        transform() { return `translate(${this.coords.x - PX_NUDGE},${this.coords.y - PX_NUDGE}) scale(0.04)`; }
     }
 };
 </script>

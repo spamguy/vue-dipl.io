@@ -1,6 +1,7 @@
 import MutationTypes from '../mutation-types';
 import Game from '@/api/game';
 import Phase from '@/api/phase';
+import Colours from '@/utils/Colours';
 
 const state = {
     currentGame: {
@@ -22,7 +23,8 @@ const getters = {
     gameVariant: (state, getters, rootState, rootGetters) => {
         // Defer to an existing Vuex getter for this info.
         return state.currentGame.Variant ? rootGetters.getVariant(state.currentGame.Variant) : null;
-    }
+    },
+    colourSet: (state) => state.currentGame.Variant ? Colours.getColourSetForVariant(state.currentGame.Variant) : null
 };
 
 const mutations = {
