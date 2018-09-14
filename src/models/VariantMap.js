@@ -15,7 +15,10 @@ export class VariantMap {
             .getElementsByTagName('svg')[0];
 
             const provinceGroup = this[DOCUMENT_SYM].getElementById('provinces');
-            this.provinces = [...provinceGroup.children].map(el => Object.freeze(new VariantMapProvince(el)));
+            this.provinces = [...provinceGroup.children].map(el => {
+                const centreElement = this[DOCUMENT_SYM].getElementById(`${el.id}Center`);
+                return Object.freeze(new VariantMapProvince(el, centreElement));
+            });
 
             this.viewBox = this[DOCUMENT_SYM].getAttribute('viewBox');
         }

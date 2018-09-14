@@ -76,9 +76,12 @@
             </g>
 
             <g v-if="phase" id="supplyCentreLayer">
-                <map-supply-centre v-for="sc in phase.SCs"
-                                   :key="sc.Name"
-                                   :sc="sc"
+                <map-supply-centre v-for="province in gameVariant.MapDefinition.provinces"
+                                   v-if="province.isSC"
+                                   :key="province.Name"
+                                   :name="province.Name"
+                                   :x="province.centreCoordinates.x"
+                                   :y="province.centreCoordinates.y"
                 />
             </g>
 

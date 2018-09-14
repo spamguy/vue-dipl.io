@@ -12,6 +12,7 @@
     "firebase": "4.13.1",
     "moment": "2.22.1",
     "pluralize": "7.0.0",
+    "svg-path-bounds": "1.0.1",
     "vue": "2.5.17",
     "vue-localstorage": "0.6.2",
     "vue-router": "3.0.1",
