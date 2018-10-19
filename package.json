@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "0.18.0",
-    "firebase": "4.13.1",
+    "firebase": "5.5.5",
     "moment": "2.22.1",
     "pluralize": "7.0.0",
     "svg-path-bounds": "1.0.1",
@@ -21,119 +22,19 @@
     "vuex": "3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "3.0.1",
-    "@vue/cli-plugin-eslint": "3.0.1",
-    "@vue/cli-service": "3.0.1",
-    "eslint-config-semistandard": "12.0.1",
-    "eslint-config-standard": "11.0.0",
-    "eslint-plugin-import": "2.11.0",
-    "eslint-plugin-node": "6.0.1",
-    "eslint-plugin-promise": "3.7.0",
-    "eslint-plugin-standard": "3.1.0",
-    "node-sass": "4.9.0",
-    "sass-loader": "7.0.1",
+    "@vue/cli-plugin-babel": "3.0.5",
+    "@vue/cli-plugin-eslint": "3.0.5",
+    "@vue/cli-plugin-unit-mocha": "3.0.5",
+    "@vue/cli-service": "3.0.5",
+    "@vue/test-utils": "1.0.0-beta.25",
+    "chai": "4.1.2",
+    "eslint": "5.7.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-vue": "5.0.0-beta.3",
+    "node-sass": "4.9.4",
+    "sass-loader": "7.1.0",
     "vue-template-compiler": "2.5.17"
-  },
-  "babel": {
-    "presets": [
-      "@vue/app"
-    ]
-  },
-  "eslintConfig": {
-    "root": true,
-    "parserOptions": {
-      "ecmaVersion": 8
-    },
-    "extends": [
-      "semistandard",
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {
-      "space-before-function-paren": [
-        2,
-        "never"
-      ],
-      "one-var": [
-        2,
-        {
-          "var": "always",
-          "let": "always",
-          "const": "never"
-        }
-      ],
-      "brace-style": [
-        2,
-        "stroustrup",
-        {
-          "allowSingleLine": true
-        }
-      ],
-      "curly": [
-        2,
-        "multi-or-nest",
-        "consistent"
-      ],
-      "dot-location": [
-        "error",
-        "property"
-      ],
-      "no-unneeded-ternary": [
-        "error",
-        {
-          "defaultAssignment": false
-        }
-      ],
-      "array-bracket-spacing": [
-        "error",
-        "never"
-      ],
-      "object-curly-spacing": [
-        "error",
-        "always",
-        {
-          "objectsInObjects": false
-        }
-      ],
-      "vue/html-indent": [
-        "error",
-        4,
-        {
-          "attribute": 1
-        }
-      ],
-      "indent": [
-        "error",
-        4,
-        {
-          "MemberExpression": 0
-        }
-      ],
-      "vue/max-attributes-per-line": [
-        1,
-        {
-          "singleline": 4,
-          "multiline": {
-            "max": 1,
-            "allowFirstLine": true
-          }
-        }
-      ],
-      "vue/mustache-interpolation-spacing": [
-        2,
-        "never"
-      ],
-      "vue/valid-v-on": "off"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  }
 }
