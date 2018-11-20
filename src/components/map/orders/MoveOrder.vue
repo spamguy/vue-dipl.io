@@ -52,7 +52,7 @@ export default {
 
         markerEnd() {
             // See CSS file for why separate markers exist for failed orders.
-            const fullPath = this.$route.fullPath;
+            const { fullPath } = this.$route;
             const failedClass = (this.failed && 'failed') || '';
             return `url(${fullPath}#${failedClass}move)`;
         }

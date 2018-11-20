@@ -5,8 +5,7 @@
         </v-flex>
         <v-flex>
             <v-list class="elevation-1" two-line>
-                <game-list-item v-for="game in games"
-                                v-if="!getUserAsPlayer(game, user)"
+                <game-list-item v-for="game in gamesWithoutCurrentPlayer"
                                 :key="game.Id"
                                 :game="game" />
             </v-list>
@@ -34,7 +33,15 @@ export default {
         games: []
     }),
     computed: {
-        ...mapGetters(['user'])
+        ...mapGetters(['user']),
+
+        /**
+         * Finds open games in which the current user is not participating.
+         * @returns {Array<Object>} A list of games.
+         */
+        gamesWithoutCurrentPlayer() {
+            return this.games.filter(g => !this.getUserAsPlayer(g, this.user));
+        }
     },
     async created() {
         this.games = await Game.getAllOpenGames();

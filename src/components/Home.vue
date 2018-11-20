@@ -1,17 +1,18 @@
 <template>
-    <v-btn dark default class="btn--dark-flat-focused" @click.native="logIn">Log In</v-btn>
+    <v-btn dark default class="btn--dark-flat-focused" @click.native="onClick">Log In</v-btn>
 </template>
 
 <script>
-import Auth from '@/utils/Auth';
+import { logIn } from '@/utils/Auth';
 
 export default {
     name: 'Home',
     methods: {
-        async logIn() {
+        async onClick() {
             const fakeID = this.$route.query['fake-id'];
 
-            await Auth.logIn(fakeID);
+            await logIn(fakeID);
+            this.$router.push('profile/games');
         }
     }
 };

@@ -7,7 +7,7 @@ export default {
         },
 
         fullPhaseDescription() {
-            return this.phase ? `${this.phase.Season} ${this.phase.Type} ${this.phase.Year}` : null;
+            return this.phase && `${this.phase.Season} ${this.phase.Type} ${this.phase.Year}`;
         },
 
         fullGameStatus() {
@@ -15,9 +15,9 @@ export default {
                 const finishedDate = moment(this.game.FinishedAt).format('l');
                 return `Finished on ${finishedDate}`;
             }
-            else if (!this.game.Started) {
+            if (!this.game.Started)
                 return '[not started]';
-            }
+
 
             return null;
         },

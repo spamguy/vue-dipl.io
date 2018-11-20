@@ -1,7 +1,6 @@
 <template>
     <v-btn-toggle v-model="selectedAction" mandatory>
-        <v-tooltip v-for="action in actions"
-                   v-if="orderIsAvailableThisPhase(action.phaseTypes)"
+        <v-tooltip v-for="action in availableActions"
                    :key="action.icon"
                    bottom>
             <v-btn slot="activator"
@@ -47,10 +46,9 @@ export default {
         }],
         selectedAction: 'Hold'
     }),
-    methods: {
-        orderIsAvailableThisPhase(phaseTypes) {
-            // TODO: Hide adjustment buttons that aren't useful during adjustment phase.
-            return phaseTypes.indexOf(this.phaseType) > -1;
+    computed: {
+        availableActions() {
+            return this.actions.filter(a => a.phaseTypes.indexOf(this.phaseType) > -1);
         }
     }
 };

@@ -3,7 +3,7 @@ import Game from '@/api/game';
 import Phase from '@/api/phase';
 import Colours from '@/utils/Colours';
 
-const state = {
+const gameState = {
     currentGame: {
         Members: [],
         Variant: null
@@ -13,29 +13,42 @@ const state = {
     phaseOrdinal: 1
 };
 
-const getters = {
-    game: (state) => state.currentGame,
-    phase: (state) => state.phases.length
+const gameGetters = {
+    game: state => state.currentGame,
+    phase: state => (state.phases.length
         ? state.phases[state.phaseOrdinal - 1]
-        : null,
-    orders: (state) => state.orders,
-    lastPhaseOrdinal: (state) => state.phases.length,
-    gameVariant: (state, getters, rootState, rootGetters) => {
-        // Defer to an existing Vuex getter for this info.
-        return state.currentGame.Variant ? rootGetters.getVariant(state.currentGame.Variant) : null;
-    },
-    colourSet: (state) => state.currentGame.Variant ? Colours.getColourSetForVariant(state.currentGame.Variant) : null
+        : null),
+    orders: state => state.orders,
+    lastPhaseOrdinal: state => state.phases.length,
+    gameVariant: (state, getters, rootState, rootGetters) => (state.currentGame.Variant
+        ? rootGetters.getVariant(state.currentGame.Variant)
+        : null),
+    colourSet: state => (state.currentGame.Variant
+        ? Colours.getColourSetForVariant(state.currentGame.Variant)
+        : null)
 };
 
 const mutations = {
-    [MutationTypes.SET_CURRENT_GAME]: (state, game) => (state.currentGame = game),
-    [MutationTypes.SET_CURRENT_GAME_PHASES]: (state, phases) => (state.phases = phases),
-    [MutationTypes.SET_CURRENT_GAME_ORDERS]: (state, orders) => (state.orders = orders),
-    [MutationTypes.SET_CURRENT_GAME_ORDINAL]: (state, phaseOrdinal) => (state.phaseOrdinal = phaseOrdinal)
+    [MutationTypes.SET_CURRENT_GAME]: (state, game) => {
+        state.currentGame = game;
+        return state;
+    },
+    [MutationTypes.SET_CURRENT_GAME_PHASES]: (state, phases) => {
+        state.phases = phases;
+        return state;
+    },
+    [MutationTypes.SET_CURRENT_GAME_ORDERS]: (state, orders) => {
+        state.orders = orders;
+        return state;
+    },
+    [MutationTypes.SET_CURRENT_GAME_ORDINAL]: (state, phaseOrdinal) => {
+        state.phaseOrdinal = phaseOrdinal;
+        return state;
+    }
 };
 
 const actions = {
-    setGameData: async({ commit }, ID) => {
+    setGameData: async ({ commit }, ID) => {
         const game = await Game.getGame(ID);
         const phases = await Phase.getPhasesForGame(ID);
 
@@ -52,7 +65,7 @@ const actions = {
         commit(MutationTypes.SET_CURRENT_GAME_ORDINAL, 1);
     },
 
-    setOrdinal: async({ commit, state }, { ID, ordinal }) => {
+    setOrdinal: async ({ commit, state }, { ID, ordinal }) => {
         // Undefined/invalid ordinal is set to last phase by default.
         if (!ordinal || ordinal < 0 || ordinal > state.phases.length)
             ordinal = state.phases.length;
@@ -72,8 +85,8 @@ const actions = {
 };
 
 export default {
-    state,
+    state: gameState,
     mutations,
     actions,
-    getters
+    getters: gameGetters
 };

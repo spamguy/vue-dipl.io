@@ -1,4 +1,4 @@
-import { Client } from './base';
+import Client from './base';
 
 export default {
     getPhasesForGame: gameID => Client.get(`Game/${gameID}/Phases`),

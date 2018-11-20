@@ -26,7 +26,8 @@ export default {
             if (!this.phaseContext)
                 return { };
 
-            const ownerColour = Colours.getColourSetForVariant(this.mapDefinition.Name)[this.phaseContext.Owner];
+            const colours = Colours.getColourSetForVariant(this.mapDefinition.Name);
+            const ownerColour = colours[this.phaseContext.Owner];
             return {
                 fill: ownerColour,
                 stroke: ownerColour,

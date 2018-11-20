@@ -25,9 +25,10 @@
                     <v-container grid-list-md>
                         <v-layout column>
                             <v-flex>
+                                <!-- eslint-disable -->
                                 <v-alert type="info" :value="true">
                                     <span>By joining this game, you agree to:</span>
-                                
+
                                     <ul>
                                         <li>play to the end.</li>
                                         <li>play with quality.</li>
@@ -37,6 +38,7 @@
                                     <span>Failure to meet these expectations risks bans from future games.</span>
                                 </v-alert>
                             </v-flex>
+                            <!-- eslint-enable -->
 
                             <v-flex><h5 class="headline">Player Preferences</h5></v-flex>
 
@@ -106,7 +108,7 @@ export default {
 
             return (reason && `You can't join this game because ${reason}.`) || reason;
         },
-        
+
         /**
          * Opens sub-dialog with custom join options.
          */
@@ -121,7 +123,7 @@ export default {
             const options = { };
             if (this.useAlias)
                 options.GameAlias = this.gameAlias;
-            if (this.preferredNations.length && this.preferredNations.length < this.gameVariant.Nations.length)
+            if (this.preferredNations.length < this.gameVariant.Nations.length)
                 options.NationPreferences = this.preferredNations.join(',');
 
             // TODO: Error handling.
@@ -150,7 +152,7 @@ export default {
     }),
     created() {
         const vm = this;
-        EventBus.$on('details', async(gameID) => {
+        EventBus.$on('details', async (gameID) => {
             await vm.setGameData(gameID);
             vm.isDialogActive = true;
             vm.colours = Colours.getColourSetForVariant(vm.gameVariant);

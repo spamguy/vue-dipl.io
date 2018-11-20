@@ -1,16 +1,16 @@
 import axios from 'axios';
 import Vue from 'vue';
 
-import auth from '@/utils/Auth';
+import { logOut } from '@/utils/Auth';
 
-let Client = axios.create({
+const Client = axios.create({
     baseURL: process.env.VUE_APP_DIPLICITY_ENDPOINT,
     headers: {
         Accept: 'application/json'
     }
 });
 
-Client.interceptors.request.use(function(config) {
+Client.interceptors.request.use((config) => {
     const fakeID = Vue.localStorage.get('fakeID');
     const token = Vue.localStorage.get('token');
 
@@ -22,30 +22,31 @@ Client.interceptors.request.use(function(config) {
     if (fakeID)
         config.params = { 'fake-id': fakeID };
     else if (token)
-        config.headers.Authorization = 'Bearer ' + token;
+        config.headers.Authorization = `Bearer ${token}`;
 
     return config;
-}, function(error) {
-    return Promise.reject(error);
-});
+}, error => Promise.reject(error));
 
 function extractDataFromResponse(response) {
     // Most API responses have a Properties wrapper that needs to be stripped.
-    let data = response.data;
+    let { data } = response;
     if (data.Properties)
         data = response.data.Properties;
 
     // If the desired data is an array, elements probably have a Properties wrapper too.
     if (Array.isArray(data))
-        data = data.map(item => item.Properties); 
+        data = data.map(item => item.Properties);
 
     return data;
 }
 
-Client.interceptors.response.use(extractDataFromResponse, error => {
-    if (!error.response)
-        auth.logOut();
+Client.interceptors.response.use(extractDataFromResponse, (error) => {
+    if (!error.response) {
+        logOut();
+        Vue.$router.push('/');
+    }
+
     return Promise.reject(error);
 });
 
-export { Client };
+export default Client;

@@ -4,7 +4,9 @@
             <v-menu v-model="showMenu" absolute>
                 <v-layout slot="activator" class="white--text" column v-ripple>
                     <v-flex>{{userLabel}}</v-flex>
-                    <v-flex v-if="userStats.PracticalRating > 0">{{userStats.PracticalRating}} points</v-flex>
+                    <v-flex v-if="userStats.PracticalRating > 0">
+                        {{userStats.PracticalRating}} points
+                    </v-flex>
                 </v-layout>
                 <v-list>
                     <v-list-tile v-for="(item, i) in menuItems"
@@ -40,7 +42,7 @@
 <script>
 import vuex from 'vuex';
 
-import Auth from '@/utils/Auth';
+import { logOut } from '@/utils/Auth';
 import User from '@/api/user';
 
 export default {
@@ -84,7 +86,7 @@ export default {
             'setVariants',
             'setUser'
         ]),
-        logOut: Auth.logOut
+        logOut
     }
 };
 </script>

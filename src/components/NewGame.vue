@@ -21,7 +21,10 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn flat @click.stop="$router.push('/profile/games')">Cancel</v-btn>
-                    <v-btn :disabled="!game.isValid" flat color="primary" @click.stop="submit">Create</v-btn>
+                    <v-btn :disabled="!game.isValid"
+                           flat
+                           color="primary"
+                           @click.stop="submit">Create</v-btn>
                 </v-card-actions>
             </v-card>
         </v-flex>
@@ -51,10 +54,10 @@ export default {
             if (!this.$refs.form.validate())
                 return;
 
-            let newGame = await Game.createGame(this.game);
+            const newGame = await Game.createGame(this.game);
             if (newGame) {
                 this.$router.push({
-                    path: '/games/' + newGame.ID,
+                    path: `/games/${newGame.ID}`,
                     query: { new: '1' }
                 });
             }

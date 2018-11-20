@@ -16,7 +16,7 @@ const router = new Router({
     mode: 'history',
     routes: [
         { path: '/', component: Home },
-        { path: '/login', component: Login },
+        { path: '/login', component: Login }, // TODO: Add /logout endpoint.
         {
             path: '/',
             component: AuthBase,

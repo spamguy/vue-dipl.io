@@ -69,7 +69,8 @@ export default {
         layout() {
             const binding = { };
 
-            if (!this.$vuetify.breakpoint.mdAndUp) binding.column = true;
+            if (!this.$vuetify.breakpoint.mdAndUp)
+                binding.column = true;
 
             return binding;
         },
@@ -79,13 +80,13 @@ export default {
         }
     },
     watch: {
-        async '$route'(to, from) {
+        async $route(to, from) {
             // Catch in-game phase navigation, and load relevant data.
             if (to.params.ID === from.params.ID)
                 await this.setOrdinal({ ID: to.params.ID, ordinal: to.params.ordinal });
         }
     },
-    beforeRouteLeave: function(to, from, next) {
+    beforeRouteLeave(to, from, next) {
         this.clearGameData();
         next();
     },

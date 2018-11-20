@@ -1,23 +1,16 @@
 import Vue from 'vue';
-import router from '@/router';
 
-export default {
-    async logIn(fakeID) {
-        if (fakeID) {
-            Vue.localStorage.set('fakeID', fakeID);
-            router.push('profile/games');
-        }
-        else {
-            window.location = `${process.env.VUE_APP_DIPLICITY_ENDPOINT}/Auth/Login?redirect-to=${encodeURIComponent(process.env.VUE_APP_DOMAIN)}/login`;
-        }
-    },
+async function logIn(fakeID) {
+    if (fakeID)
+        Vue.localStorage.set('fakeID', fakeID);
+    else
+        window.location = `${process.env.VUE_APP_DIPLICITY_ENDPOINT}/Auth/Login?redirect-to=${encodeURIComponent(process.env.VUE_APP_DOMAIN)}/login`;
+}
 
-    logOut: () => {
-        // Purge local storage.
-        Vue.localStorage.remove('fakeID');
-        Vue.localStorage.remove('token');
+function logOut() {
+    // Purge local storage.
+    Vue.localStorage.remove('fakeID');
+    Vue.localStorage.remove('token');
+}
 
-        // Go home.
-        router.push('/');
-    }
-};
+export { logIn, logOut };

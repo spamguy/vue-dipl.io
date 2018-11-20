@@ -1,6 +1,6 @@
 import MutationTypes from '../mutation-types';
 
-const state = {
+const userState = {
     user: {
         Glicko: {
             PracticalRating: 0
@@ -18,7 +18,10 @@ const getters = {
 };
 
 const mutations = {
-    [MutationTypes.SET_USER]: (state, user) => (state.user = user)
+    [MutationTypes.SET_USER]: (state, user) => {
+        state.user = user;
+        return state;
+    }
 };
 
 const actions = {
@@ -26,7 +29,7 @@ const actions = {
 };
 
 export default {
-    state,
+    userState,
     getters,
     mutations,
     actions

@@ -1,5 +1,6 @@
 <template>
     <div v-if="gameVariant" :class="{'notStarted': !phase}">
+        <!-- eslint-disable -->
         <svg :id="game.ID" :viewBox="gameVariant.MapDefinition.viewBox">
             <defs>
                 <marker id="move"
@@ -107,6 +108,7 @@
                             :target-y="provinces[order.Parts[2]].y" /> -->
             </g>
         </svg>
+        <!-- eslint-enable -->
 
         <!-- TODO: Display snackbar within map element only. -->
         <v-snackbar v-model="mapDidError" color="red">

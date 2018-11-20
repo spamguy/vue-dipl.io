@@ -1,21 +1,21 @@
-import { VariantMapProvince } from "./VariantMapProvince";
+import VariantMapProvince from './VariantMapProvince';
 
-const VARIANT_NAME_SYM = Symbol();
-const DOCUMENT_SYM = Symbol();
+const VARIANT_NAME_SYM = Symbol('variantName');
+const DOCUMENT_SYM = Symbol('svgDocument');
 
 const SUPPLY_CENTER_GROUP_NAME = 'supply-centers';
 
-export class VariantMap {
+export default class VariantMap {
     constructor(name, definition) {
         const parser = new DOMParser();
 
         try {
             this[VARIANT_NAME_SYM] = name;
-            this[DOCUMENT_SYM] = parser.parseFromString(definition, 'image/svg+xml')
-            .getElementsByTagName('svg')[0];
+            [this[DOCUMENT_SYM]] = parser.parseFromString(definition, 'image/svg+xml')
+            .getElementsByTagName('svg');
 
             const provinceGroup = this[DOCUMENT_SYM].getElementById('provinces');
-            this.provinces = [...provinceGroup.children].map(el => {
+            this.provinces = [...provinceGroup.children].map((el) => {
                 const centreElement = this[DOCUMENT_SYM].getElementById(`${el.id}Center`);
                 return Object.freeze(new VariantMapProvince(el, centreElement));
             });

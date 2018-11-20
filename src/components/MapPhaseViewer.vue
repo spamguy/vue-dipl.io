@@ -7,7 +7,7 @@
                    color="primary">
             <v-toolbar-title>{{fullPhaseDescription()}}</v-toolbar-title>
             <v-spacer />
-            <map-order-menu v-if="game.Started && !game.Finished && phase.PhaseOrdinal === lastPhaseOrdinal"
+            <map-order-menu v-if="orderMenuIsActive"
                             :phase-type="phase.Type" />
         </v-toolbar>
         <diplomacy-map :readonly="false" />
@@ -57,7 +57,17 @@ export default {
     },
     mixins: [GameMixin],
     computed: {
-        ...mapGetters(['game', 'phase', 'lastPhaseOrdinal'])
+        ...mapGetters(['game', 'phase', 'lastPhaseOrdinal']),
+
+        /**
+         * Whether to display order options to the user.
+         * @returns {boolean} True if options should be shown.
+         */
+        orderMenuIsActive() {
+            return this.game.Started
+                && !this.game.Finished
+                && this.phase.PhaseOrdinal === this.lastPhaseOrdinal;
+        }
     }
 };
 </script>

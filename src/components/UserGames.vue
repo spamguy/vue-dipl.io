@@ -10,7 +10,8 @@
             <v-tabs-items>
                 <v-tab-item id="Active">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!activeGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
+                    <div v-else-if="!activeGames.length"
+                         class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in activeGames"
                                         :key="game.Id"
@@ -19,7 +20,8 @@
                 </v-tab-item>
                 <v-tab-item id="Waiting">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!waitingGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
+                    <div v-else-if="!waitingGames.length"
+                         class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in waitingGames"
                                         :key="game.Id"
@@ -28,7 +30,8 @@
                 </v-tab-item>
                 <v-tab-item id="Finished">
                     <v-progress-circular v-if="loading" :size="50" indeterminate color="primary" />
-                    <div v-else-if="!finishedGames.length" class="display-2 text-xs-center my-5">Nothing here.</div>
+                    <div v-else-if="!finishedGames.length"
+                         class="display-2 text-xs-center my-5">Nothing here.</div>
                     <v-list v-else two-line>
                         <game-list-item v-for="game in finishedGames"
                                         :key="game.Id"
@@ -61,22 +64,14 @@ export default {
     }),
     async beforeRouteEnter(to, from, next) {
         // TODO: Lazy load tab data. Finished game data in particular can be heavy.
-        next(async(vm) => {
-            const result = await Promise.all([
+        next(async () => {
+            [this.activeGames, this.waitingGames, this.finishedGames] = await Promise.all([
                 Game.getAllActiveGamesForCurrentUser(),
                 Game.getAllStagingGamesForCurrentUser(),
                 Game.getAllFinishedGamesForCurrentUser()
             ]);
-            vm.setData(result);
-        });
-    },
-    methods: {
-        setData(result) {
-            this.activeGames = result[0];
-            this.waitingGames = result[1];
-            this.finishedGames = result[2];
             this.loading = false;
-        }
+        });
     }
 };
 </script>
