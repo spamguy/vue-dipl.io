@@ -7,6 +7,17 @@ const variantState = {
 };
 
 const getters = {
+    /**
+     * Fetches all variants.
+     * @returns {Array<Object>} A list of variant definitions.
+     */
+    variants: state => Object.values(state.variants),
+
+    /**
+     * Fetches a specific variant.
+     * @param {string} variantName The name of the variant.
+     * @returns {Object} The matching variant, or null.
+     */
     getVariant: state => variantName => state.variants[variantName]
 };
 

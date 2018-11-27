@@ -15,5 +15,5 @@ export default {
      * @param {string} ID The user ID.
      * @returns {Object} Statistics, with user data embedded as a subobject.
      */
-    getUserAndStats: ID => Client.get(`/User/${ID}/Stats`)
+    getUserStats: ID => Client.get(`/User/${ID}/Stats`)
 };

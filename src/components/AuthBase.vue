@@ -3,9 +3,9 @@
         <v-toolbar fixed clipped-right app class="primary">
             <v-menu v-model="showMenu" absolute>
                 <v-layout slot="activator" class="white--text" column v-ripple>
-                    <v-flex>{{userLabel}}</v-flex>
-                    <v-flex v-if="userStats.PracticalRating > 0">
-                        {{userStats.PracticalRating}} points
+                    <v-flex>{{user.Email || user.Name}}</v-flex>
+                    <v-flex v-if="user.Name">
+                        {{userStats.Glicko.PracticalRating}} points
                     </v-flex>
                 </v-layout>
                 <v-list>
@@ -61,20 +61,19 @@ export default {
         ...vuex.mapGetters([
             'user',
             'userStats'
-        ]),
-        userLabel() {
-            return this.user.Email || this.user.Name;
-        }
+        ])
     },
     async created() {
         // Get/cache all variant data. Requires no auth.
         await this.setVariants();
 
-        // Get the current user ID. Sadly redundant to next call, but required.
+        // Get the current user and stats.
         const user = await User.getUser();
+        const stats = await User.getUserStats(user.User.Id);
 
         // Get/cache user and user stats.
-        this.setUser(await User.getUserAndStats(user.User.Id));
+        this.setUser(user);
+        this.setUserStats(stats);
 
 
         // Flag the view to render content that may need variant data.
@@ -84,7 +83,8 @@ export default {
         ...vuex.mapActions([
             'toggleDrawer',
             'setVariants',
-            'setUser'
+            'setUser',
+            'setUserStats'
         ]),
         logOut
     }

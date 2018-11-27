@@ -64,13 +64,13 @@ export default {
     }),
     async beforeRouteEnter(to, from, next) {
         // TODO: Lazy load tab data. Finished game data in particular can be heavy.
-        next(async () => {
-            [this.activeGames, this.waitingGames, this.finishedGames] = await Promise.all([
+        next(async (vm) => {
+            [vm.activeGames, vm.waitingGames, vm.finishedGames] = await Promise.all([
                 Game.getAllActiveGamesForCurrentUser(),
                 Game.getAllStagingGamesForCurrentUser(),
                 Game.getAllFinishedGamesForCurrentUser()
             ]);
-            this.loading = false;
+            vm.loading = false;
         });
     }
 };

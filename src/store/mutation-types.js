@@ -1,6 +1,7 @@
 const MutationTypes = { };
 
 MutationTypes.SET_USER = 'SET_USER';
+MutationTypes.SET_USER_STATS = 'SET_USER_STATS';
 
 MutationTypes.SET_VARIANTS = 'SET_VARIANTS';
 MutationTypes.SET_VARIANT_MAP = 'SET_VARIANT_MAP';

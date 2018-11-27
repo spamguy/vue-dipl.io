@@ -14,7 +14,7 @@
                                       required />
 
                         <!-- TODO: Need something more user friendly here. -->
-                        <v-select :items="$store.state.variant.variants.map(v => v.Name)"
+                        <v-select :items="variants.map(v => v.Name)"
                                   v-model="game.Variant"
                                   label="Variant" />
                     </v-form>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import Game from '@/api/game';
 
 export default {
@@ -49,6 +51,9 @@ export default {
             MaxRating: null
         }
     }),
+    computed: {
+        ...mapGetters(['variants'])
+    },
     methods: {
         async submit() {
             if (!this.$refs.form.validate())
