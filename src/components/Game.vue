@@ -65,7 +65,12 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(['game', 'user', 'gameVariant']),
+        ...mapGetters([
+            'game',
+            'user',
+            'gameVariant',
+            'currentPlayer'
+        ]),
         layout() {
             const binding = { };
 
@@ -97,8 +102,6 @@ export default {
         const { ID, ordinal } = this.$route.params;
         await this.setGameData(ID);
         await this.setOrdinal({ ID, ordinal });
-
-        this.currentPlayer = this.getUserAsPlayer(this.game, this.user);
     },
     methods: {
         ...mapActions(['setGameData', 'clearGameData', 'setOrdinal'])

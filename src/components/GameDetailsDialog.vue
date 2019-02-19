@@ -92,7 +92,12 @@ export default {
         'diplomacy-map': DiplomacyMap
     },
     computed: {
-        ...mapGetters(['game', 'user', 'gameVariant'])
+        ...mapGetters([
+            'game',
+            'user',
+            'gameVariant',
+            'currentPlayer'
+        ])
     },
     methods: {
         ...mapActions(['setGameData', 'clearGameData']),
@@ -103,7 +108,7 @@ export default {
         joinBlockReason() {
             let reason = null;
 
-            if (this.getUserAsPlayer(this.game, this.user))
+            if (this.currentPlayer)
                 reason = 'you joined already';
 
             return (reason && `You can't join this game because ${reason}.`) || reason;

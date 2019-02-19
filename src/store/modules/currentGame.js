@@ -15,6 +15,12 @@ const gameState = {
 
 const gameGetters = {
     game: state => state.currentGame,
+    currentPlayer: (
+        state,
+        getters,
+        rootState,
+        { user }
+    ) => state.currentGame.Members.find(m => m.User.Id === user.Id),
     phase: state => (state.phases.length
         ? state.phases[state.phaseOrdinal - 1]
         : null),

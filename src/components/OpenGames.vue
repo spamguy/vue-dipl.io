@@ -40,7 +40,8 @@ export default {
          * @returns {Array<Object>} A list of games.
          */
         gamesWithoutCurrentPlayer() {
-            return this.games.filter(g => !this.getUserAsPlayer(g, this.user));
+            const userId = this.user.Id;
+            return this.games.filter(({ Members }) => Members.every(m => m.User.Id !== userId));
         }
     },
     async created() {
