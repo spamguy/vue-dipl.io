@@ -123,14 +123,14 @@ import MapProvince from './MapProvince';
 import MapSupplyCentre from './MapSupplyCentre';
 import MapUnit from './MapUnit';
 
-import HoldOrder from './orders/HoldOrder';
-import MoveOrder from './orders/MoveOrder';
+// import HoldOrder from './orders/HoldOrder';
+// import MoveOrder from './orders/MoveOrder';
 
 export default {
     name: 'DiplomacyMap',
     components: {
-        'hold-order': HoldOrder,
-        'move-order': MoveOrder,
+        // 'hold-order': HoldOrder,
+        // 'move-order': MoveOrder,
         'map-province': MapProvince,
         'map-supply-centre': MapSupplyCentre,
         'map-unit': MapUnit
